@@ -110,7 +110,7 @@
 	</section>
 </section>
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <script type="text/javascript">
 	var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
 	var count = 60;
@@ -160,7 +160,7 @@
 						document.cookie="isLogin="+result.data+" ;Path="+escape("/");
 						document.cookie="account="+result.message+";Path="+escape("/");
 						//setCookie("isLogin","1");
-						window.location.href = "../homepage.html";
+						window.location.href = "../index.html";
 					}else{
 						document.cookie="isLogin=0";
 						//setCookie("isLogin","0");

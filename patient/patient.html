@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>病人详情</title>
+    <link rel="stylesheet" href="./layer/theme/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="./css/reponse.css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="../js/slider.js"></script>
+    <style type="text/css">
+        .alertceng {
+            background: #FFFFFF;
+            padding: 10px;
+            display: none;
+        }
+
+        .alertceng span.title {
+            margin-right: 10px;
+        }
+        .but{
+            float:left; background-color: blue;border: none;outline: none;white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.015);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.015);
+    cursor: pointer;
+    -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    padding: 0 15px;
+    
+    font-size: 14px;
+    border-radius: 4px;
+    color: rgba(0,0,0,0.65);
+    background-color: #fff;
+    border-color: #d9d9d9;"
+        }
+        .btu{
+    background: none;
+    color: #009cfd;
+    border-radius: 3px;
+    border: 1px solid #009cfd;
+    font-size: 1rem;
+    padding: 0.13rem 0.5rem;
+            height: 7%;
+}
+        .btu2{
+            background: none;
+            color: #009cfd;
+            border-radius: 3px;
+            border: 1px solid #009cfd;
+            font-size: 1rem;
+            float: right;
+            padding: 0.13rem 0.5rem;
+            height: 5%;
+        }
+    </style>
+</head>
+<br>
+<br class="layui-fluid layadmin-homepage-fluid" style="background: #fff;width:90%;margin:10px auto;">
+
+<input type="text" style="display:inline-block"  id="myInput"  placeholder="请输入搜索姓名:...">
+    <!-- onkeyup="myFunction()" -->
+    <button class="btu" style="float:left;display:inline-block" onclick="myFunction()">搜索</button>
+<button class="btu" style="float:right;display:inline-block" onclick="addPatient()">添加</button>
+<br><br><br>
+    <div id="page">
+        <!-- <table id="table" class="reponsetable" name="Table"></table> -->
+    </div>
+</div>
+</body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="./js/jquery.basictable.min.js"></script>
+<script type="text/javascript" src="./reponsetable.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        getdata()
+    })
+    var Const = '';
+    function   ages(str)
+    {
+        var   r   =   str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+        if(r==null)return   false;
+        var   d=   new   Date(r[1],   r[3]-1,   r[4]);
+        if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
+        {
+            var   Y   =   new   Date().getFullYear();
+            return((Y-r[1])+"岁");
+        }
+        return("0");
+    }
+    function  getdata() {
+        $.ajax({
+            type: "GET",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "http://47.103.1.210:8082/guns-1.0.0/h5/patient_info/" ,//url 47.103.1.210:8082/guns-1.0.0
+            success: function (result) {
+                if(result.code===200){
+                    var datas=[];
+                    var html = '';
+                    html+='<div class="jq22-list-head"><h2>病人列表</h2></div>';
+                    for(var i=0;i<result.data.length;i++){
+                        // var t = {"name": result.data[i].name, "sex": result.data[i].sex, "age": result.data[i].age, "disease": result.data[i].diagnosis,
+                        //     "kfid": "<button class='btn' name="+result.data[i].kfid+" onclick=tail(this)>详情</button>"};
+                        // datas.push(t);
+                        var age = ages(result.data[i].birthday);
+                        var diagnosis='';
+                        html+='<div class="jq22-list-cell" id="'+result.data[i].id+'">';
+                        html+='   <a href="javascript:;" class="jq22-list-cell-item" style="width:100%" >';
+                        html+='       <div class="jq22-list-cell-item-info jq22-list-cell-item-info-thr" style="margin-right:0;width:100%" >';
+                        html+='            <h3 style="float:left;display:inline-block;">'+result.data[i].name+'</br>'+result.data[i].sex+'  /  '+age+'</h3>';
+                        if(result.data[i].address.length>15){
+                            diagnosis = result.data[i].address.substring(0,15)+"...";
+                        }else {
+                            diagnosis = result.data[i].address
+                        }
+                        html+='            <h2 style="float:right;display:inline-block;">'+diagnosis+'</br>' +
+                            '身高：'+result.data[i].height+'/体重：'+result.data[i].weight+'斤<button class="btn" style="margin-top:1.5em;float:right;display:inline-block" id="'+result.data[i].name+'" name="'+result.data[i].id+'" onclick=tail(this)>详情</button></h2>';
+                        html+='        </div>';
+                        html+='    </a>';
+                        html+='</div>';
+                    }
+                    Const = html;
+                    
+
+                    $("#page").html(html)
+
+                    // $('#table').basictable({
+                    //     breakpoint: 768
+                    // });
+                    // $("#table").reponsetable({
+                    //     "id": "table",
+                    //     "type": "numbers",
+                    //     "colum": [
+                    //         {"field": "name","title": "姓名"},
+                    //         {"field": "sex", "title": "性别"},
+                    //         {"field": "age", "title": "年龄"},
+                    //         {"field": "disease", "title": "病症"},
+                    //         {"field": "kfid","title":"操作"},
+                    //     ],
+                    //     "data": datas
+                    // });
+
+                }else if(result.code===401){
+                            alert("您未登陆")
+                        }else if(result.code===405){
+                    alert(result.message);
+                }else {
+                    alert("服务器开小差了！")
+                }
+            },
+            error:function(data){
+                if(data.status===401){
+                alert("您未登陆")
+                }else if(data.code===405){
+                    alert(data.message);
+                }else{
+                    alert("服务器开小差了！")
+                }
+            }
+        });
+        return 1;
+    }
+    function tail(obj){
+        //console.log($(obj).parent().parent().find("td")) //一个人的数据[0-5]
+        //var Length = $(obj).parent().parent().find("td").length;
+        // var Name =  $(obj).parent().parent().find("td")[0].innerText;
+        // var Sex =  $(obj).parent().parent().find("td")[1].innerText;
+        // var Age =  $(obj).parent().parent().find("td")[2].innerText;
+        var kfid = $(obj).attr("name");
+        var name = $(obj).attr("id");
+        sessionStorage.setItem("p_name", name);
+        var Eurl = "patient_detail.html?id="+kfid+"&name="+name;
+        var Eurl2 = encodeURI(Eurl);
+        //var Eurl=encodeURI("../dislyb/dislyb.html?name="+Name+"&sex="+Sex+"&age="+Age+"&disease="+Disease+"&kfid="+Kfid)
+        window.location.href=Eurl2;
+
+    }
+
+function getAgent(input) {
+            filter = input.value.toUpperCase();
+            table = document.getElementById("page");
+            tr = table.children.length
+            var htmls = '<div class="jq22-list-head"><h2>病人列表</h2></div>';
+            for (var i = 1; i < tr; i++) {
+                //console.log(table.children[i].firstElementChild.firstElementChild.firstElementChild.innerText)
+                var texts = table.children[i].firstElementChild.firstElementChild.firstElementChild.innerText;
+                if (texts.toUpperCase().indexOf(filter) > -1) {
+                    htmls += table.children[i].innerHTML;
+                    console.log(1)
+                }else{
+                    console.log(2)
+                }
+            }
+            $("#page").html(htmls)
+}
+function addPatient() {
+    var Eurl = "../info/info.html";
+    var Eurl2 = encodeURI(Eurl);
+    window.location.href=Eurl2;
+}
+    function myFunction() {
+        // 声明变量
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        var ttt = input.value;
+        console.log(ttt)
+        if(ttt == "" || ttt==null){
+            console.log("___"+ttt)
+            $("#page").html(Const)
+        }else{
+            $("#page").html(Const)
+            getAgent(input);
+        }
+
+        // // 循环表格每一行，查找匹配项
+        // for (i = 0; i < tr.length; i++) {
+        //     td = tr[i].getElementsByTagName("td")[0];
+        //     if (td) {
+        //         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        //             tr[i].style.display = "";
+        //         } else {
+        //             tr[i].style.display = "none";
+        //         }
+        //     }
+        // }
+    }
+
+    </script>
+</html>

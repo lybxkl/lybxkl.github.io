@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>支付</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .main {
+            width: 100%;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="content_w">
+            <div class="content">
+                <div class="title">
+                    <span></span>
+                    <span>支付二维码</span>
+                </div>
+                <img src="images/erweima.png" alt="" class="pay_erweima">
+                <span>扫一扫，结算订单</span>
+            </div>
+        </div>
+
+        <div class="footer">返回</div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+
+    <script>
+        $(".content_w").css("height", winH - $(".footer").height())
+    </script>
+</body>

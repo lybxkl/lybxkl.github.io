@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+<!--[if lt IE 9]>
+    <script src="http://www.jq22.com/jquery/html5.min.js"></script>
+    <![endif]-->
+<title>信息输入</title>
+<link rel="stylesheet" href="src/css/selector.css">
+    <link rel="stylesheet" type="text/css" href="../jeDate/jeDate/skin/jedate.css"/>
+<script src="src/js/jquery.js"></script>
+<script src="src/js/Selector.js"></script>
+    <script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="../jeDate/jeDate/dist/jedate.min.js"></script>
+    <style>
+        .addOne{
+            margin-top: 20px;
+            height:60px;
+            width: 100%;text-align:center;
+            border-radius:.2em;
+        }
+        body{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container" >
+  <div class="inner">
+    <section id="main_content" >
+      <h3>添加信息</h3>
+
+      <div class="m-form" id="froms">
+          <div class="item">
+              <label>姓名：</label>
+              <dl class="ss" style="height:36px;float:left;width:234px;border-radius: 5px;" id="name">
+                  <input type="text" style="height:34px;float:left;width:234px;border-radius: 5px;" name="name"/>
+              </dl>
+          </div>
+        <div class="item">
+          <label>性别：</label>
+          <dl class="m-select" id="Marriage">
+            <dt>男</dt>
+            <dd>
+              <input type="hidden" name="sex"/>
+            </dd>
+          </dl>
+        </div>
+          <div class="item">
+              <label>出生日期：</label>
+              <dl class="ss" style="float:left;width:234px;" id="birthday">
+                  <input type="text" style="height:34px;float:left;width:234px;border-radius: 5px;" name="birthday" id="startTime"/>
+              </dl>
+          </div>
+        <div class="item">
+          <label>身高/厘米：</label>
+          <dl class="m-select m-select-w" id="Height0">
+            <dt></dt>
+            <dd class="height">
+              <input type="hidden" name="Height">
+            </dd>
+          </dl>
+
+        </div>
+          <div class="item">
+              <label>体重/斤：</label>
+              <dl class="m-select m-select-w" id="Weight0">
+                  <dt></dt>
+                  <dd class="height">
+                      <input type="hidden" name="Weight">
+                  </dd>
+              </dl>
+
+          </div>
+        <div class="item">
+          <label>住址:</label>
+          <dl class="m-select" id="AreaSelector2">
+            <dt id="addrs"></dt>
+            <dd class="region" style="height:210px;">
+              <input type="hidden" name="addr" value="">
+              <ul class="tab">
+              </ul>
+              <div class="tab-con clearfix"> </div>
+            </dd>
+          </dl>
+        </div>
+          <div class="item">
+              <label>详细地址：</label>
+              <dl class="ss" style="height:36px;float:left;width:234px;border-radius: 5px;" id="detail_address">
+                  <input type="text" style="height:34px;float:left;width:234px;border-radius: 5px;" name="detail_address"/>
+              </dl>
+          </div>
+          <button class="addOne btn float-button-light waves-effect waves-button waves-float waves-light"
+                  style="padding:0;font-size:1.5em;color: #FFFFFF; background: #8FBC8F" onclick="addOnes()">添加信息</button>
+      </div >
+<!--      <h3>说明</h3>-->
+<!--      <p>Selector.js与address.json两个文件必须放在同一个目录下。当调用地区的方法的时候才加载adrress文件</p>-->
+
+
+</section>
+    <script>
+        $(document).ready(function () {
+            jeDate('#startTime', {
+                minDate: '1990-01-01',
+                isinitVal: true,
+                format: 'YYYY-MM-DD',
+                onClose: false,
+                donefun:function(obj){
+                    // console.log(obj)
+                    var saliDate=obj.val.split("-");
+                    // console.log(saliDate)
+                    var riNum=0;
+                    var yueNum=0;
+                    var nianNum=saliDate[0];
+                    // console.log(saliDate[1]-1)
+                    // //判断月 同时判断年
+                    if(saliDate[1]-1<=0&&saliDate[2]=="01"){
+                        yueNum=12;
+                        riNum=31;
+                        nianNum=nianNum;
+                        // console.log(nianNum,yueNum,riNum)
+                        $("#endTime").val(nianNum+"-"+yueNum+"-"+riNum)
+                        return false;
+                    }else {
+                        yueNum=saliDate[1];
+                        nianNum=nianNum-0+1;
+                    }
+                    //当 日 是01 的时候要判断当前下一个月是否为31 还是30天  在判断一个是否为闰年  2月份是29 还是28
+                    if(saliDate[2]=="01"){
+                        switch(saliDate[1]-1){
+                            case 1:
+                            case 3:
+                            case 5:
+                            case 7:
+                            case 8:
+                            case 10:
+                            case 0://0就是12月  因为是只有点击的是2019-01-01  才会是2018-12-31
+                                riNum=31;
+                                yueNum="0"+(saliDate[1]-1);
+                                break;
+                            case 4:
+                            case 6:
+                            case 9:
+                            case 11:
+                                riNum=30;
+                                yueNum="0"+(saliDate[1]-1);
+                                break;
+                        }
+                        if(saliDate[1]-1==2){
+                            yueNum="0"+(saliDate[1]-1);
+                            //判断是否为闰年
+                            if(isLeap(saliDate[0])==1){
+                                riNum=29;
+                            }else{
+                                riNum=28;
+                            }
+                        }
+                    }else{
+                        if(saliDate[2]-1<=9){
+                            riNum="0"+(saliDate[2]-1);
+                        }else{
+                            riNum=saliDate[2]-1;
+                        }
+                    }
+                    // $("#endTime").val(nianNum+"-"+yueNum+"-"+riNum)
+                    // console.log(nianNum,yueNum,riNum)
+                }
+            });
+            // jeDate('#endTime', {
+            //     minDate: '1990-01-01',
+            //     isinitVal: true,
+            //     format: 'YYYY-MM-DD',
+            //     onClose: false
+            // });
+
+            //判断是否为闰年  若为闰年，返回1，反之则返回0
+            function isLeap(year) {
+                if((year%4==0 && year%100!=0)||(year%400==0)){
+                    return 1;
+                }
+                return 0;
+            }
+        })
+        $.fn.serializeJson=function(){
+            var serializeObj={};
+            var array=this.serializeArray();
+            array.push({"name":"name","value":document.getElementsByName("name")[0].value+""});
+            array.push({"name":"sex","value":document.getElementsByName("sex")[0].value+""});
+            array.push({"name":"birthday","value":document.getElementsByName("birthday")[0].value+""});
+            array.push({"name":"Height","value":document.getElementsByName("Height")[0].value+""});
+            array.push({"name":"Weight","value":document.getElementsByName("Weight")[0].value+""});
+            if(document.getElementsByName("detail_address")[0].value!==""||document.getElementsByName("detail_address")[0].value!=null){
+                array.push({"name":"address","value":$("#addrs").text()+"-"+document.getElementsByName("detail_address")[0].value});
+            }else {
+                array.push({"name":"address","value":$("#addrs").text()});
+            }
+
+
+            var str=this.serialize();
+            $(array).each(function(){
+                if(serializeObj[this.name]){
+                    if($.isArray(serializeObj[this.name])){
+                        serializeObj[this.name].push(this.value);
+                    }else{
+                        serializeObj[this.name]=[serializeObj[this.name],this.value];
+                    }
+                }else{
+                    serializeObj[this.name]=this.value;
+                }
+            });
+            return serializeObj;
+        };
+        function addOnes() {
+            if((document.getElementsByName("name")[0].value==""|| document.getElementsByName("name")[0].value==null)
+                ||(document.getElementsByName("sex")[0].value==""|| document.getElementsByName("sex")[0].value==null)
+                ||(document.getElementsByName("birthday")[0].value==""|| document.getElementsByName("birthday")[0].value==null)
+                ||(document.getElementsByName("Height")[0].value==""|| document.getElementsByName("Height")[0].value==null)
+                ||(document.getElementsByName("Weight")[0].value==""|| document.getElementsByName("Weight")[0].value==null)
+                ||($("#addrs").text()==""|| $("#addrs").text()==null)){
+                alert("信息未填完")
+            }else {
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "http://47.103.1.210:8082/guns-1.0.0/h5/patient_info_from" ,//url
+                    data: $('#froms').serializeJson(),//获取表单数据
+                    success: function (result) {
+                        if (result.code === 200) {
+                            alert("提交成功");
+                            history.back();
+                        }else if(result.code===401){
+                            alert("您未登陆")
+                        }else if(result.code===405){
+                            alert(result.message);
+                        }else if(result.code===406){
+                            alert(result.message);
+                        }else{
+                            alert("提交失败");
+                        };
+                    },
+                    error : function() {
+                        alert("服务器开小差了！")
+                    }
+                });
+            }
+
+        }
+      //普通模式
+      new SelectorJS.selector.init({
+        id:'#Marriage',
+        data: [["男", "男"], ["女", "女"]],
+        value:'男'
+      });  
+
+      //年龄联动
+      new SelectorJS.age('#Age0','#Age1',25,27);
+
+      //身高联动
+      new SelectorJS.heightMulti('#Height0','#Height1',0,0);
+      //体重联动
+      new SelectorJS.heightMulti('#Weight0','#Weight1',0,0);
+
+      //地区联动 二级
+      new SelectorJS.area.init('#AreaSelector','101020600', false);
+
+      //地区联动 三级
+      new SelectorJS.area.init('#AreaSelector2','101160101', true);
+
+      //自定义联动
+      var salaryCode = [["1", "1000"], ["2", "2000"], ["3", "3000"], ["4", "5000"], ["5", "8000"], ["6", "10000"], ["7", "20000"], ["8", "50000"], ["9", "50000以上"] ];
+      var salaryDefault1 = '1';
+      var salaryDefault2 = '4';
+      new SelectorJS.selector.init({
+        id:'#Salary0',
+        data: salaryCode,
+        value:salaryDefault1,
+        click: function(val, index){
+          new SelectorJS.selector.init({
+            id:'#Salary1',
+            data: salaryCode.slice(index),
+            value:  Math.max(salaryCode[index][0], parseInt(salaryDefault2) )
+          }).select.click();
+        }
+      }); 
+      new SelectorJS.selector.init({
+            id:'#Salary1',
+            data: salaryCode.slice(parseInt(salaryDefault1)),
+            value:  salaryDefault2
+      });
+</script>
+  </div>
+</div>
+</body>
+</html>

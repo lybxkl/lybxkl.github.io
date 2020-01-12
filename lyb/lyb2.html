@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="./css/waves.min.css?v=0.7.2">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.form.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="../jeDate/jeDate/skin/jedate.css"/>
+    <script src="../jeDate/jeDate/dist/jedate.min.js"></script>
+    <title>处方笺</title>
+    <style>
+    	input{
+    		text-align:center;
+            background-color:#FAEBD7;
+    	}
+        body {
+        background: #333;
+    }
+        *{
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .all{
+            width: 100%;
+            height: 100%;
+             border: 1px solid black; 
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            margin-top: 0.6%;
+            margin-bottom: 0.6%;
+            background-color:#FAEBD7;
+            border-radius: 5px;
+        }
+
+        .topAll{
+            height: 300px;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            border-bottom: 3px solid black;
+        }
+
+        .topTittle{
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .topMsgOne{
+            margin-top: 50px;
+        }
+
+        .topMsgTwo{
+            margin-top: 20px;
+        }
+
+        .name,
+        .sex,
+        .xingbie{
+            width: 25%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .yearOne,
+        .moonOne{
+            width: 15%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .adress{
+            width: 51%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .yearTwo{
+            width: 20%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+        .moonTwo,
+        .day{
+            width: 15%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .linchuang{
+            width: 87.5%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .middleAll{
+            height: 550px;
+            width: 93.7%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            border-top: 3px solid black;
+            border-bottom:  3px solid black;
+        }
+
+        .R{
+            font-size: 40px;
+            margin-top: 20px;
+            margin-left: 25px;
+        }
+
+        .neirong{
+            resize: none;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+            margin-top: 0.6%;
+            border: 1px solid black; 
+            overflow:auto;
+        }
+        .neirong2{
+            resize: none;
+            width: 97%;
+            height: 400px;
+            max-height: 400px;
+            max-width: 95%;
+            margin-left: 0.6%;
+            margin-top: 0.6%;
+            border: 1px solid black; 
+            overflow:auto;
+        }
+        .doctor{
+            float:right;
+            margin-top: 10px;
+            margin-right: 25px;
+        }
+
+        .innerDoctor{
+            border: none;
+            border-bottom:  1px solid black;
+        }
+
+        .bottomAll{
+            width: 93.7%;
+            height: 45px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
+        .bottomAll2{
+            width: 93.7%;
+            height: 45px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+        }
+
+        .cash{
+            width: 31.3%;
+            border: none;
+            border-bottom:  1px solid black;
+        }
+
+        .check{
+            width: 30%;
+            border: none;
+            border-bottom:  1px solid black;
+        }
+        .addOne{
+        	padding-left:10px;
+        	padding-right:10px;
+        	margin-top: 10px;
+        	height:38px;
+        	width: 100%;text-align:center;
+        	border-radius:.2em;
+        }
+        .addOne2{
+            padding-left:20px;
+            padding-right:20px;
+            margin-left: 10px;
+            height:38px;
+            width: 20%;
+            float:right;
+            text-align:center;
+            border-radius:.2em;
+        }
+        button:hover {
+            background: #1bb556;
+        }
+
+	.dropdown{position: relative;display:inline-block;width: 35%;/*padding-left:10px; */}
+	.dropdown2{position: relative;display:inline-block;width: 25%;/*padding-left:10px; */}
+    .dropdown3{position: relative;display:inline-block;width: 25%;/*padding-left:10px; */}
+    .dropdown-selected{width: 100%!important;height:30px;line-height:30px;border:1px solid #c6c8cc;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;color:#333;text-indent: 10px;margin-bottom: 0!important;}
+    .dropdown-selected-textarea{width: 60%!important;height:50px;border:1px solid #c6c8cc;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;color:#333;text-indent: 10px;margin-bottom: -20px!important;}
+    .dropdown ul{padding:0;width:100%;max-height:200px;overflow-y:auto ;background-color:#fff;margin-top:2px;border:1px solid #c6c8cc;position:absolute;display:none;z-index: 2;}
+    .dropdown ul li{list-style: none;text-indent:10px;}
+    .dropdown ul li a{display:block;color:#282c33;text-decoration:none;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .dropdown ul li:hover{background-color:#f2f6fa;}
+    .dropdown ul li a:active,.dropdown ul li.active a{background-color: #e4e9f2;}
+    </style>
+</head>
+<body >
+    <from id = "froms" method="POST" name="0">
+    <div class="all">
+        <div class="topAll" >
+            <p class="topTittle">处方笺</p>
+            <div class="topMsgOne">
+                姓名:&nbsp;<input name="name" class="name" value="" disabled />
+                性别:&nbsp;<input name="sex" class="sex" width="15px" value="" disabled/>
+
+            </div>
+            <div class="topMsgTwo">
+年龄:&nbsp;<input class="yearOne" name="age" value=""  disabled/>
+            </div>
+            <div class="topMsgTwo">
+                住址:&nbsp;<input class="adress" name = "address" disabled value=""/>
+
+            </div>
+            <div class="topMsgTwo">
+                日期：&nbsp;<input type="text" style="height:34px;width:234px;border-radius: 5px;" name="birthday" id="startTime"/>
+<!--日期:&nbsp;<input class="yearTwo" name="yer" type="number" oninput="if(value.length>4)value=value.slice(0,4)"/>年&nbsp;-->
+<!--                <input class="moonTwo" name="moon" type="number" oninput="if(value.length>2)value=value.slice(0,2)"/>月&nbsp;-->
+<!--                <input class="day" type="number" oninput="if(value.length>2)value=value.slice(0,2)" name="day" />日-->
+            </div>
+        </div>
+        <div class="linchuang">
+            <p style="display:inline-block;">诊断:</p>
+            <textarea  name="diagnosis" cols="1" rows="6" id="diagnosis" class="dropdown-selected-textarea" style="display:inline-block;font-size:12px;" disabled  placeholder="诊断"></textarea>
+            <button class="addOne2 btn float-button-light waves-effect waves-button waves-float waves-light"
+                    style="padding:0;font-size:0.5em;color: #FFFFFF; background: #8FBC8F" onclick="addDiagnosis()">添加诊断
+            </button>
+        </div>
+        <div class="middleAll">
+            <p class="R">R:</p>
+            <div class="neirong2">
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%;margin-left:7%;border-right:5%" >药名:</h3>
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%">剂量:</h3>
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%">备注:</h3>
+                <div class="neirong">
+            	<div style="border-bottom:1px solid black;" class="ttt">
+
+		            <div>
+                        <div class="dropdown"  onclick="search.changeValue(this);search.searchKeyword2(this);">
+                            <input type="text" name="dropdown" class="dropdown-selected"
+                                   placeholder="请输入药名" onkeyup="search.searchKeyword(this);" style="font-size:12px;">
+                        </div>
+
+                        <div class="dropdown2">
+                            <input type="number" name="dropdown2" class="dropdown-selected"style="font-size:12px;"   placeholder="剂量 / 单位(克)">
+                        </div>
+
+
+                        <div class="dropdown3">
+                            <input type="text" name="dropdown3" class="dropdown-selected">
+                        </div>
+                        <div style="cursor:pointer;display:inline-block;margin-left:10px;border: 1px solid black;border-radius: 10px; width: 5%; height: 22px;text-align:center;" onclick="removes(this)"><a >X</a></div>
+                    </div>
+            	</div>
+                    <button class="addOne btn float-button-light waves-effect waves-button waves-float waves-light"
+                            style="padding:0;font-size:0.5em;color: #FFFFFF; background: #8FBC8F" onclick="addOnes()">添加药品</button>
+            	</div>
+			</div>
+            <div class="doctor">
+                医师:&nbsp;&nbsp;&nbsp;<input class="innerDoctor" disabled name="innerDoctor"/>
+            </div>
+        </div>
+        <div class="bottomAll">
+            金额/￥:&nbsp;<input class="cash" name="cash"/><input class="advice" name="advice" hidden />
+            <a target="_self" style="float:right;padding:5px;font-size:1em;border-radius: 5px;color: #FFFFFF; background: #8FBC8F" onclick="adviseHtml()">用药嘱咐</a>
+        </div>
+        <div class="bottomAll2">
+            药师(审核、核对、发药)：&nbsp;<input class="check" disabled name="checkName"/><input class="tt" name="tt" hidden />
+        </div>
+
+        <div class="link mission-link bottomAll" style="margin-top: 0px;margin-bottom:10px;margin-right:20px" onclick="commit()">
+            <a class="button" data-title="请检查清楚哦！" style="float:right;display:inline-block;
+            margin-right: 25px;">
+
+            确认提交
+
+            </a>
+
+        </div>
+    </div>
+</from>
+</body>
+<script type="text/javascript">
+        Waves.attach('.flat-buttons', ['waves-button']);
+        Waves.attach('.float-buttons', ['waves-button', 'waves-float']);
+        Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
+    </script>
+    <script type="text/javascript" src="./js/waves.min.js?v=0.7.1"></script>
+    <!-- jQuery  -->
+    <script type="text/javascript">
+        function   ages(str)
+        {
+            var   r   =   str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+            if(r==null)return   false;
+            var   d=   new   Date(r[1],   r[3]-1,   r[4]);
+            if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
+            {
+                var   Y   =   new   Date().getFullYear();
+                return((Y-r[1])+"岁");
+            }
+            return("0");
+        }
+        var currentRoute = false;
+        $(document).on('ready', function () {
+
+            // Init Waves
+            Waves.init();
+            Waves.attach('.drag-ripple', 'waves-block', true);
+            Waves.attach('#bg-pattern', null, true);
+            init();
+            $(window).on('hashchange', routing);
+            /**
+             * Example source code click
+             */
+            $('#example .top-button').on('click', function () {
+                var type = $(this).data('code');
+                $('#source-code .box .code').addClass('hide');
+                $('#source-code .box #code-' + type).removeClass('hide');
+                $('#source-code').removeClass('hide');
+                setTimeout(function () {
+                    $('#source-code').addClass('show');
+                }, 50);
+            });
+            $('#source-code .top-button').on('click', function () {
+
+                $('#source-code').removeClass('show');
+
+                setTimeout(function () {
+                    $('#source-code .box .code').addClass('hide');
+                    $('#source-code').addClass('hide');
+                }, 500);
+            });
+        });
+
+    </script>
+<script>
+    $(document).ready(function () {
+        jeDate('#startTime', {
+            minDate: '1990-01-01',
+            isinitVal: true,
+            format: 'YYYY-MM-DD',
+            onClose: false,
+            donefun:function(obj){
+                // console.log(obj)
+                var saliDate=obj.val.split("-");
+                // console.log(saliDate)
+                var riNum=0;
+                var yueNum=0;
+                var nianNum=saliDate[0];
+                // console.log(saliDate[1]-1)
+                // //判断月 同时判断年
+                if(saliDate[1]-1<=0&&saliDate[2]=="01"){
+                    yueNum=12;
+                    riNum=31;
+                    nianNum=nianNum;
+                    // console.log(nianNum,yueNum,riNum)
+                    $("#endTime").val(nianNum+"-"+yueNum+"-"+riNum)
+                    return false;
+                }else {
+                    yueNum=saliDate[1];
+                    nianNum=nianNum-0+1;
+                }
+                //当 日 是01 的时候要判断当前下一个月是否为31 还是30天  在判断一个是否为闰年  2月份是29 还是28
+                if(saliDate[2]=="01"){
+                    switch(saliDate[1]-1){
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                        case 0://0就是12月  因为是只有点击的是2019-01-01  才会是2018-12-31
+                            riNum=31;
+                            yueNum="0"+(saliDate[1]-1);
+                            break;
+                        case 4:
+                        case 6:
+                        case 9:
+                        case 11:
+                            riNum=30;
+                            yueNum="0"+(saliDate[1]-1);
+                            break;
+                    }
+                    if(saliDate[1]-1==2){
+                        yueNum="0"+(saliDate[1]-1);
+                        //判断是否为闰年
+                        if(isLeap(saliDate[0])==1){
+                            riNum=29;
+                        }else{
+                            riNum=28;
+                        }
+                    }
+                }else{
+                    if(saliDate[2]-1<=9){
+                        riNum="0"+(saliDate[2]-1);
+                    }else{
+                        riNum=saliDate[2]-1;
+                    }
+                }
+                // $("#endTime").val(nianNum+"-"+yueNum+"-"+riNum)
+                // console.log(nianNum,yueNum,riNum)
+            }
+        });
+        // jeDate('#endTime', {
+        //     minDate: '1990-01-01',
+        //     isinitVal: true,
+        //     format: 'YYYY-MM-DD',
+        //     onClose: false
+        // });
+
+        //判断是否为闰年  若为闰年，返回1，反之则返回0
+        function isLeap(year) {
+            if((year%4==0 && year%100!=0)||(year%400==0)){
+                return 1;
+            }
+            return 0;
+        }
+    })
+    //原来保存原始包含点击事件的对象
+var tmt;
+var tt = 'tmt';
+var nm = 'saveYao';
+var dt = 'dt';
+    var userEntity = {
+        tempArr:[1,2]
+    };
+function adviseHtml() {
+    sessionStorage.setItem(nm, $(".neirong").html());
+    var data = new Array();
+    var objs = $(".neirong").find("input")
+    var l = $(".neirong").find("input").length;
+    for (var i = 0; i <  l; i++) {
+        data[i] = objs[i].value;
+    }
+    userEntity.tempArr=data;
+    sessionStorage.setItem(dt, JSON.stringify(userEntity));
+    var eurl = "../index/index_ok.html";
+    window.location.href=eurl;
+
+}
+ function addOnes(){
+    // 这里可以直接添加到后面，因为之前保存好了，只能这样才可以
+ 	$(".neirong > :last-child")
+         .before(tmt);
+ }
+
+ function removes(obj){
+    $(obj).parent().remove();
+ }
+
+  window.addEventListener('pageshow', function (event) {
+        if(event.persisted || window.performance && window.performance.navigation.type == 2){
+            //console.log('window.performance.navigation.type: '+ window.performance.navigation.type)
+            // location.refresh();   //此处可以写你的实际应用的代码
+            var data = getCookie("data_ok");
+            $(".advice").val(data);
+            var data = sessionStorage.getItem(nm);
+            tmt = sessionStorage.getItem(tt);
+            $(".neirong").html(data);
+            var data2 = sessionStorage.getItem(dt);
+            userEntity = JSON.parse(data2);
+            var objs = $(".neirong").find("input");
+            var l = $(".neirong").find("input").length;
+            for (var i = 0; i <  l; i++) {
+                objs[i].value = userEntity.tempArr[i];
+            }
+            var Diagnosis = sessionStorage.getItem("Diagnosis");
+            var strs= new Array(); //定义一数组
+            strs=Diagnosis.split("--"); //字符分割
+            var T = "简要症状："+strs[0]+'\r'+" 其他症状："+strs[1];
+            $("#diagnosis").val(T);
+            userEntity.tempArr=[1,2];
+            sessionStorage.removeItem("Diagnosis");
+            sessionStorage.removeItem(dt);
+            //sessionStorage.removeItem(tt);
+            sessionStorage.removeItem(nm);
+            //console.log("---",$(".advice").val());
+        }else {
+            onlodes();
+        }
+    },false);
+
+$.fn.serializeJson=function(){  
+    var serializeObj={};  
+    var array=this.serializeArray();
+    var tt = $(".tt").val();
+    if(tt===""){
+        tt = getParams("id")
+    }
+    array.push({"name":"id","value":tt+""});
+    array.push({"name":"diagnosis","value":document.getElementsByName("diagnosis")[0].value+""});
+    var data = [];
+     var objs = $(".neirong").find("input");
+     var l = $(".neirong").find("input").length;
+     var is = 0;
+     for (var i = 0; i <  l-2; i = i+3) {
+            var row2 = {"yaoName": objs[i].value, "yaoLiang": objs[i+1].value,"beiZhu":objs[i+2].value};
+              data.push(row2);
+              is++;
+     }
+    array.push({"name":"time","value":$("#startTime").val()});
+     array.push({"name":"neirongLength","value":is});
+     array.push({"name":"neirong","value":data});
+    array.push({"name":"advice","value":$(".advice").val()+""});
+    array.push({"name":"innerDoctor","value":document.getElementsByName("innerDoctor")[0].value+""});
+    array.push({"name":"cash","value":document.getElementsByName("cash")[0].value+""});
+    array.push({"name":"checkName","value":document.getElementsByName("checkName")[0].value+""});
+    var str=this.serialize();  
+    $(array).each(function(){  
+        if(serializeObj[this.name]){  
+             if($.isArray(serializeObj[this.name])){  
+                     serializeObj[this.name].push(this.value);  
+                }else{  
+                  serializeObj[this.name]=[serializeObj[this.name],this.value];
+                }  
+           }else{  
+               serializeObj[this.name]=this.value;   
+           }  
+        });  
+      return serializeObj;  
+}
+function cheackYao(ttt,obj) {
+    for (var i = 0 ;i<ttt.length;i++){
+        if(ttt[i]===obj){
+            return true;
+        }
+    }
+    return false;
+}
+ function commit(){
+    var ls = 1;
+    var data = [];
+    var ttt = new Array();
+    var is = 0;
+     var objs = $(".neirong").find("input")
+     var l = $(".neirong").find("input").length;
+     for (var i = 0; i <  l-2; i = i+3) {
+          if(objs[i].value == "" || objs[i].value == null || objs[i+1].value == "" || objs[i+1].value == null){
+            alert("第"+ls+"行药品信息未填写完整");
+            return;
+          }else{
+            if(cheackYao(ttt,objs[i].value)){
+                alert("请检查第"+ls+"行药品，请勿有重复药品");
+                ttt = new Array();
+                return;
+            }else {
+                var row2 = {yaoName: objs[i].value, yaoLiang: objs[i+1].value,beizhu:objs[i+2].value};
+                data.push(row2);
+                ttt.push(objs[i].value);
+                ls++;
+            }
+          }
+     }
+     if(ls >= l/3){
+         var data = getCookie("data_ok");
+         if(data===null||data===""){
+             alert("医嘱未填写");
+         }else {
+
+             $.ajax({
+                 //几个参数需要注意一下
+                 type: "POST",//方法类型
+                 dataType: "json",//预期服务器返回的数据类型
+                 url: "http://47.103.1.210:8082/guns-1.0.0/h5/kf_froms" ,//url
+                 data: $('#froms').serializeJson(),//获取表单数据
+                 success: function (result) {
+                     if (result.code === 200) {
+                         alert("提交成功");
+                         sessionStorage.removeItem(tt);
+                         sessionStorage.removeItem(nm);
+                         document.cookie="data_ok= ;Path="+escape("/");
+                         history.go(-2);
+                     }else if(result.code===401){
+                         alert("您未登陆")
+                     }else if(result.code===405){
+                         alert(result.message);
+                     }else if(result.code===406){
+                         alert(result.message);
+                     }else{
+                         alert("提交失败");
+                     }
+                     ;
+                 },
+                 error : function() {
+                     alert("服务器开小差了！")
+                 }
+             });
+         }
+     }
+
+
+     
+ }
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+    function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+    function   ages(str)
+    {
+        var   r   =   str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+        if(r==null)return   false;
+        var   d=   new   Date(r[1],   r[3]-1,   r[4]);
+        if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
+        {
+            var   Y   =   new   Date().getFullYear();
+            return((Y-r[1])+"岁");
+        }
+        return("0");
+    }
+   function onlodes(){
+       if(getParams("id")===""||getParams("id")==null){
+           alert("病人信息有误")
+       }else {
+           $(".tt").val(getParams("id"));
+           // var data = getCookie("data_ok");
+           // $(".advice").val(data);
+           // console.log($(".advice").val());
+           document.cookie="data_ok= ;Path="+escape("/");
+           var date=new Date;
+           var y = date.getFullYear();
+           $(".yearTwo").val(y);
+           var m = date.getMonth() + 1;
+           m = m < 10 ? '0' + m : m;
+           $(".moonTwo").val(m);
+           var d = date.getDate();
+           d = d < 10 ? ('0' + d) : d;
+           $(".day").val(d);
+           $.ajax({
+               //几个参数需要注意一下
+               type: "GET",//方法类型
+               dataType: "json",//预期服务器返回的数据类型
+               url: "http://47.103.1.210:8082/guns-1.0.0/h5/yaos/"+getParams("id") ,//url
+               success: function (result) {
+                   if (result.code == 200) {
+                       $(".name").val(result.data.info.name);
+                       $(".sex").val(result.data.info.sex);
+                       $(".yearOne").val(ages(result.data.info.birthday));
+                       $(".adress").val(result.data.info.address);
+                       var html = $(".dropdown").html();
+                       html += '<ul style="z-index:999">';
+                       for(var i=0;i<result.data.list.length;i++){
+                           html += '<li><a href="javaScript:">'+result.data.list[i]+'</a></li>';
+                       }
+                       html +='</ul>'
+                       $(".innerDoctor").val(result.message);
+                       $(".check").val(result.message);
+                       $(".dropdown").html(html);
+                       $("#froms").attr("name","1");
+                   }else if(result.code==401){
+                       alert("您未登陆")
+                   }else if(result.code===405){
+                       alert(result.message);
+                   }
+                   else{
+                       alert("失败，请重试");
+                   }
+                   //复制一份包含点击事件的对象
+                   tmt = $(".neirong").children(":first").html();
+                   sessionStorage.setItem(tt, tmt);
+               },
+               error : function(data) {
+                   if(data.status==401){
+                       alert("您未登陆")
+                   }else if(data.code===405){
+                       alert(data.message);
+                   }else{
+                       alert("服务器开小差了！")
+                   }
+
+               }
+           });
+       }
+
+    }
+    function addDiagnosis() {
+        sessionStorage.setItem(nm, $(".neirong").html());
+        var data = new Array();
+        var objs = $(".neirong").find("input");
+        var l = $(".neirong").find("input").length;
+        for (var i = 0; i <  l; i++) {
+            data[i] = objs[i].value;
+        }
+        userEntity.tempArr=data;
+        sessionStorage.setItem(dt, JSON.stringify(userEntity));
+        var wurl = "../index/index_ok2.html";
+        window.location.href=wurl;
+    }
+    var search = {
+        searchKeyword: function (obj) {
+            var nWord = $(obj).val();
+            //var temarray = nWord.split(""); //分割
+            var array=this.unique(nWord.split(""));
+            var dsa = $(obj).parent().find("ul li a");//获取全部列表
+            var linumber = 0;
+
+            
+            $(obj).parent().find("ul li").show();
+            for (var t = 0; t < dsa.length; t++) {
+                $(dsa[t]).html($(dsa[t]).text());
+                var temstr = ($(dsa[t]).text()).split("");
+                var yes = false;
+                for (var i = 0; i < array.length; i++) {
+                    var posarr = this.findAll(temstr, array[i]);
+                    if (posarr.length > 0) {
+                        yes = true;
+                        for (var j = 0; j < posarr.length; j++) {
+                            temstr[posarr[j]] = "<em style='color:red;'>" + temstr[posarr[j]] + "</em>";
+                        }
+                    }
+                }
+                if (!yes) {
+                    $(dsa[t]).closest("li").hide();
+                }
+                else {
+                    linumber++;
+                    var htmlstr = "";
+                    for (var m = 0; m < temstr.length; m++) {
+                        htmlstr += temstr[m];
+                    }
+                    $(dsa[t]).html(htmlstr);
+                }
+
+            }
+            if (linumber == 0) {
+                $(obj).parent().find("ul li").show();
+                $(obj).parent().find("ul").slideDown(200);
+            }
+        },
+        searchKeyword2: function (obj) {
+            var nWord = $(obj).find("input").val();
+            //var temarray = nWord.split(""); //分割
+            var array=this.unique(nWord.split(""));
+            var dsa = $(obj).find("ul li a");//获取全部列表
+            var linumber = 0;
+
+            
+            $(obj).find("ul li").show();
+            for (var t = 0; t < dsa.length; t++) {
+                $(dsa[t]).html($(dsa[t]).text());
+                var temstr = ($(dsa[t]).text()).split("");
+                var yes = false;
+                for (var i = 0; i < array.length; i++) {
+                    var posarr = this.findAll(temstr, array[i]);
+                    if (posarr.length > 0) {
+                        yes = true;
+                        for (var j = 0; j < posarr.length; j++) {
+                            temstr[posarr[j]] = "<em style='color:red;'>" + temstr[posarr[j]] + "</em>";
+                        }
+                    }
+                }
+                if (!yes) {
+                    $(dsa[t]).closest("li").hide();
+                }
+                else {
+                    linumber++;
+                    var htmlstr = "";
+                    for (var m = 0; m < temstr.length; m++) {
+                        htmlstr += temstr[m];
+                    }
+                    $(dsa[t]).html(htmlstr);
+                }
+
+            }
+            if (linumber == 0) {
+                $(obj).find("ul li").show();
+                $(obj).find("ul").slideDown(200);
+            }
+        },
+        findAll: function (arr, str) {
+            var results = [],
+                len = arr.length,
+                pos = 0;
+            while (pos < len) {
+                pos = arr.indexOf(str, pos);
+                if (pos === -1) {
+                    break;
+                }
+                results.push(pos);
+                pos++;
+            }
+            return results;
+        },
+        unique: function (arr) {
+            var new_arr = [];
+            for (var i = 0; i < arr.length; i++) {
+                var items = arr[i];
+                //判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
+                if ($.inArray(items, new_arr) == -1) {
+                    new_arr.push(items);
+                }
+            }
+            return new_arr;
+        },
+        changeValue: function (obj) {
+            $(obj).find("ul").slideUp(200);
+            var input = $(obj).find('input');
+            var ul = $(obj).find('ul');
+            if (!ul.is(':visible')) {
+                ul.slideDown('fast');
+            } else {
+                ul.slideUp('fast');
+            }
+
+            $(obj).find('ul a').click(function () {
+                input.val($(this).text());
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active')
+                $(this).closest('ul').slideUp(200);
+                return false;
+            })
+            var e = this.getEvent();
+            window.event ? e.cancelBubble = true : e.stopPropagation();
+        },
+        _init: function () {
+            $(".dropdown").on("click", "ul li a", function () {
+                this.find("input").val($(this).text());
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active')
+                $(this).closest('ul').slideUp(200);
+                return false;
+            })
+        },
+        getEvent: function(){
+        if(window.event){
+            return window.event;
+        }
+        var f = arguments.callee.caller;
+        do{
+            var e = f.arguments[0];
+            if(e && (e.constructor === Event || e.constructor===MouseEvent || e.constructor===KeyboardEvent)){
+                return e;
+            }
+        }while(f=f.caller);
+    }
+
+    }
+
+    search._init();
+</script>
+</html>

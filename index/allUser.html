@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>所有患者</title>
+    <link rel="stylesheet" href="css/base.css">
+    <style>
+        html,
+        body {
+            /* height: 100%; */
+            background: #fff;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        /* 
+        
+            已用MUI替代
+        
+        
+        
+         */
+        
+        .header {
+            width: 100%;
+            height: .88rem;
+            background: #f0f0f0;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+        }
+        
+        .header>div {
+            width: 6rem;
+            height: .57rem;
+            background: #fff;
+            border-radius: 4px;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+        }
+        
+        .header>div span {
+            display: block;
+            width: .23rem;
+            height: .23rem;
+            background: url(images/seach.png) no-repeat center center;
+            background-size: .23rem .23rem;
+            margin-left: .15rem
+        }
+        
+        .header>div input {
+            font-size: .26rem;
+            width: 5rem;
+            height: .3rem;
+            line-height: .3rem;
+            margin-left: .1rem;
+            padding: 0 .1rem;
+            padding-top: .01rem;
+        }
+        
+        .main {
+            width: 100%;
+        }
+        
+        .s_index {
+            width: 100%;
+            height: .5rem;
+            line-height: .5rem;
+            padding: 0 .2rem;
+            background: #f7f7f7;
+            font-size: .28rem;
+            color: #666;
+        }
+        
+        .user_list {
+            width: 100%;
+        }
+        
+        .user_list ul {
+            width: 6.2rem;
+            margin-left: .2rem;
+        }
+        
+        .user_list ul li {
+            width: 100%;
+            height: 1.2rem;
+            border-bottom: 1px solid #e2e2e2;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+        }
+        
+        .user_list ul li:last-of-type {
+            border: 0
+        }
+        
+        .user_list ul li img {
+            display: block;
+            width: .66rem;
+            height: .66rem;
+            border-radius: 50%;
+        }
+        
+        .user_list ul li>div {
+            height: 1rem;
+            margin-left: .2rem;
+        }
+        
+        .user_list ul li>div div {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+        }
+        
+        .user_list ul li>div div span {
+            display: block;
+        }
+        
+        .user_list ul li>div div:first-of-type span {
+            line-height: .44rem;
+        }
+        
+        .user_list ul li>div div:first-of-type span:first-of-type {
+            font-size: .26rem;
+            color: #666;
+            margin-right: .4rem;
+        }
+        
+        .user_list ul li>div div:first-of-type span:last-of-type {
+            font-size: .24rem;
+            color: #999;
+        }
+        
+        .user_list ul li>div div:last-of-type span {
+            font-size: .28rem;
+            color: #333;
+            border: 1px solid #999;
+            border-radius: 4px;
+            padding: .05rem .2rem;
+            margin-right: .1rem;
+            margin-top: .03rem;
+        }
+        
+        .guide {
+            width: .5rem;
+            height: 7.5rem;
+            position: fixed;
+            top: 1rem;
+            right: 0
+        }
+        
+        .guide span {
+            display: block;
+            font-size: .24rem;
+            color: #333;
+            /* position: fixed; */
+            text-transform: uppercase;
+            text-align: center
+        }
+        
+        .to_top {
+            width: .5rem;
+            height: .5rem;
+            border-radius: 4px;
+            border: 1px solid #e2e2e2;
+            position: fixed;
+            bottom: .2rem;
+            right: .2rem;
+            font-size: .2rem;
+            background: #b55444;
+            color: #fff;
+            line-height: .5rem;
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <div>
+                <span></span>
+                <input type="text" placeholder="患者姓名、患者标签、病历">
+            </div>
+        </div>
+        <div class="guide">
+            <span>a</span>
+            <span>b</span>
+            <span>c</span>
+            <span>d</span>
+            <span>e</span>
+            <span>f</span>
+            <span>g</span>
+            <span>h</span>
+            <span>i</span>
+            <span>j</span>
+            <span>k</span>
+            <span>l</span>
+            <span>m</span>
+            <span>n</span>
+            <span>o</span>
+            <span>p</span>
+            <span>q</span>
+            <span>r</span>
+            <span>s</span>
+            <span>t</span>
+            <span>u</span>
+            <span>v</span>
+            <span>w</span>
+            <span>x</span>
+            <span>y</span>
+            <span>z</span>
+        </div>
+        <div class="to_top">顶部</div>
+        <div class="main">
+
+            <div id="a">
+                <div class="s_index">
+                    A
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">阿花</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">阿d花</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="b">
+                <div class="s_index">
+                    B
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">棒子</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">甭说</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="c">
+                <div class="s_index">
+                    C
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">车身</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">此后</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="d">
+                <div class="s_index">
+                    D
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">等等</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">点评</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="e">
+                <div class="s_index">
+                    E
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">二郎庙</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">饿了么</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="f">
+                <div class="s_index">
+                    F
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">发呢</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">范跑跑</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="g">
+                <div class="s_index">
+                    G
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">高规格花</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">故乡</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="h">
+                <div class="s_index">
+                    H
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">还有</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">忽视</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="i">
+                <div class="s_index">
+                    I
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">ile</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">idwiidgx</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="j">
+                <div class="s_index">
+                    J
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">觉得</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">键盘</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="k">
+                <div class="s_index">
+                    K
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">开心</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">口袋</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="l">
+                <div class="s_index">
+                    L
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">咯啶</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">领导</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="m">
+                <div class="s_index">
+                    M
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">美的</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">迷信</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="n">
+                <div class="s_index">
+                    N
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">你们</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">哪怕</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="o">
+                <div class="s_index">
+                    O
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">殴打</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">偶像</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <div id="p">
+                <div class="s_index">
+                    P
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">拍摄</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">朋友</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <div id="q">
+                <div class="s_index">
+                    Q
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">奇葩</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">期待</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <div id="r">
+                <div class="s_index">
+                    R
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">人的</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">如果</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="s">
+                <div class="s_index">
+                    S
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">身体</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">奢侈</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="t">
+                <div class="s_index">
+                    T
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">通过</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">推荐</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="u">
+                <div class="s_index">
+                    U
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">uh</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">u阿花</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="v">
+                <div class="s_index">
+                    V
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">vd</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">v阿花</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div id="w">
+                <div class="s_index">
+                    W
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">无法</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">文化</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="x">
+                <div class="s_index">
+                    X
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">许多</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">喜欢</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="y">
+                <div class="s_index">
+                    Y
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">也是</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">一天</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="z">
+                <div class="s_index">
+                    Z
+                </div>
+                <div class="user_list">
+                    <ul>
+                        <li>
+                            <img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">知道</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><img src="images/erweima.png" alt="">
+                            <div>
+                                <div>
+                                    <span class="namer">自然</span>
+                                    <span>女 28岁</span>
+                                </div>
+                                <div>
+                                    <span>感冒</span>
+                                    <span>慢性肠胃炎</span>
+                                    <span>发烧感冒</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+
+    <script>
+        $(".guide span").click(function() {
+            var index = $(this).index();
+            var h = $(".main").children().eq(index).offset().top;
+            $('html , body').animate({
+                scrollTop: h
+            }, 'slow');
+        })
+        $(".header input").keyup(function() {
+
+            // })
+            // $(".header input")[0].addEventListener("input", function() {
+            var val = $(this).val();
+            if (val) {
+                var h = $("#" + val).offset().top;
+                $('html , body').animate({
+                    scrollTop: h
+                }, 'slow');
+                $(this).blur();
+            }
+            // var d = [];
+            // for (var i = 0; i < $(".main>div .namer").size(); i++) {
+            //     var val2 = $(".main>div:eq(" + i + ")").children().find(".namer").text();
+            //     var h = $(".main>div:eq(" + i + ")").offset().top;
+            //     console.log(h)
+            //     console.log(val, val2)
+            //     var x = val2.indexOf(val)
+
+            //     if (x != -1) {
+            //         $('html , body').animate({
+            //             scrollTop: h
+            //         }, 'slow');
+            //     }
+            //     $(this).blur();
+            // console.log(x)
+            // console.log("==================")
+            // d.push($(".main>div:eq(" + i + ")").children().find(".namer").text());
+
+            // }
+
+        })
+
+        $(".to_top").click(function() {
+            $('html , body').animate({
+                scrollTop: 0
+            }, 'slow');
+        })
+    </script>
+    <script>
+        const arr1 = ["adc", "ddd", "dwedsa", "dwd", "dedxsghj"];
+        let arr2 = [];
+        for (let i = 0; i < arr1.length; i++) {
+            let ret1 = arr1[i].findIndex((value, index, arr) => {
+                return value == "a"
+            })
+            arr2.push(ret1)
+        }
+        console.log(arr2)
+
+
+        let arr3 = [];
+        for (let i = 0; i < arr1.length; i++) {
+            console.log(arr1[i])
+            let num = arr1[i].indexOf("ad")
+            arr3.push(num)
+        }
+        console.log(arr3)
+    </script>
+</body>
+
+</html>

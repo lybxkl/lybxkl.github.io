@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>填写病症名</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/normalize3.0.2.min.css" />
+    <link rel="stylesheet" href="css/style.css?v=7" />
+    <!-- <link href="css/mobiscroll.css" rel="stylesheet" />
+    <link href="css/mobiscroll_date.css" rel="stylesheet" /> -->
+    <link href="css2/mobiscroll.scroller.css" rel="stylesheet" />
+    <link href="css2/mobiscroll.scroller.android-ics.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            /* height: 100%; */
+            background: #fff;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .popup .goto_reg {
+            height: 3.38rem;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .goto_reg div:first-of-type {
+            height: 2.48rem;
+            line-height: 2.48rem
+        }
+        
+        .goto_reg div:last-of-type {
+            height: .9rem;
+            line-height: .9rem
+        }
+        
+        .goto_reg div:last-of-type span:last-of-type {
+            background: #f7f7f7
+        }
+        
+        .dwb-n {
+            display: none;
+        }
+        
+        .dwbc-p .dwbw {
+            width: 50%;
+        }
+        
+        .seach_s {
+            position: relative;
+        }
+        
+        .seach_s input {
+            padding-right: 1.2rem;
+        }
+        /* ////////////////////////////////  2018.1.15.14 */
+        
+        .clear_all {
+            display: block;
+            width: .26rem;
+            height: .26rem;
+            background: url(images/clear_all.png) no-repeat center center;
+            background-size: .26rem .26rem;
+            position: absolute;
+            right: .3rem;
+        }
+        
+        .popup .goto_c {
+            height: 3.38rem;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 5rem;
+            border: 1px solid #999;
+            position: absolute;
+            z-index: 2224;
+            margin-left: -2.5rem;
+            margin-top: -.8rem;
+            top: 25%;
+            background: #fff;
+            left: 50%;
+            font-size: .28rem;
+            display: none;
+        }
+        
+        .goto_c div:first-of-type {
+            height: 2.48rem;
+            line-height: .48rem;
+            width: 100%;
+            /* height: 50%;
+    line-height: .8rem; */
+            text-align: center;
+            border-bottom: 1px solid #999;
+            padding: 0 .5rem;
+            padding-top: .7rem;
+        }
+        
+        .goto_c div:last-of-type {
+            height: .9rem;
+            line-height: .9rem;
+            width: 100%;
+            /* height: 50%; */
+            display: flex;
+            display: -webkit-flex;
+        }
+        
+        .goto_c div:last-of-type span:last-of-type {
+            background: #f7f7f7
+        }
+        
+        .goto_c div:last-of-type span {
+            display: block;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+            line-height: .8rem;
+        }
+        
+        .goto_c div:last-of-type span:last-of-type {
+            background: #f7f7f7;
+        }
+        
+        .footer {
+            height: .9rem;
+            width: 6.4rem;
+            background: #b55444;
+            position: relative;
+            bottom: 0;
+            text-align: center;
+            line-height: .9rem;
+            color: #fff;
+            font-size: .32rem;
+        }
+        /* ////////////////////////////////  2018.1.15.14 */
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="main1">
+            <!-- 输入手机号 -->
+            <div class="entering_ph">
+                <div>
+                    <span class="icon_5"></span>
+                    <!-- <span class="p_ph"></span> -->
+                    <!-- ////////////////////////////////////////2018.1.15  对应的样式也要改 -->
+                    <input type="number" placeholder="请输入手机号码">
+                    <span class="cx">查询</span>
+                </div>
+            </div>
+
+            <!-- <div class="line"></div> -->
+
+
+
+            <!-- 列表 -->
+            <div class="s_lists_w">
+                <div class="s_lists">
+                    <!-- <div class="s_list">
+                    <span class="name_">试试，</span>
+                    <span class="sex_">男，</span>
+                    <span class="birthday_">1900</span>
+                </div> -->
+                    <div class="news_w">
+
+                        <div class="news">
+                            <span></span>
+                            <span>新增</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="line"></div>
+            </div>
+
+
+
+            <!-- 姓名 -->
+            <div class="detailed_name_W">
+                <div class="detailed_name">
+                    <div>
+                        <div class="name_en">
+                            <span class="color3">姓名:</span>
+                            <input type="text" placeholder="请输入姓名">
+                        </div>
+                        <div class="sex_en">
+                            <span class="color3">性别:</span>
+                            <div>
+                                <span class="sex_active" data-sex="1">男</span>
+                                <span data-sex="2">女</span>
+                            </div>
+                        </div>
+                        <div class="b_en">
+                            <span class="color3">出生日期</span>
+                            <span>
+                                    <input type="text" name="USER_AGE" id="USER_AGE" readonly class="input" placeholder="请填写你的出生日期" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"></div>
+            </div>
+
+
+
+            <!-- 姓名性别年龄 -->
+            <div class="l_lists_wrap">
+                <div class="l_lists">
+                    <div>
+                        <span class="color11">姓名:</span>
+                        <span class="color12 name"></span>
+                    </div>
+                    <div>
+                        <span class="color11">性别:</span>
+                        <span class="color12 sex"></span>
+                    </div>
+                    <div>
+                        <span class="color11">出生年月:</span>
+                        <span class="color12 birthday"></span>
+                    </div>
+                </div>
+                <div class="line"></div>
+            </div>
+
+
+            <div class="method height_80 ">
+                <span class="img_icon4 img_public"> </span>
+                <span class="htyy_text">咨询费</span>
+            </div>
+
+
+
+
+            <!-- 咨询费 -->
+            <div class="method height_80 ">
+                <span class="img_icon4 img_public"> </span>
+                <span class="htyy_text">咨询费</span>
+            </div>
+            <div class="consulting ">
+                <div>
+                    <span data-mon="0">免费</span>
+                    <span data-mon="50" class="m_o m_oo">50元</span>
+                    <span data-mon="100">100元</span>
+
+                    <span data-mon="150">150元</span>
+                    <span data-mon="200">200元</span>
+                    <div>
+                        <span class="custom">自定义</span>
+                        <input type="number">
+                        <span class="yuan">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <!-- 搜索病症 -->
+            <div class="method height_80 ">
+                <span class="img_icon7 img_public"> </span>
+                <span class="htyy_text">病、病症</span>
+            </div>
+            <div class="seach_s">
+                <input type="text" placeholder="请输入病、病症">
+                <!--  /* ////////////////////////////////  2018.1.15.14 */ -->
+                <span class="clear_all"></span>
+                <!-- 隐藏的空容器 存放药品ID -->
+                <div></div>
+            </div>
+            <!-- 病症列表 -->
+            <!-- <div class="bing_lists">
+                <ul class="uls">
+                    <li>感冒</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视</li>
+                    <li>可视11</li>
+                </ul>
+
+            </div> -->
+
+
+
+
+            <!-- <div class="choose_type">
+                <span data-type="1">中药饮片</span>
+                <span data-type="2" class="ty_active">颗粒剂</span>
+                <span data-type="3">拍方</span>
+            </div> -->
+
+        </div>
+        <div class="footer">下一步</div>
+
+        <div class="input_illness">
+            <div class="seach_input">
+                <div>
+                    <input type="text">
+                    <span class="go_back">返回</span>
+                </div>
+                <ul class="uls">
+
+                    <!-- <li>感冒</li>
+                <li>可视</li> -->
+                </ul>
+            </div>
+
+        </div>
+        <!-- 一些弹出层 -->
+        <div class="backg"></div>
+        <div class="popup">
+            <!-- 用户未注册的提醒 -->
+            <div class="goto_reg">
+                <div>该手机号尚未注册，是否前去注册？</div>
+                <div>
+                    <span class="cancels">取消</span>
+                    <span class="goto_regs">前去注册</span>
+                </div>
+            </div>
+            <!--  /* ////////////////////////////////  2018.1.15.14 */ -->
+            <div class="goto_c">
+                <div>
+                    该手机号未绑定用户，请直接 输入用户信息</div>
+                <div>
+                    <span class="cancels">取消</span>
+                    <span class="goto_regs">前去注册</span>
+                </div>
+            </div>
+            <!--  /* ////////////////////////////////  2018.1.15.14 */ -->
+            <div class="choose_type">
+                <span data-type="1">中药饮片</span>
+                <span data-type="2" class="ty_active">颗粒剂</span>
+                <span data-type="3">拍方</span>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+    <!-- <script src="js/mobiscroll_date.js" charset="gb2312"></script>
+    <script src="js/mobiscroll.js"></script> -->
+
+    <script src="js/picker.min.js"></script>
+    <!-- <script src="js/pockerdata.js"></script> -->
+
+    <script src="js/timedata.js"></script>
+    <script>
+        var entering = {
+            config: {
+                formData: new FormData(),
+                formData1: new FormData(),
+                str1: "",
+                winH: document.documentElement.clientHeight,
+
+            },
+            init: function() {
+                var _this = this;
+                $(".entering_ph input")[0].addEventListener("input", function() {
+                    $(".entering_ph .cx").addClass("cxactive")
+                });
+                // 点击查询
+                $(".entering_ph .cx").click(function() {
+                    var str = $.trim($(".entering_ph input").val());
+                    // var str = 13860660673;
+                    entering.config.formData.append("tel", str);
+                    //15606079985  测试电话
+                    if (!(/^1[345789]\d{9}$/.test(str))) {
+                        layer.msg('请填写正确的手机号码！', {
+                            time: 1000
+                        });
+                        $(".entering_ph input").focus();
+                    } else {
+                        $.ajax({
+                            type: "post",
+                            url: "http://ww.lehuo100.com/" + baseUrl.entering.searchuser,
+                            data: entering.config.formData,
+                            contentType: false,
+                            processData: false,
+                            dataType: "json",
+                            success: function(datas) {
+                                console.log(datas)
+                                var data = datas.sec;
+                                if (datas.succ == false) {
+                                    // $(".popup").show();
+                                    $(".popup .goto_reg").show();
+                                    $(".backg,.popup").show()
+                                    $(".cancels").click(function() {
+                                        $(".popup").hide();
+                                        $(".popup .goto_reg").hide();
+                                    })
+                                    $(".goto_regs").click(function() {
+                                        // 前往注册
+                                        $(".popup").hide();
+                                        $(".popup .goto_reg").hide();
+                                        $(".detailed_name_W").show();
+                                        $(".s_lists").hide();
+                                        $(".l_lists_wrap").hide(); ///////////////
+                                    })
+                                }
+                                if (datas.succ == true) {
+                                    if (data.length > 0) {
+                                        var str1 = "";
+                                        var str2 = "";
+                                        $(".s_lists").show(); ///////////////
+                                        $(".l_lists_wrap").show(); ///////////////
+                                        $(".detailed_name_W").hide() ///////////////
+                                        $(".s_lists_w,.l_lists").css("display", "block")
+                                        for (var i = 0; i < data.length; i++) {
+                                            str2 = data[i].sex;
+                                            if (str2 == 1) {
+                                                str2 = "男,"
+                                            }
+                                            if (str2 == 2) {
+                                                str2 = "女,"
+                                            }
+                                            if (str2 == 0) {
+                                                str2 = ""
+                                            }
+                                            str1 += "<div class='s_list' data-sex='" + data[i].sex + "' data-usename='" + data[i].usename + "' data-mobile='" + data[i].mobile + "' data-id='" + data[i].id + "' data-birthday='" + data[i].birthday + "'><span class='name_'>" + data[i].usename + "," + "</span><span class='sex_'>" + str2 + "</span><span class='birthday_'>" + data[i].age + "</span></div>"
+                                        }
+                                        var str3 = " <div class='news_w'><div class='news'><span></span><span>新增</span></div></div>"
+                                        $(".s_lists").html(str1 + str3);
+                                        $(".s_lists div").first().addClass("s_active");
+                                        $(".s_lists div").first().children("span").addClass("spanactive");
+                                        str2 = data[0].sex;
+                                        if (str2 == 1) {
+                                            str2 = "男"
+                                        }
+                                        if (str2 == 2) {
+                                            str2 = "女"
+                                        }
+                                        if (str2 == 0) {
+                                            str2 = "未填写"
+                                        }
+                                        $(".l_lists .name").text(data[0].usename);
+                                        $(".l_lists .sex").text(str2);
+                                        var birthdays = data[0].birthday;
+                                        var birthdays1 = birthdays.substring(0, 4);
+                                        var birthdays2 = birthdays.substring(4, 6);
+                                        var birthdays3 = birthdays.substring(6, 8);
+                                        $(".l_lists .birthday").text(birthdays1 + "-" + birthdays2 + "-" + birthdays3);
+
+
+                                        //病人的选择
+                                        $(".s_lists_w").on("click", ".s_list", function() {
+                                            $(".detailed_name_W").hide();
+                                            $(this).addClass("s_active").siblings().removeClass("s_active");
+                                            $(this).children("span").addClass("spanactive");
+                                            $(this).siblings().children("span").removeClass("spanactive");
+                                            $(".l_lists_wrap").show();
+                                            var name = $(this).children(".name_").text().replace(",", "");
+                                            var sex = $(this).children(".sex_").text().replace(",", "");
+                                            var birthday = $(this).attr("data-birthday")
+                                            var birthday1 = birthday.substring(0, 4);
+                                            var birthday2 = birthday.substring(4, 6);
+                                            var birthday3 = birthday.substring(6, 8);
+                                            if (sex == "") {
+                                                sex = "未填写"
+                                            }
+                                            $(".l_lists .name").text(name);
+                                            $(".l_lists .sex").text(sex);
+                                            $(".l_lists .birthday").text(birthday1 + "-" + birthday2 + "-" + birthday3);
+                                        })
+
+                                        // 新增
+                                        $(".s_lists .news_w").click(function() {
+                                            $(".detailed_name_W").show();
+                                            $(".s_lists").children(".s_active").children(".spanactive").removeClass("spanactive");
+                                            $(".s_lists").children(".s_active").removeClass("s_active");
+                                            $(".l_lists_wrap").css("display", "none")
+
+                                        });
+                                    }
+                                    if (data.length = 0) {
+                                        $(".detailed_name_W").show()
+                                    }
+
+                                }
+
+                            },
+                            error: function(err) {
+                                layer.msg('连接服务器失败', {
+                                    time: 1000
+                                });
+                            }
+                        });
+
+                    }
+                });
+                var post_id, post_mobile, post_usename, post_sex, post_birthday, post_cost_money, post_d_id, post_d_str, post_type;
+                // 点下一步时 弹出方法
+                $(".footer").click(function() {
+                    // var str = $.trim($(".entering_ph input").val()); //（用户需输入手机号查询）
+                    post_id = $(".s_lists .s_active").attr("data-id"); //患者ID
+                    post_mobile = $(".s_lists .s_active").attr("data-mobile"); //患者手机号
+                    post_usename = $(".s_lists .s_active").attr("data-usename"); //患者名字
+                    post_sex = $(".s_lists .s_active").attr("data-sex"); //患者性别
+                    post_birthday = $(".s_lists .s_active").attr("data-birthday"); //患者出生日期
+                    post_cost_money = $(".consulting  .m_oo").attr("data-mon"); //咨询费
+                    post_d_id = $(".seach_s div").text(); //病症ID
+                    post_d_str = $(".seach_s input").val(); //病症名
+                    post_d_str = post_d_str.slice(0, post_d_str.length - 1);
+                    console.log(post_d_id)
+                    var bool = $(".s_lists div").hasClass("s_active");
+                    if (!bool) { //如果用户点击了新增 一些信息要从新增的地方取
+                        post_mobile = $.trim($(".entering_ph input").val());
+                        post_usename = $(".name_en input").val();
+                        post_sex = $(".sex_en>div .sex_active").attr("data-sex");
+                        post_birthday = $(".b_en input").val().replace(/-/g, "");
+                    }
+                    var bool1 = $(".consulting>div>span").hasClass("m_oo");
+                    if (!bool1) { //如果用户自定义金额 咨询费要从自定义地方取
+                        post_cost_money = $(".consulting  .custom").text().replace("元", "");
+                    }
+                    if (!post_usename) {
+                        layer.msg('患者信息不能为空！', {
+                            time: 1000
+                        }); //患者名字为空
+                        return
+                    }
+                    if (!post_d_str) {
+                        layer.msg('病症名不能为空！', {
+                            time: 1000
+                        }); //病症
+                        return
+                    }
+                    console.log("咨询费" + post_cost_money)
+                        //////////////////////////////////////////////////////////////////////////////////////////////////
+                    $(".backg,.popup").show()
+                    $(".choose_type").css({
+                        "transform": "translateY(0rem)",
+                        "-webkit-transform": "translateY(0rem)"
+                    })
+                });
+                $(".popup").click(function() {
+                    $(this).hide();
+                    $(".backg").hide();
+                    $(".choose_type").css({
+                        "transform": "translateY(2.8rem)",
+                        "-webkit-transform": "translateY(2.8rem)"
+                    })
+                    $(".goto_reg").hide()
+                })
+
+                $(".choose_type span").click(function() {
+                    post_type = $(this).attr("data-type"); //处方类型
+                    entering.config.formData1.append("id", post_id);
+                    entering.config.formData1.append("mobile", post_mobile);
+                    entering.config.formData1.append("usename", post_usename);
+                    entering.config.formData1.append("sex", post_sex);
+                    entering.config.formData1.append("birthday", post_birthday);
+                    entering.config.formData1.append("cost_money", post_cost_money);
+                    entering.config.formData1.append("d_id", post_d_id);
+                    entering.config.formData1.append("d_str", post_d_str);
+                    entering.config.formData1.append("type", post_type);
+                    console.log("患者ID:" + post_id, "   患者手机号: " + post_mobile, "  患者名字:" + post_usename, "   患者性别:" + post_sex, "   患者出生日期:" + post_birthday, "   咨询费:" + post_cost_money, "  病症ID:" + post_d_id, "    病症名:" + post_d_str, "    处方类型:" + post_type)
+
+                    $.ajax({
+                        type: "post",
+                        url: "http://ww.lehuo100.com/" + baseUrl.entering.prescribe,
+                        data: entering.config.formData1,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function(datas) {
+                            console.log(datas)
+                            if (datas.succ) {
+                                // window.location.href = datas.sec;
+                            } else {
+                                layer.msg(datas.msg, {
+                                    time: 1000
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            layer.msg('连接服务器失败', {
+                                time: 1000
+                            });
+                        }
+                    });
+
+                })
+
+
+                $(".sex_en>div>span").click(function() {
+                    $(this).addClass("sex_active").siblings().removeClass("sex_active");
+                });
+                $(".choose_type span").click(function() {
+                    $(this).addClass("ty_active").siblings().removeClass("ty_active");
+                });
+
+
+                // 咨询费的选择
+                $(".consulting>div>span").click(function() {
+                    $(this).addClass("m_oo").siblings().removeClass("m_oo");
+                    $(this).val('').siblings("div").css({
+                        "color": "#000",
+                        "background": "#fff",
+                        "border": "1px solid #999"
+                    });
+                    $(".custom").show().html("自定义");
+                    $(".yuan").hide()
+                    if (!$(".m_o").hasClass("m_oo")) {
+                        $(".m_o").addClass("m_oed").removeClass("m_o") //////////////
+                    } else {
+                        $(".m_o").addClass("m_o").removeClass("m_oed") /////////////////
+                    }
+                    if ($(".m_oed").hasClass("m_oo")) { ///////////////
+                        $(".m_oed").addClass("m_o") //////////////////////
+                    } //////////////////////
+
+                });
+
+                // 自定义咨询费
+                $(".custom").click(function() {
+                    $(this).hide().siblings().show().focus();
+                    $(".consulting>div>span").removeClass("m_oo").removeClass("m_o");
+                    $(".consulting>div>span:eq(1)").addClass("m_oed"); /////////////////
+
+                });
+                $(".consulting>div>div input").blur(function() {
+                    var custom = $(".consulting  input").val();
+                    if (!custom) {
+                        $(this).val('').hide();
+                        $(".custom").show().html("自定义");
+                        $(".yuan").hide()
+                    } else {
+                        $(".custom").show().html(custom + "元");
+                        $(this).parent().css({
+                            "background": "#b55444",
+                            "color": "#fff",
+                            "border": "1px solid #b55444"
+                        })
+                        $(this).hide();
+                        $(".yuan").hide()
+                    }
+                    $(".footer").css("display", "block")
+                    $(".main").css("height", entering.config.winH - $(".footer").height());
+                });
+
+
+                $(".seach_s input").focus(function() {
+                    // $(".footer").css("display", "none")
+
+                    $(".main1").hide();
+                    $(".footer").hide();
+                    var top = $(this).offset().top;
+                    $(".input_illness").css("display", "block");
+                    $(".input_illness input").focus();
+                })
+                $(".go_back").click(function() {
+                    $(".input_illness").hide();
+                    $(".main1").show();
+                    $(".footer").show();
+                    var val = $(".input_illness input").val();
+                    $(".seach_s input").val(val + ",");
+                });
+                // 一些输入框在获取焦点时 把底部的提交按钮隐藏
+                // $(".name_en input,.b_en input,.consulting input").focus(function() {
+                //     $(".footer").css("display", "none")
+                //     $(".main").css("height", winH);
+                // })
+                // $(".name_en input,.b_en input,.seach_s input").blur(function() {
+                //     $(".footer").css("display", "block")
+                //     $(".main").css("height", winH - $(".footer").height());
+                // })
+
+
+                $(".input_illness input")[0].addEventListener("input", function() {
+                    var str = $(this).val().toUpperCase(); //首字母
+                    var str1 = $(this).val(); //文字
+                    var str3 = str.substring(str.lastIndexOf(",") + 1);
+
+
+                    var lis = ""; //保存拼接的<li>  药品列表
+
+                    $.getJSON("js/disease.json", function(data) {
+                        var arry = new Array();
+                        for (var i = 0; i < data.length; i++) {
+                            var strarr = data[i].name_spell.indexOf(str3);
+                            arry.push(strarr)
+
+                        }
+                        var arry2 = new Array();
+                        var arry3 = new Array();
+                        for (var j = 0; j < arry.length; j++) {
+                            if (arry[j] != -1) {
+                                arry2.push(data[j].name);
+                                arry3.push(data[j].id)
+                            }
+                        }
+                        for (var g = 0; g < arry2.length; g++) {
+                            lis += "<li data-id='" + arry3[g] + "'>" + arry2[g] + "</li>"
+                        }
+                        $(".input_illness ul").children().remove();
+                        $(".input_illness ul").append(lis)
+                    })
+
+
+
+
+                    $.getJSON("js/disease.json", function(data) {
+                        var arry = new Array();
+                        for (var i = 0; i < data.length; i++) {
+                            var strarr = data[i].name.indexOf(str3);
+                            arry.push(strarr)
+
+                        }
+                        var arry2 = new Array();
+                        var arry3 = new Array();
+                        for (var j = 0; j < arry.length; j++) {
+                            if (arry[j] != -1) {
+                                arry2.push(data[j].name)
+                                arry3.push(data[j].id)
+
+                            }
+                        }
+                        for (var g = 0; g < arry2.length; g++) {
+                            lis += "<li data-id='" + arry3[g] + "'>" + arry2[g] + "</li>"
+                        }
+                        $(".input_illness ul").children().remove();
+                        $(".input_illness ul").append(lis)
+
+                    })
+                })
+
+
+
+                // var arrstr = []; //保存最终的字符串
+                var strs = '';
+                var str_ids = [];
+                $(".input_illness").on("click", "li", function() {
+
+                    // $("html,body").scrollTop(500)
+                    $('html, body').animate({
+                        scrollTop: 1500
+                    }, 300);
+                    // var arrte = $(".input_illness input").val();
+                    var val = $(".input_illness input").val();
+                    $(".main1").show();
+                    $(".footer").show();
+                    var str = $.trim($(this).text());
+                    var str_id = $(this).attr("data-id");
+                    // strs = $(".input_illness input").val();
+                    strs = strs + str + ",";
+
+                    console.log(strs);
+                    // arrstr.push(str)
+                    str_ids.push(str_id);
+                    $(".seach_s div").text(str_ids);
+                    // arrstr = arrte + str;
+                    $(this).parent().find("li").remove();
+                    $(".input_illness input").val(strs);
+                    val = $(".input_illness input").val();
+                    $(".seach_s input").val(val);
+
+                    $(".input_illness").hide()
+                });
+                $(".seach_s .clear_all").click(function() {
+                    str_ids = [];
+                    strs = '';
+                    $(".seach_s input").val('');
+                    $(".input_illness input").val('');
+                    $(".seach_s div").html('')
+                })
+            }
+        }
+
+        entering.init()
+
+        // 把引用的库换掉 然后把timedata.js引进来就行了  其他不变
+
+
+        // 时间选择器
+        // $(function() {
+        //     var currYear = (new Date()).getFullYear();
+        //     var opt = {};
+        //     opt.date = {
+        //         preset: 'date'
+        //     };
+        //     opt.datetime = {
+        //         preset: 'datetime'
+        //     };
+        //     opt.time = {
+        //         preset: 'time'
+        //     };
+        //     opt.default = {
+        //         theme: 'android-ics light', //皮肤样式
+        //         display: 'modal', //显示方式 
+        //         mode: 'scroller', //日期选择模式
+        //         dateFormat: 'yyyy-mm-dd',
+        //         lang: 'zh',
+        //         showNow: true,
+        //         nowText: "今天",
+        //         startYear: currYear - 150, //开始年份
+        //         endYear: currYear //结束年份
+        //     };
+
+        //     $("#USER_AGE").mobiscroll($.extend(opt['date'], opt['default']));
+
+        // });
+    </script>
+</body>
+
+</html>

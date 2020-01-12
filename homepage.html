@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>生活服务</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="js/slider.js"></script>
+
+    </head>
+    <body onload="show()">
+
+        <section class="jq22-flexView">
+            <header class="jq22-navBar jq22-navBar-fixed b-line" name="">
+                <!-- <a href="javascript:;" class="jq22-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a> -->
+                <div class="jq22-center">
+                    <h2 class="jq22-center-title">智慧中药房</h2>
+                </div>
+                <a href="javascript:;" class="jq22-navBar-item" onclick="">
+                    
+                </a>
+            </header>
+            <section class="jq22-scrollView">   <!--首页轮播图 -->
+                <div class="m-slider" data-ydui-slider>
+                    <div class="slider-wrapper">
+                        <div class="slider-item">
+                            <a href="javascript:;">
+                                <img src="images/banner-001.png">
+                            </a>
+                        </div>
+                        <div class="slider-item">
+                            <a href="javascript:;">
+                                <img src="images/banner-001.png">
+                            </a>
+                        </div>
+                        <div class="slider-item">
+                            <a href="javascript:;">
+                                <img src="images/banner-001.png">
+                            </a>
+                        </div>
+                        <div class="slider-item">
+                            <a href="javascript:;">
+                                <img src="images/banner-001.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slider-pagination"></div>  <!--上面第二句的 ：轮播图指示圆点-->
+                </div>
+
+
+                <div class="jq22-grids">
+                    <a href="javascript:;" class="jq22-grids-item">
+                        <div class="jq22-grids-item-icon">
+                            <!--<a href="http://www.baidu.com"></a>-->
+                            <img src="images/doctor_iccon.png" alt="" >
+<!--                            onclick="javascript:location.href='./kf/kf.html'"-->
+                            <!--待定-->
+                        </div>
+                        <div class="jq22-grids-item-text">病人反馈</div>
+                    </a>
+                    <a href="javascript:;" class="jq22-grids-item">
+                        <div class="jq22-grids-item-icon">
+                            <img src="images/warehouse.png" alt="" onclick="javascript:location.href='./table/table.html'">
+                        </div>
+                        <div class="jq22-grids-item-text">中药库存</div>
+                    </a>
+                    <a href="javascript:;" class="jq22-grids-item">
+                        <div class="jq22-grids-item-icon">
+                            <img src="images/patient.png" alt="" onclick="javascript:location.href='./patient/patient.html'">
+                        </div>
+                        <div class="jq22-grids-item-text">我的病人</div>
+                    </a>
+                </div>
+
+                <div class="jq22-list-head">
+                    <h2>精选服务(建设中)</h2>
+                </div>
+                <div class="jq22-list-cell">
+                    <a href="javascript:;" class="jq22-list-cell-item">
+                        <div class="jq22-list-cell-item-img">
+                            <h2>药方推荐</h2>
+                            <p>医师推荐</p>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="jq22-list-cell-item" >
+                        <div class="jq22-list-cell-item-info" onclick="javascript:location.href='./com/index.html'">
+                            <h2>流式药柜</h2>
+                            <span>
+                                <em>更清楚</em>
+                                <em>省时省力</em>
+                            </span>
+                        </div>
+                        <div class="jq22-list-cell-item-info jq22-list-cell-item-info-two">
+                            <h2>入库监控</h2>
+                            <span>
+                                <em>大数据</em>
+                                <em>专业</em>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                <div class="jq22-list-head">
+                    <h2>更多服务建设中</h2>
+                </div>
+                <div class="jq22-list-cell">
+                    <a href="javascript:;" class="jq22-list-cell-item">
+                        <div class="jq22-list-cell-item-info jq22-list-cell-item-info-thr" style="margin-right:0">
+                             <h2 style="float:left;display:inline-block;">日常维修</h2>
+                             <!-- <h2 style="float:right;display:inline-block;">1231</br><button class="btn" style="position: absolute;bottom:1em;float:right;display:inline-block">详情</button></h2>'; -->
+
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="jq22-list-cell-item">
+                        <div class="jq22-list-cell-item-info jq22-list-cell-item-info-fou" onclick="javascript:location.href='./begin/index.html'">
+                            <h2>起点管理</h2>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </section>
+
+    </body>
+    <script>
+        function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+    function getData1(){
+        var Eurl2 = window.location.href;
+        var Etext =decodeURI(Eurl2);
+        var name = getParams("isLogin");
+        return name;
+    };
+
+    function getCookie(name)
+        {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+        }
+        function show(){
+            // console.log(getData1(),getCookie("isLogin"))
+            if(getCookie("isLogin")!=null){
+                if(getCookie("isLogin").toString()=== "1"){
+                    $(".jq22-navBar-item").attr("onclick","outLogin()");
+                    $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>注销')
+                }else{
+                     $(".jq22-navBar-item").attr("onclick","login()");
+                    $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+                }
+            }else{
+                $(".jq22-navBar-item").attr("onclick","login()");
+                $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+            }
+                
+        }
+        function login() {
+                var Eurl = "login/login.html";
+                var Eurl2 = encodeURI(Eurl);
+                window.location.href=Eurl2;
+           
+        }
+        function outLogin() {
+                alert("正在退出登陆")
+                $.ajax({
+                 type: 'GET',
+                 url: "http://47.103.1.210:8082/guns-1.0.0/kfOutLogout",//47.103.1.210:8082/guns-1.0.0
+                 async:true, //是否使用异步请求的方式
+                 dataType: 'json',
+                success: function (result) {
+                    if(result.code === 200){
+                        $(".jq22-navBar-item").attr("onclick","login()");
+                        $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+                        alert("退出登陆成功");
+                        document.cookie="isLogin=0"+";Path="+escape("/");
+                    }else{
+                        alert("退出登陆错误！！！")
+                    }
+                },
+                error: function(result2) {
+                     //alert("服务繁忙")
+                    // if(result2.status == 200){
+                    //     $(".jq22-navBar-item").attr("onclick","login()");
+                    // $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+                    //     alert("退出登陆成功")
+                    //     document.cookie="isLogin=0"+";Path="+escape("/");
+                    // }else if(result2.status == 500){
+                        outLoginagan();
+                    // }else{
+                    //     alert("退出登陆错误！！！")
+                    // }
+                }
+        });
+           
+        }
+         function outLoginagan() {
+                $.ajax({
+                 type: 'GET',
+                 url: "http://47.103.1.210:8082/guns-1.0.0/kfOutLogout",
+                 async:true, //是否使用异步请求的方式
+                 dataType: 'json',
+                success: function (result) {
+                    if(result.code == 200){
+                        $(".jq22-navBar-item").attr("onclick","login()");
+                    $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+                    document.cookie="isLogin=0"+";Path="+escape("/");
+                        alert("退出登陆成功")
+                    }else{
+                        alert("退出登陆错误！！！")
+                    }
+                },
+                error: function(result2) {
+                    if(result2.status == 200){
+                        $(".jq22-navBar-item").attr("onclick","login()");
+                        $(".jq22-navBar-item").html('<i class="icon icon-sys" ></i>登陆')
+                        document.cookie="isLogin=0"+";Path="+escape("/");
+                        alert("退出登陆成功")
+                    }else{
+                        alert("退出登陆错误！！！")
+                    }
+                }
+        });
+           
+        }
+    </script>
+</html>

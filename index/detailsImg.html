@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>订单详情页</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        /* 图片 */
+        
+        .dl_img {
+            display: block;
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .drugs_lists>div {
+            display: flex;
+            display: -webkit-flex;
+            justify-content: space-around;
+            -webkit-justify-content: space-around;
+            margin: .4rem 0;
+        }
+        
+        .backgr {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2222;
+            background: #000;
+            opacity: .5
+        }
+        
+        .img_swiper {
+            position: fixed;
+            z-index: 999999999999999;
+            top: 50%;
+            width: 6.4rem;
+        }
+        
+        .popups img {
+            display: block;
+            width: 6.4rem;
+        }
+        
+        .popups {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            display: none;
+        }
+        
+        .bz_img {
+            width: 100%;
+            background: #fff;
+            border-top: 1px solid #eee;
+            padding: .2rem;
+            display: flex;
+            display: -webkit-flex
+        }
+        
+        .bz_img span:first-of-type {
+            width: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="line"></div>
+        <div class="details_num">
+            <span>订单编号：2017101545639</span>
+            <span>坐诊医馆：坐坐个人工作室</span>
+            <span>开方时间：2017-9-6 10.40</span>
+        </div>
+
+        <!-- 拍方不要这个 -->
+        <div class="payment_">
+            <span>未付款</span>
+        </div>
+
+
+        <div class="line"></div>
+        <div class="details_name">
+            <div>
+                <span class="color11">患者姓名:</span>
+                <span class="color12">李明，男，1岁</span>
+            </div>
+            <div>
+                <span class="color11">病症:</span>
+                <span class="color12">感冒</span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="payment_1">
+            <span>照片</span>
+        </div>
+        <div class="drugs_lists">
+
+            <!-- 图片 -->
+            <div class="ph_img">
+                <div>
+                    <img src="images/shili.png" alt="" class="dl_img">
+                </div>
+                <div>
+                    <img src="images/shili.png" alt="" class="dl_img">
+                </div>
+                <div>
+                    <img src="images/shili.png" alt="" class="dl_img">
+                </div>
+            </div>
+
+
+        </div>
+        <div class="bz_img">
+            <span>备注</span>
+            <span>这是一些备注这是一些备注这是一些备注这是一些备注这是一些备注这是一些备注这是一些备注这是一些备注</span>
+        </div>
+
+        <!-- </div> -->
+        <div class="line"></div>
+        <div class="usage_d">
+            <ul>
+                <li>
+                    <span class="color11">用法:</span>
+                    <span class="color12">内服，每日1贴，分两次服用。</span>
+                </li>
+                <li>
+                    <span class="color11">时间:</span>
+                    <span class="color12">饭后一小时</span>
+                </li>
+                <li>
+                    <span class="color11">忌口与禁忌:</span>
+                    <span class="color12">无</span>
+                </li>
+                <li>
+                    <span class="color11">其他医嘱:</span>
+                    <span class="color12">多喝水</span>
+                </li>
+            </ul>
+        </div>
+        <div class="line"></div>
+        <div class="thinking_d">
+            <span>辩证思路:</span>
+            <span>内服，每日1贴，分两次服用。内服，每日1贴， 分两次服用。</span>
+        </div>
+        <div class="line"></div>
+        <div class="method_d">
+            <div>
+                <span>加工形式:</span>
+                <span>自煎自取</span>
+            </div>
+            <div>
+                <span>供应商:</span>
+                <span>中心药房（福建省福州市仓山区金榕 北路恩特楼7楼）</span>
+            </div>
+        </div>
+        <div class="line"></div>
+
+        <!-- 拍方不要费用 -->
+        <div class="cost_d">
+            <span class="cost_title">费用</span>
+            <ul>
+                <li>
+                    <span>咨询费用</span>
+                    <span>￥222</span>
+                </li>
+                <li>
+                    <span>药品费用</span>
+                    <span>￥222</span>
+                </li>
+                <li>
+                    <span>代煎费用</span>
+                    <span>￥222</span>
+                </li>
+                <li>
+                    <span>运费<span class="color_d">(产品满99元包邮)</span></spa n>
+                    <span>￥222</span>
+                </li>
+            </ul>
+            <div class="heji_D">
+                <span>合计</span>
+                <span>￥222</span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <!-- 增加一个幻灯片控件 -->
+        <div class="popups">
+            <div class="backgr"></div>
+            <div class="img_swiper">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="images/shili.png" alt=""></div>
+                        <div class="swiper-slide"><img src="images/shili.png" alt=""></div>
+                        <div class="swiper-slide"><img src="images/shili.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/swiper.min.js"></script>
+
+    <script>
+        $(".ph_img").on("click", "img", function() {
+            $(".popups").show();
+            var h = $(".img_swiper img").height();
+            $(".img_swiper").css("margin-top", -h / 2);
+            new Swiper('.swiper-container');
+        });
+        $(".img_swiper").on("click", "img", function() {
+            $(".popups").hide();
+        })
+    </script>
+</body>
+
+</html>

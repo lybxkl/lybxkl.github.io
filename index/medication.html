@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>完善资料</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/medication.css">
+
+    <link href="css2/mobiscroll.scroller.css" rel="stylesheet" />
+    <link href="css2/mobiscroll.scroller.android-ics.css" rel="stylesheet" />
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .Paymenttype {
+            width: 100%;
+            height: .8rem;
+            /* background: red */
+            /* border-top: 1px solid #eee; */
+            border-bottom: 1px solid #eee;
+            font-size: .28rem;
+            display: flex;
+            /* justify-content: space-between; */
+            padding: .2rem;
+            align-items: center;
+        }
+        
+        .Paymenttype>div:last-of-type {
+            display: flex;
+            align-items: center
+        }
+        
+        .Paymenttype>div:last-of-type span {
+            display: block;
+            width: 1.4rem;
+            height: .56rem;
+            border-radius: 4px;
+            line-height: .56rem;
+            text-align: center;
+            font-size: .28rem;
+            border: 1px solid #999;
+            margin-left: .2rem;
+        }
+        
+        .Paymenttype>div:last-of-type .active {
+            background: #b55444;
+            border: 1px solid #b55444;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="method height_80 ">
+            <span class="img_icon1 img_public"> </span>
+            <span class="htyy_text">用药类型</span>
+        </div>
+        <div class="types">
+            <span class="active" data-type="1">中药饮片</span>
+            <span data-type="-1">拍照传方</span>
+            <span data-type="2">颗粒剂</span>
+            <span data-type="5">颗粒剂（包装）</span>
+            <span data-type="3">膏方</span>
+            <span data-type="4">预包装商品</span>
+        </div>
+        <!-- 分割线 -->
+        <div class="line pai"></div>
+        <div class="method height_80 pai">
+            <span class="img_icon1 img_public"> </span>
+            <span class="htyy_text">供应商选择</span>
+        </div>
+        <div class="in input_think_active pai">
+            <!-- 请选择供应商 -->
+            <div class="positions">
+                <span>所在区域:</span>
+                <!-- <span class="ssqu" id="sel_city">福建省 福州市</span> -->
+                <input id="area" placeholder="请选择所在地区" areaid="10072 10131 11159" readonly="" class="" value="福建 福州">
+                <span class="choose_city"></span>
+            </div>
+            <!-- 选择支付方式 -->
+            <div class="Paymenttype">
+                <div>
+                    结算方式:
+                </div>
+                <div>
+                    <span class="active" data-online="0">线上结算</span>
+                    <span data-online="1">门店结算</span>
+                </div>
+
+            </div>
+            <!-- 选择代煎代送？ -->
+            <div class="choose_fry">
+                <span class="fry_active" data-service='1'>代煎代送</span>
+                <span data-service='2'>自煎代送</span>
+                <span data-service='3'>代煎自取</span>
+                <span data-service='4'>自取</span>
+            </div>
+            <!-- 选择药房 -->
+            <div class="choose_phar">
+                <ul>
+                    <!-- <li>
+                        <span>
+                                <span class=" phar_active pharmacy_active"></span>
+                        </span>
+                        <div>
+                            <div>
+                                <span>瑞来春堂</span>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <span>
+                             <span class=" phar_active"></span>
+                        </span>
+                        <div>
+                            <div>
+                                <span>瑞来春堂</span>
+                                <span>预估1502</span>
+                            </div>
+
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="footer">下一步</div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+
+
+    <script src="js2/zepto.js"></script>
+    <script src="js2/mobiscroll.zepto.js" type="text/javascript"></script>
+    <script src="js2/mobiscroll.core.js" type="text/javascript"></script>
+    <script src="js2/mobiscroll.scroller.js" type="text/javascript"></script>
+    <script src="js2/mobiscroll.area.js"></script>
+    <script src="js2/mobiscroll.scroller.android-ics.js"></script>
+    <script src="js/i18n/mobiscroll.i18n.zh.js"></script>
+
+
+    <script>
+        var index = {
+            config: {
+                valo: $("#area").attr("areaid"),
+            },
+            init: function() {
+                var _this = this;
+                _this.getData(1, 1258, 1, 0);
+                $('#area').scroller('destroy').scroller({
+                    preset: 'area',
+                    theme: 'android-ics light',
+                    display: 'bottom',
+                    valueo: index.config.valo
+                });
+                // 选择用药类型
+                $(".types span").click(function() {
+                    $(this).addClass("active").siblings().removeClass("active");
+                    var type = $(this).attr("data-type");
+                    var onlinez = $(".Paymenttype div:last .active").attr("data-online");
+                    if (type == -1) {
+                        $(".pai").hide();
+                        return false;
+                    } else {
+                        $(".pai").show()
+                        _this.shippingMethod();
+                        var city = 1258,
+                            service = $(".choose_fry .fry_active").attr("data-service"),
+                            online = $(".Paymenttype .active").attr("data-online");
+                        console.log("用药类型为：" + type, "   城市：" + city, "    配送方式： " + service, "     结算方式：" + online)
+                        _this.getData(type, city, service, online);
+                    }
+                });
+                // 选择配送方式
+                $(".choose_fry").on("click", "span", function() {
+                    $(this).addClass("fry_active").siblings().removeClass("fry_active");
+                    var type = $(".types .active").attr("data-type"),
+                        city = 1258,
+                        service = $(".choose_fry .fry_active").attr("data-service"),
+                        online = $(".Paymenttype .active").attr("data-online");
+                    console.log("用药类型为：" + type, "   城市：" + city, "    配送方式： " + service, "     结算方式：" + online)
+                    _this.getData(type, city, service, online);
+                });
+                //选择药房
+                $(".choose_phar").on("click", "li", function() {
+                    $(this).addClass("p_active").siblings().removeClass("p_active")
+                    $(this).find(".phar_active").addClass("pharmacy_active")
+                    $(this).siblings().find(".phar_active").removeClass("pharmacy_active")
+                });
+
+                // 选择结算方式
+                $(".Paymenttype>div:last span").click(function() {
+                    $(this).addClass("active").siblings().removeClass("active");
+                    $(".choose_fry span:first").addClass("fry_active")
+                    _this.shippingMethod();
+                    var type = $(".types .active").attr("data-type"),
+                        city = 1258,
+                        service = $(".choose_fry .fry_active").attr("data-service"),
+                        online = $(".Paymenttype .active").attr("data-online");
+                    console.log("用药类型为：" + type, "   城市：" + city, "    配送方式： " + service, "     结算方式：" + online)
+                    _this.getData(type, city, service, online);
+                })
+            },
+
+            /**
+             * @author YuTao
+             * @description 用开方类型 城市id 服务类型id 结算方式四个参数请求数据
+             * @param {number} type        开方类型
+             * @param {number} city        城市id
+             * @param {number} service     服务类型id
+             * @param {number} online      结算方式
+             */
+            getData: function(type, city, service, online) {
+                $.ajax({
+                    type: "get",
+                    url: "http://w.i.htyy.com/doctor_ajax.php?do=getSupplierByTCS",
+                    data: {
+                        "type": type,
+                        "city": city,
+                        "service": service,
+                        "online": online
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var datas = data.sec;
+                        console.log(datas)
+                        var str = '';
+                        for (var i = 0; i < datas.length; i++) {
+                            str += "<li>" +
+                                "<span>" +
+                                "<span class='phar_active'></span>" +
+                                "</span>" +
+                                "<div>" +
+                                "<div>" +
+                                "<span>" + datas[i].name + "</span>" +
+                                "</div>" +
+                                "</div>" +
+                                "</li>"
+                        }
+                        $(".choose_phar ul").html(str);
+                        $(".choose_phar li:first .phar_active").addClass("pharmacy_active")
+                    },
+                    error: function(err) {
+                        console.log(err)
+                    }
+                });
+            },
+            shippingMethod: function() {
+                var type = $(".types .active").attr("data-type");
+                var onlinez = $(".Paymenttype div:last .active").attr("data-online");
+                var str = '';
+                if (type == 1 && onlinez == 0) {
+                    str += "<span data-service='1'>代煎代送</span><span  data-service='2'>自煎代送</span><span  data-service='3'>代煎自取</span><span  data-service='4'>自取</span>"
+                } else {
+                    str += "<span  data-service='4'>自取</span><span  data-service='5'>送货上门</span>"
+                }
+                $(".choose_fry").html(str);
+                $(".choose_fry span:first").addClass("fry_active")
+                if (type == -1) {
+                    $(".pai").hide();
+                    return false;
+                } else {
+                    $(".pai").show()
+                }
+            }
+        }
+        index.init();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>开方服务</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="../js/slider.js"></script>
+
+    </head>
+    <body>
+
+        <section class="jq22-flexView">
+            <header class="jq22-navBar jq22-navBar-fixed b-line" name="">
+                <!-- <a href="javascript:;" class="jq22-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a> -->
+                <div class="jq22-center">
+                    <h2 class="jq22-center-title">智慧中药房</h2>
+                </div>
+
+            </header>
+            <section class="jq22-scrollView">   <!--首页轮播图 -->
+                <div class="jq22-list-head">
+                    <h2>开方服务</h2>
+                </div>
+                <div class="jq22-list-cell">
+                    <a href="javascript:;" class="jq22-list-cell-item">
+                        <div class="jq22-list-cell-item-img" onclick="dianzi()">
+                            <h2>电子处方</h2>
+                            <p>无纸开方</p>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="jq22-list-cell-item" >
+                        <div class="jq22-list-cell-item-info" onclick="paizhao()">
+                            <h2>拍照传方</h2>
+                            <span>
+                                <em>更便捷</em>
+                                <em>省时省力</em>
+                            </span>
+                        </div>
+                        <div class="jq22-list-cell-item-info jq22-list-cell-item-info-two">
+                            <h2>待开发...</h2>
+                            <span>
+                                <em>专业</em>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </section>
+<script>
+    function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+    function dianzi() {
+        if(getParams("id")===""||getParams("id")==null){
+            alert("病人数据错误")
+        }else {
+            window.location.href='../lyb/lyb2.html?id='+getParams("id");
+        }
+    }
+    function paizhao() {
+        if(getParams("id")===""||getParams("id")==null){
+            alert("病人数据错误")
+        }else {
+            window.location.href='../index/upload_ok2.html?id='+getParams("id");
+        }
+    }
+</script>
+    </body>
+</html>

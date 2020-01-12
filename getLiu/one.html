@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>药品推荐取药路径</title>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <script src="js/modernizr.js"></script>
+    <script>
+      //保存所有要取药的id和顺序
+      var myMap=new Map();
+      //保存上一个的位置
+      var orderNow = 0;
+      Array.prototype.distinct = function(){
+       var arr = this,
+        result = [],
+        i,
+        j,
+        len = arr.length;
+       for(i = 0; i < len; i++){
+        for(j = i + 1; j < len; j++){
+         if(arr[i] === arr[j]){
+          j = ++i;
+         }
+        }
+        result.push(arr[i]);
+       }
+       return result;
+      }
+
+         function getParams(key) {
+              var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+              var r = window.location.search.substr(1).match(reg);
+              if (r != null) {
+                  return unescape(r[2]);
+              }
+              return null;
+          };
+          function getData1(){
+              var Eurl2 = window.location.href;
+              var Etext =decodeURI(Eurl2);
+              var name = getParams("kfid").toString();
+              return name;
+          };
+          function getData2(){
+              var Eurl2 = window.location.href;
+              var Etext =decodeURI(Eurl2);
+              var name = getParams("address").toString();
+              return name;
+          };
+      function getData3(){
+          var Eurl2 = window.location.href;
+          var Etext =decodeURI(Eurl2);
+          var name = getParams("name").toString();
+          return name;
+      };
+       function onlodes(){
+          $.ajax({
+              //几个参数需要注意一下
+              type: "GET",//方法类型
+              dataType: "json",//预期服务器返回的数据类型
+              url: "http://47.103.1.210:8082/guns-1.0.0/h5/kf_yao_getByid_box/"+getData1(),//url 47.103.1.210:8082/guns-1.0.0
+              success: function (result) {
+                  console.log(result)
+                  if(result.code==406){
+                     alert(result.message)
+                  }else if(result.code===405){
+                      alert(result.message);
+                  }else if(result.code==500){
+                     alert(result.message)
+                  }else{
+                     //保存第一个要取药的id
+                        var one = '';
+                     
+                        for(var key in result.data){
+                           
+                                 var html = '<figure class="org-chart cf"><div class="board " onclick="findNext()"><ul class="columnOne"><li> <span class="lvl-b"><strong>'+key+'</strong><br>智慧开方<br>开方单号：12312312312312312</span> </li></ul></div><ul class="departments ">';
+                                 var x_line = new Array();
+                                 var y_line = new Array();
+                                 for(var i = 0; i < result.data[key].length; i++){
+                                     var list = result.data[key];
+                                          x_line.push(list[i]["address_x"])
+                                          y_line.push(list[i]["address_y"])
+                                   }
+                                   // console.log("--->"+x_line.distinct().sort())
+                                   // console.log("--->"+y_line.distinct().sort())
+                                 for(var i = 0; i < y_line.distinct().length; i++){
+
+                                    html +='<li class="department central"><span class="lvl-b"><strong>第'+y_line.distinct().sort()[i]+'列</strong> <br></span> ';
+                                    html +='<ul class="sections">';
+                                    for(var j = 0; j < x_line.distinct().length; j++){
+                                       var txt = "";
+                                       //要取药的 标志
+                                       var tip = 0;
+                                       //第一个要取药的 标志
+                                       var tagOne = 0;
+                                       //序号
+                                       var order = '';
+                                       for(var k = 0; k < result.data[key].length; k++){
+                                          var list = result.data[key];
+                                          //console.log("输出list中的值"+list[i]["address_x"]+"--"+list[i]["address_y"]+"--"+list[i]["yaoName"]);
+                                          if(parseInt(list[k]["address_y"]) == y_line.distinct().sort()[i] && parseInt(list[k]["address_x"]) == x_line.distinct().sort()[j]){
+                                                if(list[k]["tag"] >= 1){
+                                                   if(list[k]["order"] == 1){
+                                                      tip = 1;
+                                                      tagOne = 1;
+                                                      order += list[k]["order"]+',';
+                                                      one = key+"_"+x_line.distinct().sort()[j]+"_"+y_line.distinct().sort()[i];
+                                                      myMap.set(1,one);
+                                                      txt += "<u><b style='color:#FF0000'>"+list[k]["yaoName"]+"</b></u>，"
+                                                   }else if(list[k]["order"] > 1){
+                                                      order = order+list[k]["order"]+',';
+                                                      tip = 1;
+                                                      one = key+"_"+x_line.distinct().sort()[j]+"_"+y_line.distinct().sort()[i];
+                                                      myMap.set(list[k]["order"],one);
+                                                      txt += "<u><b style='color:#FF0000'>"+list[k]["yaoName"]+"</b></u>，"
+                                                   }else{
+                                                      tip = 1;
+                                                      txt += "<u><b>"+list[k]["yaoName"]+"</b></u>，"
+                                                   }
+                                                }else{
+                                                   txt += list[k]["yaoName"]+"，"
+                                                }
+                                             }
+
+                                          }
+                                          var x_y = key+"_"+x_line.distinct().sort()[j]+"_"+y_line.distinct().sort()[i];
+                                          var x_y_2 = key+"</br>"+x_line.distinct().sort()[j]+"行"+y_line.distinct().sort()[i]+"列";
+                                          if(tip==1){
+                                             if(tagOne==1){
+                                                html +='<li class="section '+x_y+'" id='+x_y+'> <span id = "sp" style="background-color: yellow">('+order.substring(0,order.length-1)+')'+x_y_2+'<br><strong>'+txt.substring(0,txt.length-1)+'</strong></span> </li>';
+                                             }else{
+                                                html +='<li class="section '+x_y+'" id='+x_y+'> <span style="background-color:   #FF7F50">('+order.substring(0,order.length-1)+')'+x_y_2+'<br><strong>'+txt.substring(0,txt.length-1)+'</strong></span> </li>';
+                                             }
+                                          }else{
+                                             html +='<li class="section '+x_y+'" id='+x_y+'> <span style="background-color: #92D4A8"><br><strong>'+txt.substring(0,txt.length-1)+'</strong></span> </li>';
+                                          }
+                                       }
+                                       html +='</ul></li>';
+                                   } 
+                                   html +='</ul></figure>'
+                              
+                              
+                                 var obj = $(".content").html();;
+                                 
+                                 $(".content").html(obj+html);
+                        }
+
+                       
+                        // console.log(getElementPos(document.getElementById(""+one+"")));
+                        //直接调用原生js将元素置于最中间
+                        // demo.scrollIntoView({block:"start"})//开始位置
+                        //  demo.scrollIntoView({block:"center"})//中间位置
+                        //  demo.scrollIntoView({block:"end"})//末尾位置
+                        //document.body.style.zoom=1.4;
+                        //$("#"+one+"").find("span").css("background-color","yellow");
+                        
+                        
+                        // var btn = document.querySelectorAll('.中药柜2_4_4')[0];  
+                        // var event = document.createEvent('Events');
+                        // event.initEvent('touchend', true, true); 
+                        // btn.dispatchEvent(event); 
+                        //window.location.hash = "#"+one+""; 
+                        //document.getElementById(""+one+"").scrollIntoView({behavior: "instant", block: "center"});
+                        //$("body").css({"transform":"scale(6,6)","transform-origin":"0 0"});
+                         console.log(myMap)
+                         var o = getData2().split("-");
+                         var t = "中药柜"+o[0]+"_"+o[1]+"_"+o[2]
+                         next2(t);
+                       //ScrollToControl(t)
+                       //发送取哪一个药的数据
+                      send("webSocket,"+getData2()+":"+getCookie("account")+":"+getData3()+",2")
+                  }
+                  
+              },
+              error : function(data) {
+                  console.log(data)
+                  alert("服务器开小差了！")
+                  
+              }
+          });
+    }
+    //1表示上一个是向下
+    var tags = 0;
+    //找前一个
+    function findorder(index){
+      console.log(parseInt(index)+"--"+myMap.size)
+      if(parseInt(index) == (myMap.size-1) || tags== 1){
+        $("#sp").css("background-color","#FF7F50");
+        next2(myMap.get(parseInt(index)+1));
+        tags = 0;
+      }else{
+        next2(myMap.get(parseInt(index)+1));
+      }
+        
+        orderNow = parseInt(index)
+      if(parseInt(index)==0 && orderNow == parseInt(index)){
+        $("#sp").css("background-color","yellow");
+        alert("已经是第一个了")
+        
+      }
+      // if(orderNow==1){
+      //    nextOne(myMap.get(orderNow));
+      //    alert("已经是第一个了")
+      // }else{
+      //     next(myMap.get(orderNow),myMap.get(orderNow-1));
+      //     orderNow--;
+      // }
+    }
+    //找下一个
+    function findNext(index){
+      // console.log(parseInt(index))
+      // if(parseInt(index)==0){
+      //     nextOne(myMap.get(0));
+      // }else 
+      if(parseInt(index)==parseInt(myMap.size)-1 && orderNow == parseInt(index)){
+        alert("已经是最后一个了")
+      }
+        next(myMap.get(parseInt(index)),myMap.get(parseInt(index)+1));
+        orderNow = parseInt(index);
+        tags =1;
+      // if(orderNow==1){
+      //    nextOne(myMap.get(orderNow));
+      //    orderNow++;
+      // }else if(orderNow>1 && parseInt(orderNow) <= parseInt(myMap.size)){
+      //    next(myMap.get(orderNow-1),myMap.get(orderNow));
+      //    orderNow++;
+      // }else{
+      //    alert("已经是最后一个了")
+      // }
+         
+    }
+    // obj 当前id obj2 下一个id
+    function next(objs,obj2){
+      console.log(objs+"--++"+obj2)
+      $("#sp").css("background-color","#FF7F50");
+      $("body").css({"transform":"scale(6,6)","transform-origin":"0 0"});
+      $("#"+obj2+"").find("span").css("background-color","yellow");
+         $("#"+objs+"").find("span").css("background-color","#FF7F50");
+         
+         //window.location.hash = "#"+obj2+""; 
+        // document.getElementById(""+obj2+"").scrollIntoView({behavior: "instant", block: "center"});
+        ScrollToControl(obj2)
+         
+    }
+    // obj 当前id obj2 下一个id
+    function next2(obj2){
+      $("body").css({"transform":"scale(6,6)","transform-origin":"0 0"});
+      $("#sp").css("background-color","#FF7F50");
+      for (var i = 1; i <=myMap.size; i++) {
+        var txtt = myMap.get(i);
+        if(txtt == obj2){
+          $("#"+obj2+"").find("span").css("background-color","yellow");
+          ScrollToControl(obj2)
+        }else{
+          $("#"+txtt+"").find("span").css("background-color","#FF7F50");
+        }
+      }
+      
+      //$("body").css({"transform":"scale(6,6)","transform-origin":"0 0"});
+         
+         //window.location.hash = "#"+obj2+""; 
+        // document.getElementById(""+obj2+"").scrollIntoView({behavior: "instant", block: "center"});
+        
+         
+    }
+    // obj 当前id obj2 下一个id
+    function nextOne(obj2){
+      
+         //$("body").css({"transform":"scale(6,6)","transform-origin":"0 0"})
+         $("#"+obj2+"").find("span").css("background-color","yellow");
+         //window.location.hash = "#"+obj2+""; 
+         //document.getElementById(""+obj2+"").scrollIntoView({behavior: "instant", block: "center"});
+         //ScrollToControl(obj2)
+         
+    }
+
+function animateScroll(element,speed,x,y,x_1,y_1) {
+    let rect=element.getBoundingClientRect();
+    //获取元素相对窗口的top值，此处应加上窗口本身的偏移
+
+    let currentTop=0;
+    let currentLeft = 0;
+    let requestId;
+    let sp = speed;
+    let times = 0;
+    //采用requestAnimationFrame，平滑动画
+    function step(timestamp) {
+      times = currentTop;
+      currentTop+=speed/2;
+
+      if(currentTop<=y){
+         if(currentLeft<=x){
+            currentLeft+=speed/2;
+         }
+         
+         window.scrollTo(currentLeft,currentTop);
+        requestId=window.requestAnimationFrame(step);
+      }else{
+        window.cancelAnimationFrame(requestId);
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+
+function ScrollToControl(id)
+{
+ var elem = document.getElementById(id);
+ var scrollPos = getElementPos(elem).y-document.body.clientHeight/2;
+ var x = getElementPos(elem).x-document.body.clientWidth/2;
+ var y_1 = getElementPos(elem).y;
+ var x_1 = getElementPos(elem).x;
+
+ //ScrollSmoothly(scrollPos,repeatTimes,remainderx);
+ //window.scrollTo(x,scrollPos);
+ //有动画的移动，但是不太稳定，目前一个bug(当要移动的目标x坐标大于y坐标则会出错，移动不到那去)
+ //animateScroll(elem,50,x,scrollPos,x_1,y_1)
+
+ window.scrollTo(x,scrollPos);
+}
+
+
+//获取对象的X，Y位置  接受对象 不接收ID
+function getElementPos(el) { 
+ var ua = navigator.userAgent.toLowerCase(); 
+ var isOpera = (ua.indexOf('opera') != -1);
+ var isIE = (ua.indexOf('msie') != -1 && !isOpera); // not opera spoof 
+ if(el.parentNode === null || el.style.display == 'none'){ 
+  return false; 
+ } 
+ var parent = null;
+ var pos = []; 
+ var box;
+ if(el.getBoundingClientRect){//IE
+  box = el.getBoundingClientRect();
+  var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop); 
+  var scrollLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft); 
+  return {x:box.left + scrollLeft, y:box.top + scrollTop}; 
+ }else if(document.getBoxObjectFor){// gecko
+  box = document.getBoxObjectFor(el); 
+  var borderLeft = (el.style.borderLeftWidth)?parseInt(el.style.borderLeftWidth):0;
+  var borderTop = (el.style.borderTopWidth)?parseInt(el.style.borderTopWidth):0;
+  pos = [box.x - borderLeft, box.y - borderTop]; 
+ }else{// safari & opera 
+  pos = [el.offsetLeft, el.offsetTop];
+  parent = el.offsetParent; 
+  if (parent != el) { 
+   while (parent) {
+    pos[0] += parent.offsetLeft;
+    pos[1] += parent.offsetTop; 
+    parent = parent.offsetParent;
+   } 
+  } 
+  if (ua.indexOf('opera') != -1  || ( ua.indexOf('safari') != -1 && el.style.position == 'absolute' )){
+   pos[0] -= document.body.offsetLeft; 
+   pos[1] -= document.body.offsetTop;
+  }
+ }
+ if (el.parentNode) { parent = el.parentNode; }
+ else { parent = null; } 
+ while (parent && parent.tagName != 'BODY' && parent.tagName != 'HTML'){ // account for any scrolled ancestors 
+  pos[0] -= parent.scrollLeft; 
+  pos[1] -= parent.scrollTop; 
+  if (parent.parentNode) { parent = parent.parentNode; } 
+  else { parent = null; } 
+ } 
+ return {x:pos[0], y:pos[1]}; 
+}
+
+function getCookie(name)
+        {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+        }
+var socket;
+      if(!window.WebSocket){
+         window.WebSocket = window.MozWebSocket;
+      }
+
+      if(window.WebSocket){
+         socket = new WebSocket("ws://47.103.1.210:8090/websocket");
+         socket.onmessage = function(event){
+          console.log(event.data)
+            var txt2 = event.data.replace(/ /, "").substring(1,event.data.length-1).split(','); 
+            //下一个
+            if(txt2[0] == "adiv112233" && txt2[1] == getCookie("account") && txt2[2] == " 1"){
+               findNext(txt2[3].substring(1,txt2[3].length-1))
+               //前一个
+            }else if(txt2[0] == "adiv112233" && txt2[1] == getCookie("account") && txt2[2] == " 0"){
+                 findorder(txt2[3].substring(1,txt2[3].length-1))
+            }else if(txt2[0] == "adiv112233" && txt2[1] == getCookie("account") && txt2[2] == " 2"){
+              console.log(parseInt(txt2[3].substring(1,txt2[3].length-1)))
+                 next2(myMap.get(parseInt(txt2[3].substring(1,txt2[3].length-1))+1));
+            }else if(event.data.toString().substring(0,6)=="登陆连接成功"){
+              document.cookie="U="+event.data.toString().substring(6)+";Path="+escape("/");
+               console.log(event.data.toString().substring(6))
+            }else{
+               console.log("错误数据"+event.data)
+                alert(event.data)
+            }
+         };
+
+         socket.onopen = function(event){
+          if(getCookie("account")!=null){
+            send("webSocket,"+getCookie("account")+",1")
+          }else{
+            alert("服务器跑路了，请重新登陆！！！")
+          }
+         };
+
+         socket.onclose = function(event){
+            alert("WebSocket连接已经关闭")
+         };
+      }else{
+         alert("您的浏览器不支持WebSocket");
+      }
+
+
+      function send(message){
+         if(!window.WebSocket){
+            return;
+         }
+         if(socket.readyState == WebSocket.OPEN){
+            socket.send(message);
+         }else{
+            alert("WebSocket连接没有建立成功！！");
+         }
+      }
+    </script>
+</head>
+<body onload="onlodes()">
+
+  <div class="content" id="com">
+   <h1>药品推荐取药路径</h1>
+
+</div>
+
+
+
+  <script src="http://www.jq22.com/jquery/1.8.3/jquery.min.js"></script>
+
+
+
+</body>
+
+
+
+</html>

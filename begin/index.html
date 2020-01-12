@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="telephone=no" name="format-detection" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="getdata()">
+<section class="jq22-flexView">
+	<header class="jq22-navBar jq22-navBar-fixed b-line">
+<!--		<a href="javascript:;" class="jq22-navBar-item">-->
+<!--			<i class="icon icon-return"></i>-->
+<!--		</a>-->
+		<div class="jq22-center">
+			<span class="jq22-center-title">药方规划起点</span>
+		</div>
+		<a href="javascript:;" class="jq22-navBar-item">
+			<i class="icon icon-sys"></i>
+		</a>
+	</header>
+	<section class="jq22-scrollView">
+<!--		<div class="jq22-auto-img">-->
+<!--			<img src="images/head.png" alt="">-->
+<!--		</div>-->
+		<div class="jq22-auto-form">
+			<div class="jq22-auto-box">
+				<div class="jq22-palace">
+					<a href="javascript:;" class="jq22-palace-grid">
+						<div class="jq22-palace-grid-icon">
+							<img src="images/item-001.png" alt="">
+						</div>
+						<div class="jq22-palace-grid-text">
+							<h2>在线修改</h2>
+						</div>
+					</a>
+					<a href="javascript:;" class="jq22-palace-grid">
+						<div class="jq22-palace-grid-icon">
+							<img src="images/item-002.png" alt="">
+						</div>
+						<div class="jq22-palace-grid-text">
+							<h2>联系</h2>
+						</div>
+					</a>
+					<a href="javascript:;" class="jq22-palace-grid">
+						<div class="jq22-palace-grid-icon">
+							<img src="images/item-003.png" alt="">
+						</div>
+						<div class="jq22-palace-grid-text">
+							<h2>审核</h2>
+						</div>
+					</a>
+					<a href="javascript:;" class="jq22-palace-grid">
+						<div class="jq22-palace-grid-icon">
+							<img src="images/item-004.png" alt="">
+						</div>
+						<div class="jq22-palace-grid-text">
+							<h2>成功</h2>
+						</div>
+					</a>
+				</div>
+				<form action="" class="jq22-auto-inp">
+					<div class="jq22-flex">
+						<label>柜号</label>
+						<div class="jq22-flex-box">
+							<select id="box" class="weui-select" name="select1">
+								<option selected="" value="1">中药柜1</option>
+								<option value="2">中药柜2</option>
+<!--								<option value="3">中药柜3</option>-->
+							</select>
+						</div>
+					</div>
+					<div class="jq22-flex">
+						<label>行</label>
+						<div class="jq22-flex-box">
+							<select id="hang" class="weui-select" name="select1">
+								<option value="1">第一行</option>
+								<option value="2">第二行</option>
+								<option value="3">第三行</option>
+								<option value="4">第四行</option>
+								<option value="5">第五行</option>
+								<option value="6">第六行</option>
+								<option value="7">第七行</option>
+							</select>
+						</div>
+					</div>
+					<div class="jq22-flex">
+						<label>列</label>
+						<div class="jq22-flex-box">
+							<select id="line" class="weui-select" name="select1">
+								<option value="1">第一列</option>
+								<option value="2">第二列</option>
+								<option value="3">第三列</option>
+								<option value="4">第四列</option>
+								<option value="5">第五列</option>
+								<option value="6">第六列</option>
+								<option value="7">第七列</option>
+							</select>
+						</div>
+					</div>
+<!--					<div class="jq22-flex">-->
+<!--						<label>密令</label>-->
+<!--						<div class="jq22-flex-box">-->
+<!--							<input type="text" id="password" autocomplete="off" placeholder="请输入密令">-->
+<!--						</div>-->
+<!--					</div>-->
+					<button class="jq22-apply-btn" type="button" onclick="binding()">修改</button>
+
+				</form>
+			</div>
+		</div>
+
+	</section>
+</section>
+</body>
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+	function  getdata() {
+		$.ajax({
+			type: "GET",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: "http://47.103.1.210:8082/guns-1.0.0/h5/getBegin" ,//url 47.103.1.210:8082/guns-1.0.0
+			success: function (result) {
+				if(result.code==200){
+					//动态改变select选中的option
+					$("#box option").each(function(i,n){
+						if($(n).val()== result.data[0])
+						{
+							$(n).attr("selected",true);
+						}
+					});
+					$("#line option").each(function(i,n){
+						if($(n).val()== result.data[2])
+						{
+							$(n).attr("selected",true);
+						}
+					});
+					$("#hang option").each(function(i,n){
+						if($(n).val()== result.data[1])
+						{
+							$(n).attr("selected",true);
+						}
+					});
+				}else if(result.code==401){
+					alert("您未登陆")
+				}else {
+					alert(result.message)
+				}
+			},
+			error:function(data){
+				if(data.status==401){
+					alert("您未登陆")
+				}else{
+					alert(data.message)
+				}
+			}
+		});
+
+	}
+
+	function binding(){
+		var B = $("#box").val();
+		var L = $("#line").val();
+		var H = $("#hang").val();
+		$.ajax({
+			type: "GET",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: "http://47.103.1.210:8082/guns-1.0.0/h5/updateBegin/"+B+"/"+H+"/"+L ,//url 47.103.1.210:8082/guns-1.0.0
+			success: function (result) {
+				if(result.code===200){
+					//window.location.reload();
+					alert("更新成功")
+				}else if(result.code===401){
+					alert("您未登陆")
+				}else if(result.code===405){
+					alert(result.message)
+				}else {
+					alert(result.message)
+				}
+			},
+			error:function(data){
+				if(data.status===401){
+					alert("您未登陆")
+				}else if(data.code===405){
+					alert(data.message)
+				}else{
+					alert(data.message)
+				}
+			}
+		});
+	}
+</script>
+
+</html>

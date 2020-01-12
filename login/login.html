@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登陆</title>
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<!-- 	<meta content="telephone=no" name="format-detection" /> -->
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<section class="aui-flexView">
+	<header class="aui-navBar aui-navBar-fixed">
+		<a href="javascript:history.go(-1)" class="aui-navBar-item">
+			<i class="icon icon-return"></i>
+		</a>
+		<div class="aui-center">
+			<span class="aui-center-title"></span>
+		</div>
+		<a href="javascript:;" class="aui-navBar-item" >
+			客服
+		</a>
+	</header>
+	<section class="aui-scrollView">
+		<div class="aui-ver-head">
+			<img src="images/head.png" alt="">
+		</div>
+		<div class="aui-ver-form">
+
+			<!-- <h2>短信快捷登录</h2>
+			<div class="aui-flex">
+				<div class="aui-flex-box">
+					<i class="icon icon-phone"></i>
+					<input id="phone1" type="text" autocomplete="off" placeholder="手机号码" >
+				</div>
+			</div>
+			<div class="aui-flex">
+				<div class="aui-flex-box">
+					<i class="icon icon-code"></i>
+					<input id="code1" type="text" autocomplete="off" placeholder="验证码">
+				</div>
+				<div class="aui-button-code">
+					<input id="btnSendCode1" type="button" class="btn btn-default" value="获取验证码" onClick="sendMessage1()" />
+				</div>
+			</div> -->
+			<h2>药房登录</h2>
+			<div class="aui-flex">
+				<div class="aui-flex-box">
+					<i class="icon icon-phone"></i>
+					<input name="username" type="text" autocomplete="off" placeholder="账号" >
+				</div>
+			</div>
+			<div class="aui-flex">
+				<div class="aui-flex-box">
+					<i class="icon icon-code"></i>
+					<input name="password" type="password" autocomplete="off" placeholder="密码" >
+				</div>
+			</div>
+			<div class="aui-ver-button">
+				<button onclick="binding()" >立即登录</button>
+			</div>
+			<div class="aui-cell-box">
+				<label class="cell-right">
+					<input type="checkbox" value="1" name="remember" checked="checked">
+					<i class="cell-checkbox-icon"></i>
+					<em>记住我</em>
+				</label>
+			</div>
+		</div>
+		<!-- <div class="aui-login-box">
+			<h2>其它登录方式</h2>
+		</div>
+		<div class="aui-palace">
+			<a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-icon">
+					<img src="images/icon-sc1.png" alt="">
+				</div>
+				<div class="aui-palace-grid-text">
+					<h2>微信</h2>
+				</div>
+			</a>
+			<a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-icon">
+					<img src="images/icon-sc2.png" alt="">
+				</div>
+				<div class="aui-palace-grid-text">
+					<h2>淘宝</h2>
+				</div>
+			</a>
+			<a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-icon">
+					<img src="images/icon-sc3.png" alt="">
+				</div>
+				<div class="aui-palace-grid-text">
+					<h2>腾讯</h2>
+				</div>
+			</a>
+			<a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-icon">
+					<img src="images/icon-sc4.png" alt="">
+				</div>
+				<div class="aui-palace-grid-text">
+					<h2>微博</h2>
+				</div>
+			</a>
+		</div> -->
+
+	</section>
+</section>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+	var count = 60;
+	var InterValObj1;
+	var curCount1;
+	function sendMessage1() {
+		curCount1 = count;
+		var phone = $.trim($('#phone1').val());
+		if (!phoneReg.test(phone)) {
+			alert(" 请输入有效的手机号码");
+			return false;
+		}
+
+		$("#btnSendCode1").attr("disabled", "true");
+		$("#btnSendCode1").val( + curCount1 + "秒再获取");
+		InterValObj1 = window.setInterval(SetRemainTime1, 1000);
+
+	}
+	function SetRemainTime1() {
+		if (curCount1 == 0) {
+			window.clearInterval(InterValObj1);
+			$("#btnSendCode1").removeAttr("disabled");
+			$("#btnSendCode1").val("重新发送");
+		}
+		else {
+			curCount1--;
+			$("#btnSendCode1").val( + curCount1 + "秒再获取");
+		}
+	}
+
+	function binding(){
+		var obj ={};
+		obj["username"] = $('input[name="username"]').val()
+		obj["password"] = $('input[name="password"]').val()
+		obj["remember"] = $('input[name="remember"]').val()
+		$.ajax({
+		         type: 'POST',
+		         url: "http://47.103.1.210:8082/guns-1.0.0/kfLogin",//47.103.1.210:8082/guns-1.0.0
+				 timeout:4000, //请求超时的时间，以毫秒计
+				 dataType:'json', //预期的服务器返回参数类型
+				 contentType: "application/json;charset=UTF-8",
+		         // cache: false,
+		        data: JSON.stringify(obj),
+		        success: function (result) {
+		        	if(result.code === 200){
+						alert("登陆成功");
+						document.cookie="isLogin="+result.data+" ;Path="+escape("/");
+						document.cookie="account="+result.message+";Path="+escape("/");
+						//setCookie("isLogin","1");
+						window.location.href = "../homepage.html";
+					}else{
+						document.cookie="isLogin=0";
+						//setCookie("isLogin","0");
+						alert("账号密码错误！！！")
+					}
+		        },
+				error: function(result2) {
+					alert("服务繁忙")
+					// console.log(result2.responseText.split(",")[1])
+					// if(result2.status === 200){
+					// 	alert("登陆成功");
+					// 	document.cookie="isLogin="+result2.responseText.split(",")[1]+";Path="+escape("/");
+					// 	//setCookie("isLogin","1");
+					// 	document.cookie="account="+result2.responseText.split(",")[2]+";Path="+escape("/");
+					// 	window.location.href = "../homepage.html";
+					//
+					// }else{
+					// 	document.cookie="isLogin=0";
+					// 	//setCookie("isLogin","0");
+					// 	alert("账号密码错误！！！")
+					// }
+				}
+		});
+	}
+	function setCookie(name,value)
+	{
+		var Days = 7;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	}
+</script>
+
+</html>

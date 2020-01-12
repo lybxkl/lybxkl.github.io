@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>COM管理</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+</head>
+<body onload = "onloder()" id="bodys" style="background-color:#FAEBD7;" class="">
+<div style="text-align:center"><h2>COM管理</h2></div>
+<div class="container" id="container">
+    <br/>
+    <form class="form-inline" id="control" hidden>
+        <button type="button" class="btn btn-primary" v-on:click="add()">新增</button>
+         <div class="form-group" style="float: right">
+            <label>搜索</label>
+            <input type="text" class="form-control" v-model="search" v-on:input ="searchFn"  placeholder="请输入搜索关键字">
+        </div>
+    </form>
+    <hr/>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>说明</th>
+            <th>COM口</th>
+            <th>波特率</th>
+            <th>执行时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbodys" hidden>
+        <tr v-for="(item,index) in cloneTableDatas">
+            <td>{{ item.id }}</td>
+            <td>{{ item.tips }}</td>
+            <td>{{ item.com}}</td>
+            <td>{{ item.baudrate }}</td>
+            <td>{{ item.controlTime }}</td>
+            <td>{{ item.status }}</td>
+            <td>
+                <button type="button" class="btn btn-seccess" v-on:click="edit(index)">编辑</button>
+<!--                <button type="button" class="btn btn-seccess" v-on:click="run(index)">启动</button>-->
+<!--                <button type="button" class="btn btn-danger" v-on:click="stop(index)">停止</button>-->
+                <!--                    <button type="button" class="btn btn-danger" hidden v-on:click="del(index)">删除</button>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--运行-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="runModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">运行</h4>
+                </div>
+                <div class="modal-body">
+                    <h1>你确定要运行该程序</h1>
+                    <form hidden>
+                        <div class="form-group">
+                            <label>COM口</label>
+                            <input type="text" class="form-control" v-model="selectedlist.com">
+                        </div>
+                        <div class="form-group">
+                            <label>说明</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.tips">
+                        </div>
+                        <div class="form-group">
+                            <label>波特率</label>
+                            <input type="text" class="form-control" v-model="selectedlist.baudrate">
+                        </div>
+                        <div class="form-group">
+                            <label>执行时间</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.controlTime">
+                        </div>
+                        <div class="form-group">
+                            <label>状态</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.status">
+                        </div>
+                        <div class="form-group">
+                            <label>执行口令</label>
+                            <input type="password" class="form-control" v-model="selectedlist.salt">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary"  v-on:click="runSubForm">确认启动</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--停止-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="stopModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">停止</h4>
+                </div>
+                <div class="modal-body">
+                    <h1>你确定要停止该程序</h1>
+                    <form hidden>
+                        <div class="form-group">
+                            <label>COM口</label>
+                            <input type="text" class="form-control" v-model="selectedlist.com">
+                        </div>
+                        <div class="form-group">
+                            <label>说明</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.tips">
+                        </div>
+                        <div class="form-group">
+                            <label>波特率</label>
+                            <input type="text" class="form-control" v-model="selectedlist.baudrate">
+                        </div>
+                        <div class="form-group">
+                            <label>执行时间</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.controlTime">
+                        </div>
+                        <div class="form-group">
+                            <label>状态</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.status">
+                        </div>
+                        <div class="form-group">
+                            <label>执行口令</label>
+                            <input type="password" class="form-control" v-model="selectedlist.salt">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" hidden  v-on:click="stopSubForm">停止</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--新增-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>COM口</label>
+                            <input type="text" name="first" class="form-control" v-model="tableData.com">
+                        </div>
+                        <div class="form-group">
+                            <label>说明</label>
+                            <input type="text" name="tips" class="form-control" v-model="selectedlist.tips">
+                        </div>
+                        <div class="form-group">
+                            <label>波特率</label>
+                            <input type="text" name="last2" class="form-control"  v-model="tableData.baudrate">
+                        </div>
+                        <div class="form-group">
+                            <label>执行口令</label>
+                            <input type="password" name="last" class="form-control"  v-model="tableData.salt">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>执行时间</label>
+                            <input type="text" name="controlTime" id="controlTime" disabled = "disabled" class="form-control"  v-model="tableData.controlTime">
+                        </div>
+                        <div class="form-group">
+                            <label>状态</label>
+                            <input type="text" name="status" disabled = "disabled" id="status"  class="form-control"  v-model="tableData.status" >
+                        </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary"  v-on:click="addSubForm">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">删除</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>COM口</label>
+                            <input type="text" name="first" class="form-control" disabled = "disabled" v-model="selectedlist.com">
+                        </div>
+                        <div class="form-group">
+                            <label>说明</label>
+                            <input type="text" name="tips" class="form-control" disabled = "disabled" v-model="selectedlist.tips">
+                        </div>
+                        <div class="form-group">
+                            <label>波特率</label>
+                            <input type="text" name="last2" class="form-control" disabled = "disabled" v-model="selectedlist.baudrate">
+                        </div>
+
+                        <div class="form-group">
+                            <label>执行时间</label>
+                            <input type="text" name="controlTime" disabled = "disabled" class="form-control"  v-model="selectedlist.controlTime">
+                        </div>
+                        <div class="form-group">
+                            <label>状态</label>
+                            <input type="text" name="status" disabled = "disabled"  class="form-control"  v-model="selectedlist.status" >
+                        </div>
+                        <div class="form-group">
+                            <label>执行口令</label>
+                            <input type="password" name="last" class="form-control"  v-model="selectedlist.salt">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary"  v-on:click="delShure()">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--编辑-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>COM口</label>
+                            <input type="text" class="form-control" v-model="selectedlist.com">
+                        </div>
+                        <div class="form-group">
+                            <label>说明</label>
+                            <input type="text"  class="form-control" v-model="selectedlist.tips">
+                        </div>
+                        <div class="form-group">
+                            <label>波特率</label>
+                            <input type="text" class="form-control" v-model="selectedlist.baudrate">
+                        </div>
+                        <div class="form-group">
+                            <label>执行时间</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.controlTime">
+                        </div>
+                        <div class="form-group">
+                            <label>状态</label>
+                            <input type="text" class="form-control" disabled = "disabled" v-model="selectedlist.status">
+                        </div>
+                        <div class="form-group">
+                            <label>执行口令</label>
+                            <input type="password" class="form-control" v-model="selectedlist.salt">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editSubForm">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+    function data(){
+       var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate()+"  "+day2.getHours()+"点"+day2.getMinutes()+"分"+day2.getSeconds()+"秒";
+        return s2
+    }
+    function onloder(){
+        $.ajax({
+            url:"http://47.103.1.210:8082/guns-1.0.0/com/getUid", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+            type:'GET', //请求方法 GET or POST
+            async:true, //是否使用异步请求的方式
+            timeout:5000, //请求超时的时间，以毫秒计
+            dataType:'json', //预期的服务器返回参数类型
+            // data:{},
+            /*  beforeSend:function(){
+                 ...
+             },//再发送请求前调用的方法 */
+            success:function(data) {
+                if(data.code===200){
+                    $("#bodys").attr("class",data.data);
+                }else {
+                    alert("获取登陆信息失败")
+                }
+            },
+            error :function(data){
+                alert("服务器跑路了")
+            }
+        });
+        $.ajax({
+            url:"http://47.103.1.210:8082/guns-1.0.0/com/getOnLineCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+            type:'GET', //请求方法 GET or POST
+            async:true, //是否使用异步请求的方式
+            timeout:4000, //请求超时的时间，以毫秒计
+            dataType:'json', //预期的服务器返回参数类型
+            // data:{},
+            /*  beforeSend:function(){
+                 ...
+             },//再发送请求前调用的方法 */
+            success:function(data) {
+                var tg = [];
+
+                for (var i = 0; i <  data.length; i++) {
+                    var row2;
+                    if(data[i].status==="1"){
+                        row2 = {"id": i+1, "com": data[i].com,"tips": data[i].tips,"baudrate":data[i].baudrate,"controlTime":data[i].controlTime,"status":"正常运行","DID":data[i].id};
+                    }else{
+                        row2 = {"id": i+1, "com": data[i].com, "tips": data[i].tips,"baudrate":data[i].baudrate,"controlTime":data[i].controlTime,"status":"停止","DID":data[i].id};
+                    }
+                    tg.push(row2);
+                }
+                app.ok(tg);
+                $("#tbodys").removeAttr("hidden");
+
+
+
+            },
+            error:function (data) {
+                alert("服务器开小差了！")
+            }
+        })
+    }
+    var app=new Vue({
+        el:"#container",
+        data:{
+            selected: -1,
+            selectedlist: { },
+            tableData:{"id":0,"com":"","tips": "","baudrate":"115200","controlTime":data(),"status":"正常运行","salt":"","DID":""},
+            tableDatas:[
+                {"id":1,"com":"com4","tips": "","baudrate":"115200","controlTime":"2018-12-25","status":"停止","salt":"","DID":""}
+            ],
+            cloneTableDatas:[ ],
+            search : ""
+        },
+        //在实例被创建之后被调用
+        created: function () {
+            this.getShowData(this.tableDatas);
+
+        },
+        methods: {
+            ok:function(arr){
+                this.tableDatas = arr;
+                this.getShowData(this.tableDatas);
+            },
+            // 获取需要渲染到页面中的数据
+            getShowData:function(arr) {
+                this.cloneTableDatas = JSON.parse(JSON.stringify(arr));
+            },
+            //新增
+            add: function () {
+                $('#addModal').modal('show');
+
+            },
+            //提交新增
+            addSubForm:function(){
+                this.tableData.id = this.tableDatas.length + 1;
+                if(this.tableData.com==null||this.tableData.com===""){
+                    alert("com口不能为空")
+                }else if(this.tableData.baudrate==null||this.tableData.baudrate===""){
+                    alert("波特率不能为空")
+                }
+                else if(this.tableData.salt==null||this.tableData.salt===""){
+                    alert("执行口令不能为空")
+                }else if((this.tableData.salt!=null||this.tableData.salt!=="") && (this.tableData.com!=null||this.tableData.com!=="")){
+                    var status = this.tableData.status;
+                    if(status==="正常运行"){
+                        status = '1';
+                    }else{
+                        status = '0';
+                    }
+                    var com = this.tableData.com;
+                    var baudrate = this.tableData.baudrate;
+                    var controlTime = this.tableData.controlTime;
+                    var tips = this.tableData.tips;
+                    var salt = this.tableData.salt;
+
+
+                    var obj ={};
+                    obj["com"] = com;
+                    obj["baudrate"] = baudrate;
+                    obj["controlTime"] = controlTime;
+                    obj["salt"] = salt;
+                    obj["status"] = status;
+                    obj["tips"] = tips;
+
+                    $.ajax({
+                        url:"http://127.0.0.1:8091/guns-1.0.0/com/addCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                        type:'POST', //请求方法 GET or POST
+                        async:true, //是否使用异步请求的方式
+                        timeout:4000, //请求超时的时间，以毫秒计
+                        dataType:'json', //预期的服务器返回参数类型
+                        contentType: "application/json;charset=UTF-8",
+                        data: JSON.stringify(obj),
+                        success:function(data) {
+                            if(data>0){
+                                app.add2();
+                            }else if(data===-1){
+                                alert("端口错误，可能正在使用或者无效")
+                            }else{
+                                alert("服务器开小差了！")
+                            }
+                        },
+                        error:function (data) {
+                            alert("服务器跑路了！")
+                        }
+                    })
+                }
+
+            },
+            add2:function(){
+                this.tableData.salt = "";
+                this.tableDatas.push(this.tableData);
+                this.getShowData(this.tableDatas);
+                this.tableData = {"id":0,"com":"","tips": "","baudrate":"115200","controlTime":data(),"status":"正常运行","salt":"","DID":""};
+                $('#addModal').modal('hide');
+            },
+            //停止
+            stop: function (index) {
+
+                this.selected = index;
+                this.selectedlist = JSON.parse(JSON.stringify(this.tableDatas))[index];
+                if(this.selectedlist.status === "停止"){
+                    alert("该程序未运行")
+                }else{
+                    $('#stopModal').modal('show');
+                }
+
+            },
+            //提交停止
+            stopSubForm:function(){
+                var obj ={};
+                obj["DID"] = this.selectedlist.DID;
+                obj["com"] = this.selectedlist.com;
+                obj["salt"] = this.selectedlist.salt;
+                obj["status"] = '0';
+                obj["baudrate"] = this.selectedlist.baudrate;
+                $.ajax({
+                    url:"http://127.0.0.1:8091/guns-1.0.0/com/stopCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                    type:'POST', //请求方法 GET or POST
+                    async:true, //是否使用异步请求的方式
+                    timeout:4000, //请求超时的时间，以毫秒计
+                    dataType:'json', //预期的服务器返回参数类型
+                    contentType: "application/json;charset=UTF-8",
+                    data:JSON.stringify(obj),
+                    /*  beforeSend:function(){
+                         ...
+                     },//再发送请求前调用的方法 */
+                    success:function(data) {
+                        if(data>0){
+                            app.stop2();
+                        }else if(data===-1){
+                            alert("端口错误，可能无效")
+                            app.stop2();
+                        }else{
+                            alert("服务器开小差了！")
+                        }
+                    },
+                    error:function (data) {
+                        alert("服务器跑路了！")
+                    }
+                })
+
+
+            },
+            stop2 :function(){
+                this.selectedlist.status = "停止";
+                Vue.set(this.tableDatas, this.selected, this.selectedlist);
+                this.getShowData(this.tableDatas);
+                alert("停止成功");
+                $('#stopModal').modal('hide');
+            },
+            run:function(index){
+                var uid = $("#bodys").attr("class");
+                this.selected = index;
+                this.selectedlist = JSON.parse(JSON.stringify(this.tableDatas))[index];
+                if(this.selectedlist.status === "正常运行"){
+                    alert("请先停止该程序")
+                }if(uid === ""){
+                    alert("未获取到取药信息，请打开手机进入2D界面")
+                }else{
+
+                    $.ajax({
+                        url:"http://127.0.0.1:8091/guns-1.0.0/com/upUid/"+uid, //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                        type:'GET', //请求方法 GET or POST
+                        async:true, //是否使用异步请求的方式
+                        timeout:4000, //请求超时的时间，以毫秒计
+                        dataType:'json', //预期的服务器返回参数类型
+                        success:function(data) {
+                            if(data.code===400||data.code===401){
+                                alert(data.message);
+                            }else if(data.code===200){
+                                $('#runModal').modal('show');
+                            }else {
+                                alert("服务器开小差啦")
+                            }
+                        },
+                        error :function(data){
+                            alert("服务器跑路了")
+                        }
+                    });
+                }
+            },
+            //提交运行
+            runSubForm:function(){
+                var obj ={};
+                var datas = data();
+                obj["DID"] = this.selectedlist.DID;
+                obj["com"] = this.selectedlist.com;
+                obj["salt"] = this.selectedlist.salt;
+                obj["status"] = '1';
+                obj["baudrate"] = this.selectedlist.baudrate;
+                obj["controlTime"] = datas;
+                $.ajax({
+                    url:"http://127.0.0.1:8091/guns-1.0.0/com/runCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                    type:'POST', //请求方法 GET or POST
+                    async:true, //是否使用异步请求的方式
+                    timeout:4000, //请求超时的时间，以毫秒计
+                    dataType:'json', //预期的服务器返回参数类型
+                    contentType: "application/json;charset=UTF-8",
+                    data:JSON.stringify(obj),
+                    /*  beforeSend:function(){
+                         ...
+                     },//再发送请求前调用的方法 */
+                    success:function(data) {
+                        if(data>0){
+                            app.run2(datas);
+                        }else if(data===-1){
+                            alert("端口错误，可能正在使用或者无效，运行失败")
+                        }else{
+                            alert("服务器开小差了！")
+                        }
+                    },
+                    error:function (data) {
+                        alert("服务器跑路了！")
+                    }
+                })
+
+
+            },
+            run2 :function(datas){
+                this.selectedlist.status = "正常运行";
+                this.selectedlist.controlTime = datas;
+                Vue.set(this.tableDatas, this.selected, this.selectedlist);
+                this.getShowData(this.tableDatas);
+                alert("运行成功");
+                $('#runModal').modal('hide');
+            },
+            //编辑
+            edit: function (index) {
+                $('#editModal').modal('show');
+                this.selected = index;
+                this.selectedlist = JSON.parse(JSON.stringify(this.tableDatas))[index];
+            },
+            //提交编辑
+            editSubForm:function() {
+                var com = this.selectedlist.com;
+                console.log("com:"+$("#idState").val());
+                var baudrate = this.selectedlist.baudrate;
+                var salt = this.selectedlist.salt;
+                if(salt==null||salt===""){
+                    alert("口令不能为空")
+                }else if(baudrate==null||baudrate===""){
+                    alert("波特率不能为空")
+                }else if(com==null||com===""){
+                    alert("COM口不能为空")
+                }else{
+                    var DID = this.selectedlist.DID;
+                    var obj ={};
+                    obj["com"] = com;
+                    obj["baudrate"] = baudrate;
+                    obj["salt"] = salt;
+                    obj["DID"] = DID;
+                    obj["tips"] = this.selectedlist.tips;
+
+                    $.ajax({
+                        url:"http://47.103.1.210:8082/guns-1.0.0/com/editCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                        type:'POST', //请求方法 GET or POST
+                        async:true, //是否使用异步请求的方式
+                        timeout:4000, //请求超时的时间，以毫秒计
+                        dataType:'json', //预期的服务器返回参数类型
+                        contentType: "application/json;charset=UTF-8",
+                        data: JSON.stringify(obj),
+                        success:function(data) {
+                            if(data>0){
+                                app.edit2();
+                            }else{
+                                alert("编辑失败")
+                            }
+                        },
+                        error:function (data) {
+                            alert("服务器跑路了！")
+                        }
+                    })
+                }
+
+
+            },
+            edit2:function(){
+                Vue.set(this.tableDatas, this.selected, this.selectedlist);
+                this.getShowData(this.tableDatas);
+                alert("保存成功")
+                $('#editModal').modal('hide');
+            },
+            //删除
+            del: function (index) {
+                this.selected = index;
+                this.selectedlist = JSON.parse(JSON.stringify(this.tableDatas))[index];
+                if(this.selectedlist.status!=="停止"){
+                    alert("请先停止该程序");
+
+                }else{
+                    $('#delModal').modal('show');
+                }
+
+            },
+            //删除
+            delShure: function (index) {
+                var com = this.selectedlist.com;
+                var baudrate = this.selectedlist.baudrate;
+                var salt = this.selectedlist.salt;
+                if(salt==null||salt===""){
+                    alert("口令不能为空")
+                }else{
+                    var DID = this.selectedlist.DID;
+                    var obj ={};
+                    obj["com"] = com;
+                    obj["salt"] = salt;
+                    obj["DID"] = DID;
+
+                    $.ajax({
+                        url:"http://127.0.0.1:8091/guns-1.0.0/com/delCom", //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+                        type:'POST', //请求方法 GET or POST
+                        async:true, //是否使用异步请求的方式
+                        timeout:4000, //请求超时的时间，以毫秒计
+                        dataType:'json', //预期的服务器返回参数类型
+                        contentType: "application/json;charset=UTF-8",
+                        data: JSON.stringify(obj),
+                        success:function(data) {
+                            if(data>0){
+                                app.del2();
+                            }else{
+                                alert("服务器开小差了！")
+                            }
+                        },
+                        error:function (data) {
+                            alert("服务器跑路了！")
+                        }
+                    })
+                }
+
+
+
+            },
+            del2:function(){
+                alert("删除成功")
+                $('#delModal').modal('hide');
+                this.tableDatas.pop(this.tableData);
+                this.getShowData(this.tableDatas);
+            },
+            update:function(){
+                this.tableData.controlTime=data();
+            },
+            //查询
+            searchFn:function (e) {
+                var key=e.target.value;
+                //查询firstName列
+                if(key){
+                    var searchArray=[];
+                    this.tableDatas.forEach(function (item) {
+                        if(item.firstName.indexOf(key)>-1){
+                            searchArray.push(item);
+                        }
+                    });
+                    this.getShowData(searchArray);
+                }else{
+                    this.getShowData(this.tableDatas);
+                }
+            }
+
+        }
+    });
+    
+setInterval("app.update()", 1000);
+    
+    function ajaxMyGet(url){
+        $.ajax({
+            url:"http://127.0.0.1:8080/"+url, //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+            type:'GET', //请求方法 GET or POST
+            async:true, //是否使用异步请求的方式
+            timeout:4000, //请求超时的时间，以毫秒计
+            dataType:'json', //预期的服务器返回参数类型
+            // data:{},
+            /*  beforeSend:function(){
+                 ...
+             },//再发送请求前调用的方法 */
+            success:function(data) {
+               return data;
+            },
+            error:function (data) {
+                alert("服务器开小差了！")
+            }
+        })
+    }
+    function ajaxMyPost(url,obj){
+        $.ajax({
+            url:"http://127.0.0.1:8080/"+url, //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+            type:'POST', //请求方法 GET or POST
+            async:true, //是否使用异步请求的方式
+            timeout:4000, //请求超时的时间，以毫秒计
+            dataType:'json', //预期的服务器返回参数类型
+           contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(obj),
+            success:function(data) {
+                console.log(".."+data)
+               return data
+            },
+            error:function (data) {
+                alert("服务器开小差了！")
+            }
+        })
+
+    }
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+    var socket;
+    if(!window.WebSocket){
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if(window.WebSocket){
+        socket = new WebSocket("ws://47.103.1.210:8090/websocket");
+        socket.onmessage = function(event){
+            if(event.data.toString() === "1"){
+                alert("当前本地应用在线")
+            }else if(event.data.toString() === "0"){
+                alert("当前本地应用离线")
+            }else if(event.data.toString()==="-1"){
+                alert("当前本地应用离线")
+            }else{
+                alert("收到异常数据: "+event.data);
+            }
+        };
+
+        socket.onopen = function(event){
+            if(getCookie("account")!=null){
+                send("webSocket,"+getCookie("account")+",0")
+            }else{
+                alert("服务器跑路了，请重新登陆！！！")
+            }
+        };
+
+        socket.onclose = function(event){
+            alert("WebSocket连接已经关闭")
+        };
+    }else{
+        alert("您的浏览器不支持WebSocket");
+    }
+
+
+    function send(message){
+        if(!window.WebSocket){
+            return;
+        }
+        if(socket.readyState == WebSocket.OPEN){
+            socket.send(message);
+        }else{
+            alert("WebSocket连接没有建立成功！！");
+        }
+    }
+</script>
+
+</body>
+</html>

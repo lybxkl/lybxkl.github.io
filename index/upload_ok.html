@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>拍方上传</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+            overflow: hidden
+        }
+        
+        .main {
+            width: 100%;
+            background: #f7f7f7;
+        }
+        /* v///////////////////////////////////////////////////////////2018.1.15.15 */
+        
+        .see_example {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            text-outline: 0;
+            left: 0;
+            z-index: 999999;
+            display: none;
+        }
+        
+        .see_example img {
+            width: 100%;
+            /* position: absolute;
+            top: 50%; */
+            margin-top: -50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="main">
+            <!-- 上传照片 -->
+            <div class="method height_80" style="background: #fff;">
+                <span class="camera img_public"> </span>
+                <span class="htyy_text">上传照片<span class="max_up">最多支持同一用户三张图片</span></span>
+            </div>
+            <div class="uploading" style="background: #fff;">
+                <div class="add_upload">
+                    <input type="file" name="file" id="cameraInput" class="file" value="" accept="image/*" multiple />
+                </div>
+                <!-- <div class="upimg">
+                    <img src="images/up_example.png" alt="">
+                    <span class="close_the"></span>
+                </div> -->
+                <div class="up_example">
+                    <span></span>
+                </div>
+
+
+            </div>
+            <div class="line"></div>
+            <!-- 用药建议类型 -->
+            <div class="method height_80 " style="background: #fff;">
+                <span class="icon_22 img_public"> </span>
+                <span class="htyy_text">用药建议类型</span>
+            </div>
+            <div class="type_u" style="background: #fff;">
+                <span class="c_active" data-type="0">中药饮片</span>
+                <span data-type="1">颗粒剂</span>
+                <span data-type="2">膏方</span>
+            </div>
+            <div class="line"></div>
+            <!-- 备注 -->
+            <div class="method height_80 " style="background: #fff;">
+                <span class="icon_33 img_public"> </span>
+                <span class="htyy_text">备注<span class="m_input">(患者不可见)</span></span>
+            </div>
+            <div class="method_out2">
+                <!-- <input type="text"> -->
+                <textarea rows="3" cols="20" placeholder="请输入备注"></textarea>
+                <!-- <input type="text" style="background:#fff"> -->
+            </div>
+            <div class="footer">提交</div>
+        </div>
+
+        <!-- 一些弹出层 -->
+        <div class="popups" >
+            <div class="backg2"></div>
+            <!-- 图片幻灯片 -->
+            <img src="" alt="" class="up_img">
+            <div class="android_up" hidden>
+                <div class="a_u_title">
+                    <span>图片</span>
+                    <span></span>
+                </div>
+                <div class="camera_a">
+                    <span class="camera_i"></span>
+                    <span>相机</span>
+                    <input type="file" name="file" id="cameraInput1" class="file" value="" accept="image/*" capture='camera'>
+                </div>
+                <div class="album">
+                    <span class="album_i"></span>
+                    <span>相册</span>
+                    <input type="file" name="file" id="cameraInput2" class="file" value="" accept="image/jpeg,image/jpeg,image/png,image/bmp" multiple />
+                </div>
+            </div>
+            <!-- ///////////////////////////////////////////////////////////2018.1.15.15 -->
+            <div class="see_example">
+                <img src="images/shili.png" alt="">
+            </div>
+            <!-- loading -->
+            <div class="spinner">
+                <div class="spinner-container container1">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container2">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container3">
+                    <div class="circle1"></div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                    <div class="circle4"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js?a=11"></script>
+    <script src="layer/layer.js"></script>
+
+    <script>
+        var type = 1;
+        var drug_type = 0;
+        var doc_remark = '';
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+        $(".type_u span").click(function() {
+            $(this).addClass("c_active").siblings().removeClass("c_active");
+            drug_type = $(".c_active").attr("data-type");
+            console.log(drug_type)
+        })
+        var base64s = [];
+
+        if (isiOS) {
+            $(".add_upload input").show();
+        } else if (isAndroid) {
+            // alert("an")
+            $(".add_upload input").hide();
+            $(".add_upload").click(function() {
+                backShow(true);
+                popupShow(true);
+            })
+        }
+
+        $('#cameraInput').change(function() {
+            console.log(52025)
+            var file = document.getElementById('cameraInput').files[0];
+            // alert(file)
+            popupShow(false)
+            drawOnCanvas(file, 'head_img1');
+        });
+        $('#cameraInput1').change(function() {
+            console.log(123)
+            var file = document.getElementById('cameraInput1').files[0];
+            // alert(file)
+            popupShow(false)
+            drawOnCanvas(file, 'head_img1');
+        });
+        $('#cameraInput2').change(function() {
+            console.log(123)
+            popupShow(false)
+            var file = document.getElementById('cameraInput2').files[0];
+            // alert(file)
+            drawOnCanvas(file, 'head_img1');
+        });
+
+        $(".method_out2 textarea").focus(function() {
+            $(this).parent().addClass("tex_active");
+
+        })
+        $(".method_out2 textarea").blur(function() {
+            $(this).parent().removeClass("tex_active");
+
+        })
+
+        function drawOnCanvas(file, num) {
+            var reader = new FileReader();
+            var str = "";
+            reader.onload = function(e) {
+                var dataURL = e.target.result,
+                    canvas = document.createElement('canvas'),
+                    ctx = canvas.getContext('2d'),
+                    img = new Image();
+                img.onload = function() {
+                    var w = img.width,
+                        h = img.height;
+                    canvas.width = w / 2;
+                    canvas.height = h / 2;
+                    var context = canvas.getContext('2d');
+                    context.drawImage(img, 0, 0, w / 2, h / 2);
+                    var base64 = canvas.toDataURL('image/jpeg', 1);
+                    console.log(base64)
+                    $.ajax({
+                        type: "post",
+                        url: baseUrl.upload.doctorimgup,
+                        data: {
+                            "base64": base64,
+                        },
+                        dataType: "json",
+                        beforeSend: function(XMLHttpRequest) {
+                            // 打开loading;
+                            loading(true);
+
+                        },
+                        success: function(res) {
+                            console.log(res)
+                            loading(false);
+                            if (typeof res == 'string') {
+                                res = JSON.parse(res)
+                            }
+                            str += "<div class='upimg'><img  src=" + base64 + "><span  data-src=" + res.sec + " class = 'close_the' > </span></div > "
+
+                            base64s.push(res.sec)
+                            console.log(base64s)
+                            $(".uploading").append(str);
+
+                            $(".up_example").remove();
+                            var se = $(".upimg").size()
+                            if (se > 2) {
+                                $(".add_upload").hide()
+                            }
+                            $(".upimg span").click(function() {
+                                $(this).parent().remove();
+                                var src_r = $(this).attr("data-src");
+                                var index = $.inArray(src_r, base64s);
+                                base64s.splice(index, 1);
+                                if (se < 2) {
+                                    $(".add_upload").show()
+                                }
+                            })
+
+                        },
+                        error: function(err) {
+                            layer.msg('连接服务器失败', {
+                                time: 1000
+                            });
+                        }
+                    });
+                };
+                img.src = dataURL;
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+        $(".a_u_title span").last().click(function() {
+            backShow(false)
+            popupShow(false)
+        })
+
+
+
+        $(".uploading").on("click", ".upimg", function() {
+            var img_src = $(this).find("img").attr("src");
+            $(".backg2").css({
+                "opacity": "0.9",
+                "z-index": "2000"
+            });
+            $(".popups .up_img").show()
+            var h = $(this).children("img").height() * 3;
+            console.log(h)
+            $(".popups .up_img").attr("src", img_src);
+            $(".popups .up_img").css({
+                "top": "50%",
+                "margin-top": -h / 2
+            })
+
+        })
+        $(".backg2").click(function() {
+            popupShow(false);
+            backShow(false)
+            $(".popups .up_img").hide()
+        });
+        ///////////////////////////////////////////////////////////2018.1.15.15
+        $(".up_example").click(function() {
+            backShow(true);
+            $(".see_example").show();
+        });
+        $(".see_example").click(function() {
+            backShow(false);
+            $(".see_example").hide();
+        });
+        ///////////////////////////////////////////////////////////2018.1.15.15
+        // 提交
+        $(".footer").click(function() {
+            $.ajax({
+                type: "post",
+                url: baseUrl.upload.recipedetail,
+                data: {
+                    "data": base64s,
+                    "type": type,
+                    "drug_type": drug_type,
+                    "doc_remark": doc_remark
+                },
+                dataType: "json",
+                success: function(data) {
+                    alert(data)
+                    if (data.succ) {
+                        //window.location.href = data.sec;
+                    } else {
+                        layer.msg(data.msg, {
+                            time: 1000
+                        });
+                    }
+                },
+                error: function(err) {
+                    layer.msg('连接服务器失败', {
+                        time: 1000
+                    });
+                }
+            });
+        })
+
+        function loading(bool) {
+            if (bool) {
+                $(".backg2").css({
+                    "opacity": ".5",
+                    "z-index": "2000"
+                })
+                $(".spinner").show()
+            } else {
+                $(".backg2").css({
+                    "opacity": "0",
+                    "z-index": "-2000"
+                })
+                $(".spinner").hide()
+            }
+        }
+
+        function backShow(bool) {
+            if (bool) {
+                $(".backg2").css({
+                    "opacity": "0.5",
+                    "z-index": "2000"
+                });
+            } else {
+                setTimeout(function() {
+                    $(".backg2").css({
+                        "opacity": "0",
+                        "z-index": "-2000"
+                    });
+                }, 100)
+            }
+        }
+
+        function popupShow(bool) {
+            if (bool) {
+                $(".popups .android_up").removeAttr("hidden");
+                $(".popups .android_up").css({
+                    "transform": " translateY(0rem)",
+                    "-webkit-transfor": " translateY(0rem)"
+                })
+            } else {
+                $(".popups .android_up").css({
+                    "transform": " translateY(10rem)",
+                    "-webkit-transfor": " translateY(10rem)"
+                })
+                $(".popups .android_up").attr("hidden","hidden");
+            }
+        }
+        // ///////////////////////////////////////////////////////////2018.1.15.15
+
+        if (/Android/gi.test(navigator.userAgent)) {
+            window.addEventListener('resize', function() {
+                if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+                    window.setTimeout(function() {
+                        document.activeElement.scrollIntoViewIfNeeded();
+                    }, 0);
+                }
+            })
+        }
+
+        var num = 50;
+        num = num.toFixed(2);
+        console.log(num)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>添加药品201815</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        body {
+            -webkit-user-select: none;
+            user-select: none;
+            background: #eee;
+            /* ////////////////////////////////////////2018.1.15 */
+        }
+        
+        .main1 {
+            width: 6.4rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 90;
+            background: #fff;
+            font-size: .28rem;
+        }
+        
+        .drugs_box ul {
+            min-height: 6rem;
+        }
+        
+        .submit_b {
+            width: 100%;
+            padding-top: .3rem;
+            background: #eee;
+        }
+        
+        .submit_b span {
+            width: 6rem;
+            height: .9rem;
+            background: #b55444;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+            text-align: center;
+            line-height: .9rem;
+            font-size: .32rem;
+            color: #fff;
+        }
+        /* ////////////////////////////////////////2018.1.15 */
+        
+        .wrap1 {}
+    </style>
+</head>
+
+<body>
+    <div class="wrap1">
+        <div class="main1">
+            <div class="choosee_type">
+                <div class="add_d">
+                    <span></span>
+                    <!--  /* ////////////////////////////////////////2018.1.15 */ -->
+                    <span>保存为经验方</span>
+                </div>
+                <div class="import_d">
+                    <span></span>
+                    <!--  /* ////////////////////////////////////////2018.1.15 */ -->
+                    <span>经验方导入</span>
+                </div>
+                <!-- <div class="submit_a">
+                    <span>提交</span>
+                </div> -->
+            </div>
+            <div class="drugs_box">
+                <div class="box_ti">
+                    <span>点击药材名称可设置先煎、后下、烊化等</span>
+                    <span class="red_close"></span>
+                </div>
+                <ul class="clearfloat">
+                    <!-- <li>
+                        <div class='drug_names'><span class='the_close'></span>
+                            <div class='drug_name'><span></span><span></span></div>
+                        </div>
+                        <div class='drug_g'> <input type='number' placeholder="+addlists.g+" class=" + addlists.classtype + "><span>g</span></div>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="input_drugs">
+                <div class="drugs_listss_W">
+                    <ul class="drugs_listss">
+
+                    </ul>
+                </div>
+
+                <div class="input_drug">
+                    <input type="text" placeholder="请输入药品">
+                    <div>
+                        <span>单贴预估：</span>
+                        <span class="price">￥0.00</span>
+                    </div>
+                </div>
+            </div>
+            <!--  /* ////////////////////////////////////////2018.1.15 */ -->
+            <div class="submit_b">
+                <span>提交</span>
+            </div>
+
+        </div>
+        <!-- <div class="footer">下一步</div> -->
+        <!-- 一些弹出层 -->
+        <div class="popups">
+            <div class="backg2"></div>
+            <!-- 煎法的选择 -->
+            <div class="choose_types">
+                <span class="d_name">阿胶</span>
+                <ul>
+                    <li data-type="type1" class="type1 ">先煎</li>
+                    <li data-type="type2" class="type2">后下</li>
+                    <li data-type="type3" class="type3">烊化</li>
+                    <li data-type="type4" class="type4">包煎</li>
+                    <li data-type="type5" class="type5">另煎(炖)</li>
+                    <li data-type="type6" class="type6">研末</li>
+                    <li data-type="type7" class="type7">分冲</li>
+                    <li data-type="type8" class="type8">研末包煎</li>
+                    <li data-type="type9" class="type9">捣碎</li>
+                </ul>
+                <textarea rows="3" cols="20" placeholder="自定义"></textarea>
+                <div class="yesorno">
+                    <span class="cancel">清空返回</span>
+                    <span class="yesok">确定</span>
+                </div>
+            </div>
+            <!-- 保存为经验方 -->
+            <div class="hold_exper">
+                <span class="h_title">保存为经验方</span>
+                <div class="ex_name">
+                    <span>经验方名称：</span>
+                    <div>
+                        <input type="text" placeholder="请输入经验方名称">
+                    </div>
+                </div>
+                <div class="ex_type">
+                    <span>经验方类别：</span>
+                    <div>
+                        <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span> <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span> <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span> <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span> <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span> <span>补血</span>
+                        <span>感冒</span>
+                        <span>肿瘤</span>
+                    </div>
+                </div>
+                <div class="yesorno2">
+                    <span class="cancel2">取消</span>
+                    <span class="yesok2">确定</span>
+                </div>
+            </div>
+            <!-- 我的经验方 -->
+            <div class="my_exper">
+                <span class="m_title">我的经验方</span>
+                <!-- <div class="m_title1">
+                    <span></span>
+                    <span>常用经验方</span>
+                </div>
+                <ul class="my_exper_lists">
+                    <li data-id='" + data[i].id + "'><span>" + data[i].name + "</span><span class='import_exper'>导入</span></li>
+                </ul> -->
+            </div>
+
+        </div>
+    </div>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/index.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+
+    <script>
+        console.log(1212)
+        var addDrug = {
+            config: {
+                formData: new FormData(),
+                formData1: new FormData(),
+                formData2: new FormData(),
+                expeStr: "",
+                inputStr: "",
+                lis: "",
+                ex_id: 0,
+                str: '',
+                drugArr: [],
+                winH: document.documentElement.clientHeight,
+                type: 1
+
+            },
+            // 初始化
+            init: function() {
+
+                var _this = this;
+                // 一些初始化操作
+                if (addDrug.config.type == 2) {
+                    $(".box_ti").remove();
+                };
+                console.log(addDrug.config.type)
+                _this.drugsBoxHeight();
+
+                var height_he = $(".hold_exper").height();
+                $(".hold_exper").css("margin-bottom", -height_he / 2)
+
+
+                // _this.fontSizeControl(); //药名 字数如果太多把字体缩小
+                // 点击导入经验方
+                $(".import_d").click(function() {
+                    _this.importDrug();
+                });
+                // 导入经验方
+                $(".my_exper").on("click", ".import_exper", function() {
+                    addDrug.config.ex_id = $(this).parent().attr("data-id");
+                    _this.importExper();
+                });
+                // 存方
+                $(".add_d").click(function() {
+                    _this.getdDrugArr();
+                    // console.log(addDrug.config.drugArr)
+                    var len = addDrug.config.drugArr.length;
+                    if (len < 1) {
+                        layer.msg('请添加药品!', {
+                            time: 1000
+                        });
+                    } else {
+                        addDrug.config.str = '';
+                        _this.addD();
+                    }
+
+                });
+                // 选择经验方类型
+                $(".ex_type>div").on("click", "span", function() {
+                    $(this).addClass("exactive").siblings().removeClass("exactive");
+                });
+                //存为经验方确定
+                $(".hold_exper .yesok2").click(function() {
+                    _this.getdDrugArr();
+                    var name = $(".ex_name input").val();
+                    if (!name) {
+                        layer.msg('请填写经验方名!', {
+                            time: 1000
+                        });
+                    } else {
+                        var classify = $(".ex_type .exactive").attr("data-id");
+                        $.ajax({
+                            type: "post",
+                            url: baseUrl.adddrugs.saveexp,
+                            data: {
+                                "n": name,
+                                "classify": classify,
+                                "type": addDrug.config.type,
+                                "drugArr": addDrug.config.drugArr
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                                if (data.succ) {
+                                    _this.popup(false, ".hold_exper");
+                                    layer.msg(data.msg, {
+                                        time: 2000
+                                    });
+                                    $(".ex_name input").val('')
+                                } else {
+                                    layer.msg(data.msg, {
+                                        time: 1000
+                                    });
+                                }
+                            },
+                            error: function(err) {
+                                layer.msg('连接服务器失败', {
+                                    time: 1000
+                                });
+                            }
+                        });
+                    }
+
+                });
+                // 关闭提示信息
+                $(".red_close").click(function() {
+                    $(this).parent().remove()
+                });
+                // 中药饮片才能打开煎法
+                if (addDrug.config.type == 1) {
+                    // 点击药材名的时候  打开煎法
+                    $(".drugs_box").on("click", ".drug_name", function() {
+                        var type = $(this).children().last().attr("data-type");
+                        console.log(type);
+
+                        var str = $(this).children().last().text();
+                        switch (str) {
+                            case "先煎":
+                                $(".type1").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "后下":
+                                $(".type2").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "type3":
+                                $(".type3").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "包煎":
+                                $(".type4").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "另煎(炖)":
+                                $(".type5").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "研末":
+                                $(".type6").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "分冲":
+                                $(".type7").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "研末包煎":
+                                $(".type8").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            case "捣碎":
+                                $(".type9").addClass("typeactive").siblings().removeClass("typeactive")
+                                break;
+                            default:
+                                $(".choose_types li").removeClass("typeactive")
+                        }
+
+                        var drugname = $(this).children().first().text()
+                        _this.popup(true, ".choose_types");
+                        $(".choose_types .d_name").text(drugname);
+                        $(this).addClass("daug_sign").parent().parent().siblings().children().find(".drug_name").removeClass("daug_sign")
+
+                    });
+                }
+
+                // 煎法的选择
+                $(".choose_types ul li").click(function() {
+                    $(".choose_types textarea").val("")
+                    if ($(this).hasClass("typeactive")) {
+                        $(this).removeClass("typeactive").siblings().removeClass("typeactive")
+                    } else {
+                        $(this).addClass("typeactive").siblings().removeClass("typeactive")
+                    }
+                });
+                // $(".choose_types ul li").toggle(function() {
+                //     $(".choose_types textarea").val("")
+                //     if ($(this).hasClass("typeactive")) {
+                //         $(this).removeClass("typeactive").siblings().removeClass("typeactive")
+                //     } else {
+                //         $(this).addClass("typeactive").siblings().removeClass("typeactive")
+                //     }
+                // }, function() {
+                //     $(".choose_types textarea").val("")
+                //     $(this).removeClass("typeactive").siblings().removeClass("typeactive")
+                // });
+                // 煎法自定义
+                $(".choose_types textarea").focus(function() {
+                    $(this).attr("placeholder", "")
+                    $(".choose_types ul li").removeClass("typeactive");
+
+                });
+                $(".choose_types textarea").blur(function() {
+                    $(this).attr("placeholder", "自定义")
+                });
+                // 点击确定
+                $(".yesorno .yesok").click(function() {
+                    var types = $(".choose_types ul .typeactive").text();
+                    var str = $(".choose_types ul .typeactive").attr("data-type")
+                    console.log(str)
+                    console.log(types)
+                    if (!types) {
+                        types = $(".choose_types textarea").val();
+                    }
+                    $(".drug_names .daug_sign").children().last().text(types).attr('data-type', str)
+                    _this.popup(false, ".choose_types");
+                });
+                // 删除药材
+                $(".drugs_box").on("click", ".the_close", function() {
+                    $(this).parent().parent().remove();
+                    _this.priceTotal();
+                });
+
+                // 本地模糊搜索
+                $(".input_drug input")[0].addEventListener("input", function() {
+                    var str = $(this).val(); //首字母
+                    var str1 = $(this).val(); //文字
+                    addDrug.config.str3 = str.substring(str.lastIndexOf(",") + 1);
+                    addDrug.config.lis = "";
+                    $.getJSON("js/drug.json", function(data) {
+                        _this.query(data, "name")
+                        _this.query(data, "smple_code")
+                    })
+                });
+
+                // 用户修改克数的时候 也要重新计算价格
+                $(".drugs_box").on("keyup", "input", function() {
+                    _this.priceTotal();
+                    var _g = $(this).val();
+                    console.log(_g)
+                });
+
+                // 本地查询的药材 点击添加
+                $(".drugs_listss").on("click", "li", function() {
+                    // _this.inputBlur()
+                    // _this.fontSizeControl();
+                    var id = $(this).attr("data-code");
+                    var name = $(this).attr("data-name")
+                    var unit = $(this).attr("data-unit"); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    var str3_ = $(".drugs_box ul li .drug_name").children().first().text();
+                    var code = $(this).attr("data-code");
+                    // 后台查询该药品在当前区域有没有货
+                    addDrug.config.formData2.append("code", code);
+                    addDrug.config.formData2.append("type", addDrug.config.type);
+                    $.ajax({
+                        type: "post",
+                        url: baseUrl.adddrugs.searchsudrug,
+                        data: addDrug.config.formData2,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data)
+                            if (data.succ) {
+                                // 判断药方内是否有重复的
+                                var idArray = [];
+                                $(".drugs_box ul li .drug_name").each(function() {
+                                    idArray.push($(this).attr("data-id"));
+                                });
+                                if (idArray.indexOf(id) == -1) {
+                                    // 添加药品
+                                    _this.addDrug({
+                                        id: id,
+                                        name: name,
+                                        price: data.sec,
+                                        num: "1",
+                                        type: '',
+                                        classtype: "yes_set",
+                                        unit: unit //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                    });
+                                    _this.drugsBoxUnit(id);
+                                    $("." + id).children(".drug_g").find("input").focus().val('').attr("placeholder", "");
+
+                                    _this.priceTotal();
+                                    _this.onScrollTop();
+                                } else {
+                                    layer.msg('药方里面已经有这味药啦！', {
+                                        time: 1000
+                                    });
+                                }
+                            } else {
+                                layer.msg(data.msg, {
+                                    time: 1000
+                                });
+                            }
+
+                        },
+                        error: function(err) {
+                            layer.msg('连接服务器失败', {
+                                time: 1000
+                            });
+                        }
+                    });
+                    $(this).siblings().remove();
+                    $(this).remove();
+                    $(".input_drug input").val('');
+                    _this.drugsBoxHeight();
+                    _this.priceTotal();
+                })
+                $(".drugs_box").on("blur", "input", function() {
+                    _this.drugsBoxUnitPhter();
+                    _this.priceTotal();
+                    _this.drugsBoxHeight();
+                });
+                // 搜索药品时获取焦点
+                $(".input_drug input").focus(function() {
+                    _this.drugsBoxHeight();
+                });
+                $(".input_drug input").blur(function() {
+                    _this.drugsBoxHeight();
+
+                });
+                $(".drugs_box").on("focus", "input", function() {
+                    _this.drugsBoxHeight();
+                });
+                // 点击遮罩层或者取消
+                $(".backg2,.yesorno  ").click(function() {
+                    _this.popup(false, ".choose_types");
+                    _this.popup(false, ".my_exper");
+                });
+                $(".cancel").click(function() {
+                    _this.popup(false, ".choose_types");
+                    _this.popup(false, ".my_exper");
+                    $(".choose_types li").removeClass("typeactive");
+                    var types = $(".choose_types ul .typeactive").text();
+                    console.log(types)
+                    if (!types) {
+                        types = $(".choose_types textarea").val();
+                    }
+                    $(".drug_names .daug_sign").children().last().text(types)
+                });
+                $(" .cancel2").click(function() {
+                    _this.popup(false, ".hold_exper");
+                    $(".ex_name input").val('')
+                });
+                // 提交
+                $(".submit_a").click(function() {
+                    _this.getdDrugArr();
+
+                    $.ajax({
+                        type: "post",
+                        url: baseUrl.adddrugs.recipedetail,
+                        data: {
+                            "data": addDrug.config.drugArr,
+                            "type": addDrug.config.type
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data)
+                            if (data.succ) {
+                                //window.location.href = data.sec;
+                            } else {
+                                layer.msg(data.msg, {
+                                    time: 1000
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            layer.msg('连接服务器失败', {
+                                time: 1000
+                            });
+                        }
+                    });
+                })
+            },
+            // 搜索药品库
+            query: function(data, name) {
+                var _this = this;
+                var arry = new Array();
+                var arruType = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    var strarr = eval('data[i].' + name + '.indexOf(addDrug.config.str3)');
+                    arruType.push(data[i].type);
+                    arry.push(strarr)
+                }
+                var arry2 = new Array();
+                var arry3 = new Array();
+                var code = new Array();
+                var units = new Array();
+                var type = addDrug.config.type;
+                console.log(type)
+                for (var j = 0; j < arry.length; j++) {
+                    if (arry[j] != -1 && arruType[j] == type) {
+                        arry2.push(data[j].name)
+                        arry3.push(data[j].id)
+                        code.push(data[j].code);
+                        units.push(data[j].unit)
+                    }
+                }
+                for (var g = 0; g < arry2.length; g++) {
+                    addDrug.config.lis += "<li data-unit='" + units[g] + "'  data-code='" + code[g] + "' data-name='" + arry2[g] + "' data-id='" + arry3[g] + "'>" + arry2[g] + "</li>" //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                }
+                $(".drugs_listss_W .drugs_listss").children().remove();
+                $(".drugs_listss_W .drugs_listss").append(addDrug.config.lis);
+                _this.drugsBoxHeight();
+            },
+            // 点击导入经验方
+            importDrug: function() {
+                var _this = this;
+                addDrug.config.expeStr = "";
+                _this.popup(true, ".my_exper");
+                $.ajax({
+                    type: "post",
+                    // url: "baseUrl.adddrugs.explist",
+                    url: "http://w.71cp.com/doctor_ajax.php?do=explist",
+                    data: addDrug.config.formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(datas) {
+                        console.log(datas)
+                        var data = datas.sec;
+                        var dd = '';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            for (var c = 0; c < data[i].length; c++) {
+                                dd += "<div class='m_title1'><span></span><span>" + data[i].name + "</span></div><ul class='my_exper_lists'><li data-id='" + data[i][c].id + "'><span>" + data[i][c].name + "</span><span class='import_exper'>导入</span></li></ul>"
+                            }
+                        }
+                        // addDrug.config.expeStr += "<div class='m_title1'>" +
+                        //     "<span></span>" +
+                        //     "<span>" + data[i].name + "</span>" +
+                        //     "</div>" +
+                        //     "<ul class='my_exper_lists'>" + dd +
+
+                        //     "</ul>"
+                        // for (var i = 0; i < data.length; i++) {
+                        //     addDrug.config.expeStr += "<li data-id='" + data[i].id + "'><span>" + data[i].name + "</span><span class='import_exper'>导入</span></li>"
+                        // }
+                        $(".my_exper_lists").children().remove();
+                        $(".my_exper").html(dd);
+                    },
+                    error: function(err) {
+                        layer.msg('连接服务器失败', {
+                            time: 1000
+                        });
+                    }
+                });
+
+            },
+            addDrug: function(addlists) {
+                var _this = this;
+                if (!addlists.num) {
+                    addlists.num = "1";
+                }
+                if (!addlists.type) {
+                    addlists.type = ''
+                }
+                var drugStr = "";
+                drugStr += " <li class=" + addlists.id + "><div class='drug_names'><span class='the_close'></span><div class='drug_name' data-price=" + addlists.price + "  data-id=" + addlists.id + "><span>" + addlists.name + "</span><span>" + addlists.type + "</span></div></div><div class='drug_g'><input type='number' placeholder=" + addlists.num + " class=" + addlists.classtype + "><span>" + addlists.unit + "</span></div></li>";
+                $(".drugs_box ul").append(drugStr);
+
+                _this.priceTotal();
+                _this.fontSizeControl(); //药名字数如果太长 把字体弄小一点
+            },
+            // 点击导入
+            importExper: function() {
+                addDrug.config.formData1.append("id", addDrug.config.ex_id);
+                addDrug.config.formData1.append("type", addDrug.config.type);
+                var _this = this;
+                $.ajax({
+                    type: "post",
+                    url: baseUrl.adddrugs.exportsexp,
+                    data: addDrug.config.formData1,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(datas) {
+                        console.log(datas)
+                        var data = datas.sec;
+                        console.log(datas)
+                        for (var i = 0; i < data.length; i++) {
+                            _this.addDrug({
+                                id: data[i].drug_num,
+                                name: data[i].drugName,
+                                price: data[i].price,
+                                num: data[i].num,
+                                type: data[i].proce_way,
+                                unit: data[i].unit,
+                                classtype: "no_set"
+                            })
+                        }
+                        var arry_g2 = $(".drugs_box").children().find(".drug_g").children(".no_set");
+                        arry_g2.each(function(i) {
+                            var val = $(this).attr("placeholder");
+                            if (val) {
+                                $(this).val(val)
+                            } else {
+                                $(this).val('1')
+                            }
+                            $(this).attr("placeholder", "")
+                        });
+
+                        // 删除药方内重复出现的药名
+                        var idArray = [];
+                        $(".drugs_box li .drug_name").each(function() {
+                            idArray.push($(this).attr("data-id"));
+                        });
+                        // console.log(idArray)
+                        var n = [];
+                        for (var j = 0; j < idArray.length; j++) {
+                            if (n.indexOf(idArray[j]) == -1) {
+                                // 不重复的放到新数组进行对比
+                                n.push(idArray[j])
+                            } else {
+                                // console.log("重复的id是" + idArray[j] + "  它会被删掉")
+                                // 删掉重复的
+                                $("." + idArray[j])[0].remove();
+                            }
+                        }
+                        // console.log("不重复的ID只有这些" + n)
+                        _this.priceTotal();
+                        _this.onScrollTop();
+                    },
+                    error: function(err) {
+                        console.log(111)
+                        layer.msg('连接服务器失败', {
+                            time: 1000
+                        });
+                    }
+                });
+                _this.popup(false, ".my_exper");
+            },
+            addD: function() {
+                var _this = this;
+                _this.popup(true, ".hold_exper");
+                $.ajax({
+                    type: "post",
+                    url: baseUrl.adddrugs.getexpclassify,
+                    data: addDrug.config.formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(datas) {
+                        // console.log(datas.sec);
+                        // var str = '';
+                        for (var i = 0; i < datas.sec.length; i++) {
+                            addDrug.config.str += "<span data-id=" + datas.sec[i].id + ">" + datas.sec[i].name + "</span>"
+                        }
+                        // var data = datas.sec;
+                        // $(".ex_type div").html(addDrug.config.str);
+                        $(".ex_type div span").first().addClass("exactive")
+                            // addDrug.config.str = ''
+
+                    },
+                    error: function(err) {
+                        layer.msg('连接服务器失败', {
+                            time: 1000
+                        });
+                    }
+                });
+            },
+            //计算价格
+            priceTotal: function() {
+                var price = 0;
+                var g = 1;
+                var total = 0;
+                var totals = 0;
+                $(".drugs_box ul li").each(function(i) {
+                    price = $(this).find(".drug_name").attr("data-price");
+                    g = $(this).find("input").val();
+                    total = Number(g) * Number(price);
+                    totals += Number(total);
+
+                })
+                var totalsz = totals.toFixed(2);
+                // console.log(price, g + "=" + totals)
+                $(".input_drug .price").text("￥" + totalsz)
+
+            },
+            // 获取盒子内的药名等信息 并保存为数组
+            getdDrugArr: function() {
+                $(".drugs_box li").each(function(i) {
+                    addDrug.config.drugArr[i] = {
+                        code: $(this).children().find(".drug_name").attr("data-id"),
+                        num: $(this).children().find("input").val(),
+                        proce_way: $(this).children().find(".drug_name span").last().text(),
+                        unit: $(this).find(".drug_g span").text()
+                    }
+                })
+            },
+            fontSizeControl: function() {
+                $(".drugs_box li").each(function(i) {
+                    var x = $(this).children().find(".drug_name").children().first();
+                    var len = x.html();
+                    // console.log(x, len, len.length)
+                    if (len.length > 4) {
+                        x.css("font-size", ".2rem")
+                    }
+                });
+            },
+            // 一些弹出层
+            popup: function(bool, el) {
+                if (bool) {
+                    $(".backg2").css({
+                        "opacity": ".5",
+                        "z-index": "2000"
+                    });
+                    $(el).css({
+                        "transform": "translateY(0)",
+                        "-webkit-transform": "translateY(0)"
+                    });
+                } else {
+                    $(".backg2").css({
+                        "opacity": "0",
+                        "z-index": "-2000"
+                    });
+                    $(el).css({
+                        "transform": "translateY(10rem)",
+                        "-webkit-transform": "translateY(10rem)"
+                    });
+                }
+
+            },
+            drugsBoxHeight: function() {
+                var h = addDrug.config.winH - $(".choosee_type").height() - $(".input_drugs").height() - 40
+
+                // $(".drugs_box").css({
+                //         "height": h,
+                //         "overflow": "auto",
+                //         "border": "1px solid red"
+                //     })
+                // alert(h)
+            },
+            drugsBoxUnit: function(id) {
+                var arry_g = $("." + id).siblings().children(".drug_g").find(".yes_set");
+                arry_g.each(function(i) {
+                    var val = $(this).val();
+                    // console.log(val)
+                    // $(this).blur()
+                    if (val) {
+                        $(this).val(val)
+                    } else {
+                        $(this).val('1')
+                    }
+                })
+            },
+            drugsBoxUnitPhter: function() {
+                var arry_g1 = $(".drugs_box").children().find(".drug_g").children();
+                arry_g1.each(function(i) {
+                    var val = $(this).val();
+                    if (val) {
+                        $(this).val(val)
+                    } else {
+                        $(this).val('1')
+                    }
+                })
+            },
+            // 让内容始终显示在最底部
+            onScrollTop: function() {
+                $(".drugs_box ul").scrollTop($(".drugs_box ul")[0].scrollHeight)
+            },
+
+        }
+        addDrug.init()
+            // var u = navigator.userAgent;
+            // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            // $(".drugs_box ul").css("height", addDrug.config.winH - $(".choosee_type").height() - $(".input_drugs").height() - 50)
+            // $(".main1").css("height", $(".choosee_type").height() + $(".drugs_box").height() + $(".input_drugs").height());
+            // $(".input_drug input").focus(function() {
+            //     if (isiOS) {
+            //         $(".drugs_box ul").css("height", "2.1rem");
+            //     } else if (isAndroid) {
+            //         $(".drugs_box ul").css("height", "2.9rem");
+            //     }
+            //     $(".main1").css("height", $(".choosee_type").height() + $(".drugs_box").height() + $(".input_drugs").height());
+            // })
+            // $(".input_drug input").blur(function() {
+            //     $(".drugs_box ul").css("height", addDrug.config.winH - $(".choosee_type").height() - $(".input_drugs").height() - 50)
+
+        //     $(".main1").css("height", $(".choosee_type").height() + $(".drugs_box").height() + $(".input_drugs").height());
+        // })
+    </script>
+</body>
+
+</html>

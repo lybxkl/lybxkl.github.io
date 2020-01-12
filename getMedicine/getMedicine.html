@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>取药</title>
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="telephone=no" name="format-detection" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="yao()">
+
+
+<section class="jq22-flexView">
+	<header class="jq22-navBar jq22-navBar-fixed b-line" style="border-bottom: 2px solid black;">
+		<a href="javascript:;" class="jq22-navBar-item">
+			<span class="btu2">null</span>&nbsp;&nbsp;
+			<span class="btu3" hidden>已取 0</span>
+		</a>
+		<div class="jq22-center">
+			<h4 class="jq22-center-title">取药中...</h4>
+
+		</div>
+		<a href="javascript:;" class="jq22-navBar-item">
+			<button class="btu" onclick="finish()">完成</button>
+		</a>
+	</header>
+
+	<section class="jq22-scrollView">
+		<a href="javascript:;" class="jq22-flex " style="background:#F5F5F5;border-bottom: 2px solid black;">
+						<!-- <div class="jq22-info-img">
+							<img src="images/book-001.png" alt="">
+						</div> -->
+						<div class="jq22-flex-box">
+							<h2>中药名称</h2>
+						</div>
+						<div class="jq22-flex-box">
+							<h2>所处位置</h2>
+						</div>
+						<div class="jq22-flex-box">
+							<h2>药量</h2>
+						</div>
+						<div class="jq22-button-get">
+							<button class="btuu" onclick="">2D视图</button>
+						</div>
+					</a>
+		<div class="jq22-six-list">
+			
+			<!-- <a href="javascript:;" class="jq22-flex b-line"> -->
+				<!-- <div class="jq22-info-img">
+					<img src="images/book-001.png" alt="">
+				</div> -->
+				<!-- <div class="jq22-flex-box">
+					<h2>薄荷</h2>
+				</div>
+				<div class="jq22-flex-box">
+					<h2>中药柜1 第一排,第二个</h2>
+				</div>
+				<div class="jq22-flex-box">
+					<h2>10.2g</h2>
+				</div>
+				<div class="jq22-button-get">
+					<button onclick="ok(this)">取完</button>
+				</div>
+			</a>
+			<a href="javascript:;" class="jq22-flex bg"> -->
+				<!-- <div class="jq22-info-img">
+					<img src="images/book-002.png" alt="">
+				</div> -->
+				<!-- <div class="jq22-flex-box">
+					<h2>荒野迷踪</h2>
+				</div>
+				<div class="jq22-flex-box">
+					<h2>中药柜123123123131 第一排,第二个123123213213</h2>
+				</div>
+				<div class="jq22-flex-box">
+					<h2>10.2g</h2>
+				</div>
+				<div class="jq22-button-get">
+					<button onclick="ok(this)">取完</button>
+				</div>
+			</a> -->
+			
+
+		</div>
+	
+		<div style="height:52px;"></div>
+	</section>
+</section>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript" src="js/layer.js"></script>
+<script type="text/javascript">
+	function yao() {
+		function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+    function getData1(){
+        var Eurl2 = window.location.href;
+        var Etext =decodeURI(Eurl2);
+        var name = getParams("kfid").toString();
+        return name;
+    };
+    if(getData1()==null||getData1()==""){
+    	alert("数据异常")
+    }else{
+    	$(".btuu").attr("onclick","javascript:location.href='../getLiu/index.html?kfid="+getData1()+"'")
+    	$.ajax({
+            url:"http://47.103.1.210:8082/guns-1.0.0/h5/kf_yao_getByid/"+getData1(), //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+            type:'GET', //请求方法 GET or POST
+            async:true, //是否使用异步请求的方式
+            timeout:4000, //请求超时的时间，以毫秒计
+            dataType:'json', //预期的服务器返回参数类型
+            // data:{},
+            /*  beforeSend:function(){
+                 ...
+             },//再发送请求前调用的方法 */
+            success:function(data) {
+            	if(data.code==200){
+            		var html = '';
+            		var htmlbg = '';
+            		var t = 0;
+            		var all =0;
+            		$(".btu2").text("共"+data.data.length+"味药")
+            		for (var i = 0; i < data.data.length; i++) {
+	                    if(data.data[i].version == 0){
+	                    	if(t %2 == 0){
+		                      html += html1(data.data[i].id,data.data[i].m_name,data.data[i].tips,data.data[i].dose,data.data[i].version);
+		                      t++;
+		                    }else{
+		                      html += html2(data.data[i].id,data.data[i].m_name,data.data[i].tips,data.data[i].dose,data.data[i].version);
+		                      t++;
+		                    }
+	                    }else{
+	                    	htmlbg += html3(data.data[i].id,data.data[i].m_name,data.data[i].tips,data.data[i].dose,data.data[i].version);
+	                    	all++;
+	                    }
+                	}
+                 $(".jq22-six-list").html(html+htmlbg);
+                 $(".btu3").text("已取 "+all)
+            	}else if(data.code==401){
+		            		alert("您未登陆")
+		         }else if(data.code===405){
+					alert(data.message);
+				}else if(data.code===406){
+					alert(data.message);
+				}else{
+            		alert("服务器开小差了！")
+            	}
+               
+            },
+            error:function (data) {
+                alert("服务器开小差了！")
+            }
+        })
+    }
+        
+    }
+    function html1(id,one,two,three,version){
+    	var html = "";
+    	html += '<a href="javascript:;" class="jq22-flex b-line" name='+id+'>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+one+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+two+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+three+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-button-get">';
+		html += '			<button onclick="ok_2(this)" name='+version+'>查看</button>';
+		html += '		</div>';
+		html += '	</a>';
+		return html;
+    }
+    function html2(id,one,two,three,version){
+    	var html = "";
+    	html += '<a href="javascript:;" class="jq22-flex bg" name='+id+'>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+one+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+two+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-flex-box">';
+		html += '			<h2>'+three+'</h2>';
+		html += '		</div>';
+		html += '		<div class="jq22-button-get">';
+		html += '			<button onclick="ok_2(this)" name='+version+'>查看</button>';
+		html += '		</div>';
+		html += '	</a>';
+		return html;
+    }
+    function html3(id,one,two,three,version){
+    	var html="";
+		html +='<a href="javascript:;" class="jq22-flex remove" name='+id+'>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+one+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+two+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+three+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-button-get2">';
+		html +='			<button name='+version+'>+已取</button>';
+		html +='		</div>';
+		html +='	</a>'
+		return html;
+    }
+
+	function finish(){
+		var length = $(".jq22-six-list").find("button").length;
+		var ids = "";
+		var num = 0;
+		for (var i = 0; i < length; i++) {
+			if($(".jq22-six-list").find("button")[i].innerText == "取完"){
+				num++;
+			}else if($(".jq22-six-list").find("button")[i].innerText == "+已取"){
+				if($(".jq22-six-list").find("button")[i].name==0){
+					if($(".jq22-six-list").find("a")[i].name!=null||$(".jq22-six-list").find("a")[i].name!=""){
+						ids += $(".jq22-six-list").find("a")[i].name+","
+					}
+				}
+			}
+	
+		}
+		if(num == 0){ 
+			//alert("全部取完了")
+			//全部都取完了
+				if(ids.substring(0,ids.length-1).length>0){
+				updateYao(ids.substring(0,ids.length-1))
+			}
+		}else{
+			//alert("还有"+num+"味药未取")
+			if(ids.substring(0,ids.length-1).length>0){
+				updateYao(ids.substring(0,ids.length-1))
+			}
+		}
+	}
+	function updateYao(obj){
+
+		$.ajax({
+		            url:"http://47.103.1.210:8082/guns-1.0.0/h5/updateVersion_kf_yao/"+obj+"/"+getData1(), //要请求的url地址http://47.103.1.210:8082/guns-1.0.0/
+		            type:'GET', //请求方法 GET or POST
+		            async:true, //是否使用异步请求的方式
+		            timeout:4000, //请求超时的时间，以毫秒计
+		            dataType:'json', //预期的服务器返回参数类型
+		            // data:{},
+		            /*  beforeSend:function(){
+		                 ...
+		             },//再发送请求前调用的方法 */
+		            success:function(data) {
+		            	if(data.code==200){
+		            		var Eurl = "../patient/patient.html";
+					        var Eurl2 = encodeURI(Eurl);
+					        window.location.href=Eurl2;
+		          
+		            	}else if(data.code==401){
+		            		alert("您未登陆")
+		            	}else if(data.code===405){
+							alert(data.message);
+						}else {
+							alert("服务器开小差了！")
+						}
+		            },
+		            error:function (data) {
+		                alert("服务器开小差了！")
+		            }
+		        })
+	}
+
+	function ok_2(obj){
+		function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+		function getData1(){
+        var Eurl2 = window.location.href;
+        var Etext =decodeURI(Eurl2);
+        var name = getParams("kfid").toString();
+        return name;
+    };
+		var name = $(obj).parent().parent().find("h2")[0].innerText;
+		var two = $(obj).parent().parent().find("h2")[1].innerText;
+		
+		var tt = two.split("-->")[0].substring(3);
+
+		var ad_h = two.split("-->")[1].split("，")[0].substring(1,two.split("-->")[1].split("，")[0].length-1);
+		var ad_L = two.split("-->")[1].split("，")[1].substring(1,two.split("-->")[1].split("，")[1].length-1);
+		var ad_B = two.split("-->")[2].split(":")[1];
+
+		var there = $(obj).parent().parent().find("h2")[2].innerText;
+		var dat = tt+"-"+ad_h+"-"+ad_L+"-"+there+"-"+ad_B;
+		var Eurl = "../getLiu/one.html?kfid="+getData1()+"&address="+dat+"&name="+name;
+        var Eurl2 = encodeURI(Eurl);
+        window.location.href=Eurl2;
+	}
+
+	function ok(obj){
+		var id = $(obj).parent().parent().attr("name")
+		var one = $(obj).parent().parent().find("h2")[0].innerText;
+		var two = $(obj).parent().parent().find("h2")[1].innerText;
+		var three = $(obj).parent().parent().find("h2")[2].innerText;
+		var version = $(obj).attr("name");
+		$(obj).parent().parent().remove();
+		console.log($(".btu3").text().substring($(".btu3").text().length-1,$(".btu3").text().length))
+		if(!Number.isNaN(Number($(".btu3").text().substring($(".btu3").text().length-1,$(".btu3").text().length)))){
+			$(".btu3").text('已取 '+(Number($(".btu3").text().substring($(".btu3").text().length-1,$(".btu3").text().length))+1));
+		}
+		
+		var html="";
+		html +='<a href="javascript:;" class="jq22-flex remove" name='+id+'>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+one+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+two+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-flex-box">';
+		html +='			<h2>'+three+'</h2>';
+		html +='		</div>';
+		html +='		<div class="jq22-button-get2">';
+		html +='			<button name='+version+'>+已取</button>';
+		html +='		</div>';
+		html +='	</a>'
+		$(".jq22-six-list").append(html)
+	}
+	var changeindex=1;
+	var clickindex=2;
+	$(".changeone li").each(function(index,element){
+		if(index/4<changeindex){
+
+			element.className="change"+changeindex;
+		}else{
+			changeindex++;
+			element.className="change"+changeindex;
+		}
+	})
+	$(".change1").siblings().css("display","none");
+	$(".change1").show();
+	$(".huan").click(function(){
+		if(clickindex<=changeindex){
+			$(".change"+clickindex).siblings().css("display","none");
+			$(".change"+clickindex).show();
+			clickindex++;
+		}else{
+			clickindex=1;
+			$(".change"+clickindex).siblings().css("display","none");
+			$(".change"+clickindex).show();
+		}
+
+	});
+</script>
+
+</html>

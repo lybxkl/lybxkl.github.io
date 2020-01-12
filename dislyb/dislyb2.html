@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/waves.min.css?v=0.7.2">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.form.js"></script>
+    <script src="js/script.js"></script>
+    <title>处方笺</title>
+    <style>
+        input {
+            text-align: center;
+            background-color: #FAEBD7;
+        }
+
+        body {
+            background: #333;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .all {
+            width: 100%;
+            height: 100%;
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            margin-top: 0.6%;
+            margin-bottom: 0.6%;
+            background-color: #FAEBD7;
+            border-radius: 5px;
+        }
+
+        .topAll {
+            height: 300px;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            border-bottom: 3px solid black;
+        }
+
+        .topTittle {
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .topMsgOne {
+            margin-top: 50px;
+        }
+
+        .topMsgTwo {
+            margin-top: 20px;
+        }
+
+        .name,
+        .sex,
+        .xingbie {
+            width: 25%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .yearOne,
+        .moonOne {
+            width: 15%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .adress {
+            width: 51%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .yearTwo {
+            width: 20%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .moonTwo,
+        .day {
+            width: 15%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .linchuang {
+            width: 87.5%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .middleAll {
+            height: 550px;
+            width: 93.7%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            border-top: 3px solid black;
+            border-bottom: 3px solid black;
+        }
+
+        .R {
+            font-size: 40px;
+            margin-top: 20px;
+            margin-left: 25px;
+        }
+
+        .neirong {
+            resize: none;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+            margin-top: 0.6%;
+            border: 1px solid black;
+            overflow: auto;
+        }
+
+        .neirong2 {
+            resize: none;
+            width: 97%;
+            height: 400px;
+            max-height: 400px;
+            max-width: 95%;
+            margin-left: 0.6%;
+            margin-top: 0.6%;
+            border: 1px solid black;
+            overflow: auto;
+        }
+
+        .doctor {
+            float: right;
+            margin-top: 10px;
+            margin-right: 25px;
+        }
+
+        .innerDoctor {
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .bottomAll {
+            width: 93.7%;
+            height: 45px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
+
+        .bottomAll2 {
+            width: 93.7%;
+            height: 45px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+        }
+
+        .cash {
+            width: 31.3%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .check {
+            width: 30%;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .addOne {
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-left: 20px;
+            height: 38px;
+            width: 25%;
+            text-align: center;
+            border-radius: .2 em；
+        }
+
+        button:hover {
+            background: #1bb556;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 35%; /*padding-left:10px; */
+        }
+
+        .dropdown2 {
+            position: relative;
+            display: inline-block;
+            width: 25%; /*padding-left:10px; */
+        }
+
+        .dropdown3 {
+            position: relative;
+            display: inline-block;
+            width: 25%; /*padding-left:10px; */
+        }
+
+        .dropdown-selected {
+            width: 100% !important;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #c6c8cc;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            color: #333;
+            text-indent: 10px;
+            margin-bottom: 0 !important;
+        }
+
+        .dropdown-selected-textarea {
+            width: 60% !important;
+            height: 50px;
+            border: 1px solid #c6c8cc;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            color: #333;
+            text-indent: 10px;
+            margin-bottom: -20px !important;
+        }
+
+        .dropdown ul {
+            padding: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            margin-top: 2px;
+            border: 1px solid #c6c8cc;
+            position: absolute;
+            display: none;
+            z-index: 2;
+        }
+
+        .dropdown ul li {
+            list-style: none;
+            text-indent: 10px;
+        }
+
+        .dropdown ul li a {
+            display: block;
+            color: #282c33;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown ul li:hover {
+            background-color: #f2f6fa;
+        }
+
+        .dropdown ul li a:active, .dropdown ul li.active a {
+            background-color: #e4e9f2;
+        }
+    </style>
+</head>
+<body onload="onlodes()">
+<form id="forms" method="POST">
+    <div class="all">
+        <div class="topAll">
+            <p class="topTittle" name="">处方笺</p>
+            <div class="topMsgOne">
+                姓名:&nbsp;<input name="name" class="name" size="20" placeholder=""/>
+                性别:&nbsp;<input name="sex" class="xingbie" placeholder="" />
+
+            </div>
+            <div class="topMsgTwo">
+                年龄:&nbsp;<input class="yearOne" name="age" />
+            </div>
+            <div class="topMsgTwo">
+                住址:&nbsp;<input class="adress" name="address" placeholder=""/>
+
+            </div>
+            <div class="topMsgTwo">
+                日期:&nbsp;<input class="yearTwo" name="yer"/>
+            </div>
+        </div>
+        <div class="linchuang">
+            <p style="display:inline-block;">临床诊断:</p>
+            <textarea name="diagnosis" cols="1" rows="6" id="diagnosis" class="dropdown-selected-textarea"
+                      style="display:inline-block;font-size:12px;" placeholder="诊断"></textarea>
+        </div>
+        <div class="middleAll">
+            <p class="R">R:
+<!--                <button class="addOne btn float-button-light waves-effect waves-button waves-float waves-light"-->
+<!--                        style="padding:0;font-size:0.5em;color: #FFFFFF; background: #8FBC8F" onclick="addOnes()">添加药品-->
+<!--                </button>-->
+            </p>
+            <div class="neirong2">
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%;margin-left:7%;border-right:5%">
+                    药名:</h3>
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%">剂量:</h3>
+                <h3 style="display:inline-block;border-left:1px solid #ddd;font-size:14px;width:30%">备注:</h3>
+                <div class="neirong">
+                    
+                </div>
+            </div>
+            <div class="doctor">
+                医师:&nbsp;&nbsp;&nbsp;<input class="innerDoctor" name="innerDoctor"/>
+            </div>
+        </div>
+        <div class="bottomAll">
+            金额:&nbsp;<input class="cash" name="cash"/>
+        </div>
+        <div class="bottomAll2">
+            药师(审核、核对、发药)：&nbsp;<input class="check" name="checkName"/>
+        </div>
+
+        <div class="link mission-link bottomAll" id="commits" style="margin-top: 0px;margin-bottom:10px;margin-right:20px"
+             onclick="commit()">
+            <a class="button" id="ass" data-title="请检查清楚哦！" style="float:right;display:inline-block;
+            margin-right: 25px;">
+
+                进行取药
+
+            </a>
+
+        </div>
+
+</form>
+</body>
+<script type="text/javascript">
+    Waves.attach('.flat-buttons', ['waves-button']);
+    Waves.attach('.float-buttons', ['waves-button', 'waves-float']);
+    Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
+</script>
+<script type="text/javascript" src="./js/waves.min.js?v=0.7.1"></script>
+<!-- jQuery  -->
+<script type="text/javascript">
+    var currentRoute = false;
+    $(document).on('ready', function () {
+
+        // Init Waves
+        Waves.init();
+        Waves.attach('.drag-ripple', 'waves-block', true);
+        Waves.attach('#bg-pattern', null, true);
+        init();
+        $(window).on('hashchange', routing);
+        /**
+         * Example source code click
+         */
+        $('#example .top-button').on('click', function () {
+            var type = $(this).data('code');
+            $('#source-code .box .code').addClass('hide');
+            $('#source-code .box #code-' + type).removeClass('hide');
+            $('#source-code').removeClass('hide');
+            setTimeout(function () {
+                $('#source-code').addClass('show');
+            }, 50);
+        });
+        $('#source-code .top-button').on('click', function () {
+
+            $('#source-code').removeClass('show');
+
+            setTimeout(function () {
+                $('#source-code .box .code').addClass('hide');
+                $('#source-code').addClass('hide');
+            }, 500);
+        });
+    });
+
+</script>
+<script>
+    //原来保存原始包含点击事件的对象
+    var tmt;
+
+    function addOnes() {
+        var tm = $(".neirong").html();
+        // 这里可以直接添加到后面，因为之前保存好了，只能这样才可以
+        $(".neirong").append(tmt);
+    }
+
+    function removes(obj) {
+        $(obj).parent().remove();
+    }
+
+
+    $.fn.serializeJson = function () {
+        var serializeObj = {};
+        var array = this.serializeArray();
+        array.push({"name": "name", "value": document.getElementsByName("name")[0].value + ""});
+        array.push({"name": "sex", "value": document.getElementsByName("sex")[0].value + ""});
+        array.push({"name": "age", "value": document.getElementsByName("age")[0].value + ""});
+        array.push({"name": "agemoon", "value": document.getElementsByName("agemoon")[0].value + ""});
+        array.push({"name": "address", "value": document.getElementsByName("address")[0].value + ""});
+
+        var time = document.getElementsByName("yer")[0].value + "," + document.getElementsByName("moon")[0].value + "," + document.getElementsByName("day")[0].value
+
+        array.push({"name": "time", "value": time});
+        array.push({"name": "diagnosis", "value": document.getElementsByName("diagnosis")[0].value + ""});
+
+
+        var data = [];
+        var objs = $(".neirong").find("input")
+        var l = $(".neirong").find("input").length;
+        var is = 0;
+        for (var i = 0; i < l - 2; i = i + 3) {
+            var row2 = {"yaoName": objs[i].value, "yaoLiang": objs[i + 1].value, "beiZhu": objs[i + 2].value};
+            data.push(row2);
+            is++;
+        }
+        array.push({"name": "neirongLength", "value": is});
+        array.push({"name": "neirong", "value": data});
+
+        array.push({"name": "innerDoctor", "value": document.getElementsByName("innerDoctor")[0].value + ""});
+        array.push({"name": "cash", "value": document.getElementsByName("cash")[0].value + ""});
+        array.push({"name": "checkName", "value": document.getElementsByName("checkName")[0].value + ""});
+        var str = this.serialize();
+        $(array).each(function () {
+            if (serializeObj[this.name]) {
+                if ($.isArray(serializeObj[this.name])) {
+                    serializeObj[this.name].push(this.value);
+                } else {
+                    serializeObj[this.name] = [serializeObj[this.name], this.value];
+                }
+            } else {
+                serializeObj[this.name] = this.value;
+            }
+        });
+        return serializeObj;
+    }
+
+    function commit() {
+        if ($(".topTittle").attr("name") == null || $(".topTittle").attr("name") == "") {
+            alert("数据错误");
+        }else {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "GET",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "http://47.103.1.210:8082/guns-1.0.0/h5/getPath/"+getData1(),//url
+                success: function (result) {
+                    if (result.code === 200) {
+                        window.location.href="../getMedicine/getMedicine.html?kfid="+$(".topTittle").attr("name");
+                    } else if(result.code === 406){
+                        alert(result.message);
+                    }else if(result.code===405){
+                        alert("没有访问权限权限");
+                    }else {
+                        alert("服务器开小差了！")
+                    }
+                },
+                error: function () {
+                    alert("异常！");
+                }
+            });
+        }
+    }
+
+//2019年9月21日22:59:39
+    function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+    function getData1(){
+        var Eurl2 = window.location.href;
+        var Etext =decodeURI(Eurl2);
+        console.log(Etext)
+        var name = getParams("kfid").toString();
+        return name;
+
+
+    };
+    function   ages(str)
+    {
+        var   r   =   str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+        if(r==null)return   false;
+        var   d=   new   Date(r[1],   r[3]-1,   r[4]);
+        if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
+        {
+            var   Y   =   new   Date().getFullYear();
+            return((Y-r[1])+"岁");
+        }
+        return("0");
+    }
+    function onlodes() {
+    
+        var kfid = getData1();
+        if(kfid == null){
+             alert("数据异常");
+        }else{
+            $.ajax({
+            //几个参数需要注意一下
+            type: "GET",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "http://47.103.1.210:8082/guns-1.0.0/h5/Patient_kf_getByid/"+kfid,//url //47.103.1.210:8082/guns-1.0.0
+            success: function (result) {
+                if (result.code == 200) {
+                    console.log(result)
+                            $('input[name="name"]').val(result.data.name)
+                            $('input[name="name"]').attr("disabled","disabled")
+                            $('input[name="sex"]').val(result.data.sex);
+                            $('input[name="sex"]').attr("disabled","disabled")
+                            $('input[name="age"]').val(ages(result.data.birthday));
+                            $('input[name="age"]').attr("disabled","disabled")
+                            $('input[name="address"]').val(result.data.address);
+                            $('input[name="address"]').attr("disabled","disabled")
+                            var kfTime = result.data.patientPrescription.kf_time
+                            $('input[name="yer"]').val(kfTime);
+                            $('input[name="yer"]').attr("disabled","disabled")
+                            $("#diagnosis").val(result.data.patientPrescription.diagnosis);
+                            $("#diagnosis").attr("disabled","disabled")
+                            var lll = result.data.mStreams.length;
+                            var html = '';
+                            for (var i = 0; i < lll; i++) {
+                                html+='<div style="border-bottom:1px solid black;" class="ttt">';
+                                html+='       <div class="dropdown">';
+                                html+='            <input type="text" name="dropdown" class="dropdown-selected"';
+                                html+='                 style="font-size:12px;" value="'+result.data.mStreams[i].m_name+'" disabled> ';
+                                html+='        </div>';
+                                html+='        <div class="dropdown2">';
+                                html+='           <input type="text" name="dropdown2" class="dropdown-selected" style="font-size:12px;"';
+                                html+='                  value="'+result.data.mStreams[i].dose+'" disabled>';
+                                html+='        </div>';
+                                html+='        <div class="dropdown3">';
+                                html+='            <input type="text" name="dropdown3" class="dropdown-selected" disabled value="'+result.data.mStreams[i].tips+'">';
+                                html+='       </div>';
+                                html+='  </div>'
+                            }
+                            $(".neirong").html(html);
+                            $('input[name="innerDoctor"]').val(result.message);
+                            $('input[name="innerDoctor"]').attr("disabled","disabled")
+                            $('input[name="cash"]').val(result.data.patientPrescription.cash);
+                            $('input[name="cash"]').attr("disabled","disabled")
+                            $('input[name="checkName"]').val(result.message);
+                            $('input[name="checkName"]').attr("disabled","disabled")
+                            $(".topTittle").attr("name",kfid)
+                            if(result.data.patientPrescription.tag==1){
+                                $("#commits").removeAttr("onclick");
+                                $("#commits").html('<a class="button" id="ass" data-title="请检查清楚哦！" style="float:right;display:inline-block; margin-right: 25px;">已取</a>');
+                            }
+                    // var html = $(".dropdown").html();
+                    // html += '<ul style="z-index:999">';
+                    // for (var i = 0; i < result.data.length; i++) {
+                    //     html += '<li><a href="javaScript:">' + result.data[i] + '</a></li>';
+                    // }
+                    // html += '</ul>'
+                    // $(".dropdown").html(html);
+
+                }else if(result.code==401){
+                            alert("您未登陆")
+                        } else if(result.code===405){
+                    alert(result.message);
+                }else {
+                    alert("失败，请重试");
+                }
+                //复制一份包含点击事件的对象
+                tmt = $(".neirong").html();
+                ;
+
+            },
+            error: function (data) {
+                if(data.status==401){
+                alert("您未登陆")
+            }else if(data.code===405){
+                    alert(data.message);
+                }else {
+                    alert("服务器开小差了！")
+                }
+            }
+        });
+        }
+
+    }
+
+
+
+
+    var search = {
+        searchKeyword: function (obj) {
+            var nWord = $(obj).val();
+            //var temarray = nWord.split(""); //分割
+            var array = this.unique(nWord.split(""));
+            var dsa = $(obj).parent().find("ul li a");//获取全部列表
+            var linumber = 0;
+
+
+            $(obj).parent().find("ul li").show();
+            for (var t = 0; t < dsa.length; t++) {
+                $(dsa[t]).html($(dsa[t]).text());
+                var temstr = ($(dsa[t]).text()).split("");
+                var yes = false;
+                for (var i = 0; i < array.length; i++) {
+                    var posarr = this.findAll(temstr, array[i]);
+                    if (posarr.length > 0) {
+                        yes = true;
+                        for (var j = 0; j < posarr.length; j++) {
+                            temstr[posarr[j]] = "<em style='color:red;'>" + temstr[posarr[j]] + "</em>";
+                        }
+                    }
+                }
+                if (!yes) {
+                    $(dsa[t]).closest("li").hide();
+                }
+                else {
+                    linumber++;
+                    var htmlstr = "";
+                    for (var m = 0; m < temstr.length; m++) {
+                        htmlstr += temstr[m];
+                    }
+                    $(dsa[t]).html(htmlstr);
+                }
+
+            }
+            if (linumber == 0) {
+                $(obj).parent().find("ul li").show();
+                $(obj).parent().find("ul").slideDown(200);
+            }
+        },
+        searchKeyword2: function (obj) {
+            var nWord = $(obj).find("input").val();
+            //var temarray = nWord.split(""); //分割
+            var array = this.unique(nWord.split(""));
+            var dsa = $(obj).find("ul li a");//获取全部列表
+            var linumber = 0;
+
+
+            $(obj).find("ul li").show();
+            for (var t = 0; t < dsa.length; t++) {
+                $(dsa[t]).html($(dsa[t]).text());
+                var temstr = ($(dsa[t]).text()).split("");
+                var yes = false;
+                for (var i = 0; i < array.length; i++) {
+                    var posarr = this.findAll(temstr, array[i]);
+                    if (posarr.length > 0) {
+                        yes = true;
+                        for (var j = 0; j < posarr.length; j++) {
+                            temstr[posarr[j]] = "<em style='color:red;'>" + temstr[posarr[j]] + "</em>";
+                        }
+                    }
+                }
+                if (!yes) {
+                    $(dsa[t]).closest("li").hide();
+                }
+                else {
+                    linumber++;
+                    var htmlstr = "";
+                    for (var m = 0; m < temstr.length; m++) {
+                        htmlstr += temstr[m];
+                    }
+                    $(dsa[t]).html(htmlstr);
+                }
+
+            }
+            if (linumber == 0) {
+                $(obj).find("ul li").show();
+                $(obj).find("ul").slideDown(200);
+            }
+        },
+        findAll: function (arr, str) {
+            var results = [],
+                len = arr.length,
+                pos = 0;
+            while (pos < len) {
+                pos = arr.indexOf(str, pos);
+                if (pos === -1) {
+                    break;
+                }
+                results.push(pos);
+                pos++;
+            }
+            return results;
+        },
+        unique: function (arr) {
+            var new_arr = [];
+            for (var i = 0; i < arr.length; i++) {
+                var items = arr[i];
+                //判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
+                if ($.inArray(items, new_arr) == -1) {
+                    new_arr.push(items);
+                }
+            }
+            return new_arr;
+        },
+        changeValue: function (obj) {
+            $(obj).find("ul").slideUp(200);
+            var input = $(obj).find('input');
+            var ul = $(obj).find('ul');
+            if (!ul.is(':visible')) {
+                ul.slideDown('fast');
+            } else {
+                ul.slideUp('fast');
+            }
+
+            $(obj).find('ul a').click(function () {
+                input.val($(this).text());
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active')
+                $(this).closest('ul').slideUp(200);
+                return false;
+            })
+            var e = this.getEvent();
+            window.event ? e.cancelBubble = true : e.stopPropagation();
+        },
+        _init: function () {
+            $(".dropdown").on("click", "ul li a", function () {
+                this.find("input").val($(this).text());
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active')
+                $(this).closest('ul').slideUp(200);
+                return false;
+            })
+        },
+        getEvent: function () {
+            if (window.event) {
+                return window.event;
+            }
+            var f = arguments.callee.caller;
+            do {
+                var e = f.arguments[0];
+                if (e && (e.constructor === Event || e.constructor === MouseEvent || e.constructor === KeyboardEvent)) {
+                    return e;
+                }
+            } while (f = f.caller);
+        }
+
+    }
+
+    search._init();
+</script>
+</html>
